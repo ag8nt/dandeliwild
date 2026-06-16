@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dandeli Wild — Karnataka's Adventure Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ── LIGHT MODE ── */
+  :root, [data-theme="light"] {
+    --green-deep:    #04342C;
+    --green-dark:    #0F6E56;
+    --green-mid:     #1D9E75;
+    --green-light:   #5DCAA5;
+    --green-pale:    #E1F5EE;
+    --amber:         #EF9F27;
+    --amber-pale:    #FAEEDA;
+    --text-primary:  #111;
+    --text-muted:    #6b7280;
+    --text-faint:    #9ca3af;
+    --border:        rgba(0,0,0,0.09);
+    --bg:            #ffffff;
+    --bg-soft:       #f9f9f8;
+    --bg-nav:        rgba(255,255,255,0.92);
+    --card-bg:       #ffffff;
+    --modal-bg:      #ffffff;
+    --search-bg:     #ffffff;
+    --search-color:  #111;
+    --radius:        14px;
+    --radius-sm:     8px;
+  }
+
+  /* ── DARK MODE ── */
+  [data-theme="dark"] {
+    --text-primary:  #f0f0ee;
+    --text-muted:    #9ca3af;
+    --text-faint:    #6b7280;
+    --border:        rgba(255,255,255,0.1);
+    --bg:            #0d1f1a;
+    --bg-soft:       #111f1a;
+    --bg-nav:        rgba(13,31,26,0.92);
+    --card-bg:       #162820;
+    --modal-bg:      #162820;
+    --search-bg:     #162820;
+    --search-color:  #f0f0ee;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-primary); background: var(--bg); line-height: 1.6; transition: background 0.3s, color 0.3s; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 64px;
+    background: var(--bg-nav);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green-deep); letter-spacing: -0.5px; }
+  [data-theme="dark"] .logo { color: var(--green-light); }
+  .logo em { color: var(--green-mid); font-style: normal; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green-mid); }
+  .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+  /* ── DARK MODE TOGGLE ── */
+  .theme-toggle {
+    display: flex; align-items: center; gap: 6px;
+    background: none; border: 1px solid var(--border);
+    border-radius: 50px; padding: 5px 12px;
+    cursor: pointer; font-size: 13px; color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif; transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--green-mid); color: var(--green-mid); }
+  .toggle-track {
+    width: 32px; height: 18px; border-radius: 50px;
+    background: var(--border);
+    position: relative; transition: background 0.3s;
+    flex-shrink: 0;
+  }
+  [data-theme="dark"] .toggle-track { background: var(--green-mid); }
+  .toggle-thumb {
+    width: 12px; height: 12px; border-radius: 50%; background: #fff;
+    position: absolute; top: 3px; left: 3px;
+    transition: transform 0.3s;
+  }
+  [data-theme="dark"] .toggle-thumb { transform: translateX(14px); }
+
+  .btn-ghost { background: none; border: 1px solid var(--border); padding: 8px 18px; border-radius: 50px; font-size: 14px; cursor: pointer; color: var(--text-primary); font-family: 'DM Sans', sans-serif; transition: border-color 0.2s; }
+  .btn-ghost:hover { border-color: var(--green-mid); color: var(--green-mid); }
+  .btn-primary { background: var(--green-mid); color: #fff; border: none; padding: 9px 22px; border-radius: 50px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--green-dark); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 92vh;
+    background: var(--green-deep);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  /* layered gradient: jungle-to-river left-right + deep glow at bottom */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(105deg, #04342C 0%, #0F6E56 35%, #1D9E75 60%, #085041 80%, #04342C 100%),
+      radial-gradient(ellipse 80% 55% at 50% 100%, rgba(93,202,165,0.25) 0%, transparent 65%);
+    background-blend-mode: screen;
+    pointer-events: none;
+  }
+  /* subtle shimmer river streak */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 40% 30% at 70% 65%, rgba(93,202,165,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: var(--green-light);
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 50px; margin-bottom: 2rem;
+  }
+  .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--green-light); display: inline-block; }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(42px, 7vw, 76px);
+    color: #fff; line-height: 1.08; letter-spacing: -1.5px;
+    margin-bottom: 1.2rem; max-width: 720px;
+  }
+  .hero h1 em { color: var(--green-light); font-style: italic; }
+  .hero-sub { font-size: 17px; color: rgba(255,255,255,0.55); margin-bottom: 2.5rem; max-width: 420px; font-weight: 300; }
+
+  /* ── SEARCH BOX ── */
+  .search-box {
+    background: var(--search-bg);
+    border-radius: var(--radius);
+    display: flex; align-items: stretch;
+    width: 100%; max-width: 700px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .sf { flex: 1; padding: 14px 18px; border-right: 1px solid var(--border); }
+  .sf:last-of-type { border-right: none; }
+  .sf label { display: block; font-size: 11px; font-weight: 500; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+  .sf-fixed { font-size: 15px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 6px; }
+  .sf-fixed-pin { font-size: 14px; }
+  .sf input { border: none; outline: none; font-size: 15px; font-family: 'DM Sans', sans-serif; color: var(--search-color); background: transparent; width: 100%; }
+  .sf input::placeholder { color: var(--text-faint); }
+  .search-btn { background: var(--green-mid); color: #fff; border: none; padding: 0 28px; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+  .search-btn:hover { background: var(--green-dark); }
+  .search-btn svg { width: 18px; height: 18px; }
+
+  /* ── STATS ── */
+  .hero-stats { display: flex; gap: 3rem; margin-top: 3rem; }
+  .hs { text-align: center; }
+  .hs-num { font-family: 'DM Serif Display', serif; font-size: 32px; color: #fff; }
+  .hs-label { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 5rem 2.5rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
+  .section-label { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green-mid); font-weight: 500; margin-bottom: 6px; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 30px; color: var(--text-primary); letter-spacing: -0.5px; }
+  .see-all { font-size: 14px; color: var(--green-mid); text-decoration: none; border-bottom: 1px solid var(--green-pale); padding-bottom: 1px; white-space: nowrap; }
+
+  /* ── ACTIVITIES ── */
+  .activities-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .act-card {
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.6rem 1.2rem 1.4rem; text-align: center; cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    background: var(--card-bg); display: block; color: inherit;
+  }
+  .act-card:hover { transform: translateY(-3px); border-color: var(--green-light); box-shadow: 0 8px 24px rgba(29,158,117,0.12); }
+  .act-icon { font-size: 32px; margin-bottom: 10px; }
+  .act-name { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+  .act-count { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+  .act-tag { display: inline-block; margin-top: 10px; font-size: 11px; background: var(--green-pale); color: var(--green-dark); padding: 3px 10px; border-radius: 50px; }
+  [data-theme="dark"] .act-tag { background: #0F6E5633; color: var(--green-light); }
+
+  /* ── RESORTS ── */
+  .resorts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .resort-card {
+    border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; background: var(--card-bg);
+  }
+  .resort-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.15); }
+  .resort-thumb { height: 170px; display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative; }
+  .thumb-green { background: linear-gradient(135deg, #E1F5EE, #9FE1CB); }
+  .thumb-teal  { background: linear-gradient(135deg, #d4ede8, #9FE1CB); }
+  .thumb-amber { background: linear-gradient(135deg, #FAEEDA, #FAC775); }
+  .thumb-deep  { background: linear-gradient(135deg, #c9e8df, #5DCAA5); }
+  .avail-pill { position: absolute; top: 12px; right: 12px; font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 50px; }
+  .avail-open { background: #EAF3DE; color: #3B6D11; }
+  .avail-few  { background: #FAEEDA; color: #854F0B; }
+  .avail-full { background: #FCEBEB; color: #A32D2D; }
+  .wishlist-btn { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.85); border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; transition: background 0.2s; }
+  .wishlist-btn:hover { background: #fff; }
+  .resort-body { padding: 1.1rem 1.2rem 1.2rem; }
+  .resort-type { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--green-mid); font-weight: 500; margin-bottom: 4px; }
+  .resort-name { font-size: 16px; font-weight: 500; color: var(--text-primary); margin-bottom: 5px; }
+  .resort-meta { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .rating-star { color: #BA7517; }
+  .dot { color: var(--text-faint); }
+  .resort-footer { display: flex; justify-content: space-between; align-items: center; }
+  .price { font-size: 17px; font-weight: 500; color: var(--text-primary); }
+  .price-sub { font-size: 12px; color: var(--text-muted); font-weight: 400; }
+  .book-btn { background: var(--green-mid); color: #fff; border: none; padding: 8px 18px; border-radius: 50px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .book-btn:hover { background: var(--green-dark); }
+  .book-btn.disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; }
+
+  /* ── WHY DANDELI ── */
+  .why-section { background: var(--bg-soft); }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .why-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem 1.5rem; }
+  .why-icon { font-size: 26px; margin-bottom: 12px; }
+  .why-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; color: var(--text-primary); }
+  .why-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── CTA BANNER ── */
+  .cta-wrap { padding: 4rem 2.5rem 0; max-width: 1100px; margin: 0 auto; }
+  .cta-banner {
+    background: var(--green-deep); border-radius: var(--radius);
+    padding: 3rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  .cta-left h2 { font-family: 'DM Serif Display', serif; font-size: 26px; color: #fff; margin-bottom: 6px; }
+  .cta-left p { font-size: 15px; color: rgba(255,255,255,0.55); }
+  .btn-light { background: #fff; color: var(--green-deep); border: none; padding: 12px 26px; border-radius: 50px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity 0.2s; white-space: nowrap; }
+  .btn-light:hover { opacity: 0.9; }
+
+  /* ── MODAL (Privacy / Terms) ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.55); align-items: center; justify-content: center; padding: 1.5rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--modal-bg); border-radius: var(--radius); max-width: 560px; width: 100%;
+    padding: 2rem 2.2rem; position: relative; max-height: 80vh; overflow-y: auto;
+    border: 1px solid var(--border);
+  }
+  .modal h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text-primary); margin-bottom: 1rem; }
+  .modal p { font-size: 14px; color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+  .modal strong { color: var(--text-primary); font-weight: 500; }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1.2rem;
+    background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text-muted);
+    line-height: 1;
+  }
+  .modal-close:hover { color: var(--text-primary); }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--green-deep); }
+  [data-theme="dark"] .footer-logo { color: var(--green-light); }
+  .footer-logo em { color: var(--green-mid); font-style: normal; }
+  .footer-copy { font-size: 13px; color: var(--text-faint); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; cursor: pointer; }
+  .footer-links a:hover { color: var(--green-mid); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .hero > * { animation: fadeUp 0.6s ease both; }
+  .hero-eyebrow { animation-delay: 0.1s; }
+  .hero h1      { animation-delay: 0.2s; }
+  .hero-sub     { animation-delay: 0.3s; }
+  .search-box   { animation-delay: 0.4s; }
+  .hero-stats   { animation-delay: 0.5s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; gap: 8px; }
+    .nav-links { display: none; }
+    .logo { font-size: 18px; }
+    .btn-ghost { display: none; }
+    .btn-primary { padding: 8px 14px; font-size: 13px; }
+    .theme-toggle { padding: 5px 8px; }
+    .theme-toggle span { display: none; }
+    .hero { padding: 3rem 1.2rem 2.5rem; min-height: auto; }
+    .hero h1 { font-size: 34px; letter-spacing: -1px; }
+    .hero-sub { font-size: 15px; margin-bottom: 1.8rem; }
+    .hero-eyebrow { font-size: 11px; margin-bottom: 1.4rem; }
+    .search-box { flex-direction: column; max-width: 100%; }
+    .sf { border-right: none; border-bottom: 1px solid var(--border); padding: 12px 16px; }
+    .sf:last-of-type { border-bottom: none; }
+    .search-btn { padding: 14px 20px; justify-content: center; border-radius: 0 0 var(--radius) var(--radius); }
+    .hero-stats { gap: 0; flex-wrap: wrap; margin-top: 2rem; width: 100%; max-width: 320px; }
+    .hs { width: 50%; padding: 0.8rem 0; }
+    .hs-num { font-size: 26px; }
+    .hs-label { font-size: 12px; }
+    .section { padding: 2.5rem 1.2rem; }
+    .section-title { font-size: 24px; }
+    .section-top { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 1.2rem; }
+    .activities-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .act-card { padding: 1.2rem 0.8rem 1rem; }
+    .act-icon { font-size: 26px; }
+    .act-name { font-size: 14px; }
+    .resorts-grid { grid-template-columns: 1fr; gap: 14px; }
+    .resort-thumb { height: 150px; }
+    .why-grid { grid-template-columns: 1fr; gap: 12px; }
+    .cta-wrap { padding: 2.5rem 1.2rem 0; }
+    .cta-banner { flex-direction: column; text-align: center; padding: 2rem 1.4rem; gap: 1.5rem; }
+    .btn-light { width: 100%; padding: 14px; font-size: 15px; }
+    footer { flex-direction: column; gap: 0.8rem; text-align: center; padding: 1.8rem 1.2rem; }
+    .footer-links { justify-content: center; }
+    .modal { padding: 1.5rem 1.2rem; }
+  }
+  @media (max-width: 380px) {
+    .hero h1 { font-size: 28px; }
+    .act-tag { display: none; }
+    .nav-actions { gap: 6px; }
+    .btn-primary { font-size: 12px; padding: 7px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Dandeli<em>Wild</em></div>
+  <ul class="nav-links">
+    <li><a href="resorts.html">Resorts</a></li>
+    <li><a href="things-to-do.html">Activities</a></li>
+    <li><a href="things-to-do.html#view">Viewpoints</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+      <span id="theme-label">Light mode</span>
+    </button>
+    <button class="btn-ghost">Sign in</button>
+    <button class="btn-primary">List your property</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow"><span></span> Karnataka's adventure capital</div>
+  <h1>Where the jungle<br>meets the <em>river</em></h1>
+  <p class="hero-sub">Find resorts, book activities, and discover the wild beauty of Dandeli.</p>
+
+  <div class="search-box">
+    <div class="sf">
+      <label>📍 Where</label>
+      <div class="sf-fixed"><span class="sf-fixed-pin"></span>Dandeli, Karnataka</div>
+    </div>
+    <div class="sf">
+      <label>Check in</label>
+      <input type="date" />
+    </div>
+    <div class="sf">
+      <label>Check out</label>
+      <input type="date" />
+    </div>
+    <div class="sf">
+      <label>Guests</label>
+      <input type="text" placeholder="1 guest" />
+    </div>
+    <button class="search-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      Search
+    </button>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-num">40+</div><div class="hs-label">Resorts & lodges</div></div>
+    <div class="hs"><div class="hs-num">15+</div><div class="hs-label">Activities</div></div>
+    <div class="hs"><div class="hs-num">12+</div><div class="hs-label">Viewpoints</div></div>
+    <div class="hs"><div class="hs-num">4.8★</div><div class="hs-label">Avg rating</div></div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-top">
+      <div>
+        <div class="section-label">Things to do</div>
+        <div class="section-title">Explore activities</div>
+      </div>
+      <a href="things-to-do.html" class="see-all">View all activities →</a>
+    </div>
+    <div class="activities-grid">
+      <a href="things-to-do.html#water" class="act-card" style="text-decoration:none;"><div class="act-icon">🚣</div><div class="act-name">River rafting</div><div class="act-count">8 operators</div><div class="act-tag">Most popular</div></a>
+      <a href="things-to-do.html#safari" class="act-card" style="text-decoration:none;"><div class="act-icon">🐆</div><div class="act-name">Jungle safari</div><div class="act-count">5 packages</div><div class="act-tag">Wildlife</div></a>
+      <a href="things-to-do.html#water" class="act-card" style="text-decoration:none;"><div class="act-icon">🚤</div><div class="act-name">Boat rides</div><div class="act-count">6 operators</div><div class="act-tag">On the Kali river</div></a>
+      <a href="things-to-do.html#view" class="act-card" style="text-decoration:none;"><div class="act-icon">🌄</div><div class="act-name">Viewpoints</div><div class="act-count">12 scenic spots</div><div class="act-tag">Sunrise views</div></a>
+      <a href="https://www.npcil.nic.in/main/Interested.aspx" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
+        <div class="act-card" style="border-color:rgba(59,130,246,0.25); position:relative;">
+          <div style="position:absolute;top:10px;right:10px;font-size:10px;color:var(--text-faint);">↗ Official site</div>
+          <div class="act-icon">⚛️</div>
+          <div class="act-name">Kaiga Nuclear Plant</div>
+          <div class="act-count">Visitor programme</div>
+          <div class="act-tag" style="background:#EFF6FF;color:#1D4ED8;">Unique attraction</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- RESORTS -->
+<section class="section" style="padding-top:0">
+  <div class="section-inner">
+    <div class="section-top">
+      <div>
+        <div class="section-label">Places to stay</div>
+        <div class="section-title">Resorts & lodges</div>
+      </div>
+      <a href="resorts.html" class="see-all">View all resorts →</a>
+    </div>
+    <div class="resorts-grid">
+      <div class="resort-card" onclick="window.location.href='resorts.html?selected=Kali+River+Resort'">
+        <div class="resort-thumb thumb-green">🌿<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-open">Available</span></div>
+        <div class="resort-body">
+          <div class="resort-type">Riverside resort</div><div class="resort-name">Kali River Resort</div>
+          <div class="resort-meta"><span class="rating-star">★ 4.8</span><span class="dot">·</span>AC rooms<span class="dot">·</span>Pool</div>
+          <div class="resort-footer"><div class="price">₹3,500 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Kali River Resort')">Book now</button></div>
+        </div>
+      </div>
+      <div class="resort-card" onclick="window.location.href='resorts.html?selected=Jungle+Nest+Lodge'">
+        <div class="resort-thumb thumb-teal">🌳<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-few">Only 2 left</span></div>
+        <div class="resort-body">
+          <div class="resort-type">Forest lodge</div><div class="resort-name">Jungle Nest Lodge</div>
+          <div class="resort-meta"><span class="rating-star">★ 4.6</span><span class="dot">·</span>Forest view<span class="dot">·</span>Tents</div>
+          <div class="resort-footer"><div class="price">₹1,800 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Jungle Nest Lodge')">Book now</button></div>
+        </div>
+      </div>
+      <div class="resort-card" onclick="window.location.href='resorts.html?selected=Dandeli+Wild+Camp'">
+        <div class="resort-thumb thumb-amber">🏕️<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-full">Fully booked</span></div>
+        <div class="resort-body">
+          <div class="resort-type">Luxury camp</div><div class="resort-name">Dandeli Wild Camp</div>
+          <div class="resort-meta"><span class="rating-star">★ 4.9</span><span class="dot">·</span>Luxury tents<span class="dot">·</span>Spa</div>
+          <div class="resort-footer"><div class="price">₹5,200 <span class="price-sub">/ night</span></div><button class="book-btn disabled" disabled>Fully booked</button></div>
+        </div>
+      </div>
+      <div class="resort-card" onclick="window.location.href='resorts.html?selected=Supa+Wilderness+Stay'">
+        <div class="resort-thumb thumb-deep">🦜<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-open">Available</span></div>
+        <div class="resort-body">
+          <div class="resort-type">Eco resort</div><div class="resort-name">Supa Wilderness Stay</div>
+          <div class="resort-meta"><span class="rating-star">★ 4.7</span><span class="dot">·</span>Bird watching<span class="dot">·</span>Cottages</div>
+          <div class="resort-footer"><div class="price">₹2,400 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Supa Wilderness Stay')">Book now</button></div>
+        </div>
+      </div>
+      <div class="resort-card" onclick="window.location.href='resorts.html?selected=Kali+Riverside+Camp'">
+        <div class="resort-thumb thumb-green" style="background:linear-gradient(135deg,#c9e8df,#9FE1CB)">🌊<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-few">3 rooms left</span></div>
+        <div class="resort-body">
+          <div class="resort-type">River camp</div><div class="resort-name">Kali Riverside Camp</div>
+          <div class="resort-meta"><span class="rating-star">★ 4.5</span><span class="dot">·</span>Rafting included<span class="dot">·</span>Meals</div>
+          <div class="resort-footer"><div class="price">₹2,900 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Kali Riverside Camp')">Book now</button></div>
+        </div>
+      </div>
+      <div class="resort-card" onclick="window.location.href='resorts.html?selected=Forest+Edge+Safari+Lodge'">
+        <div class="resort-thumb thumb-amber" style="background:linear-gradient(135deg,#f5e8cc,#EF9F27)">🦁<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-open">Available</span></div>
+        <div class="resort-body">
+          <div class="resort-type">Safari lodge</div><div class="resort-name">Forest Edge Safari Lodge</div>
+          <div class="resort-meta"><span class="rating-star">★ 4.8</span><span class="dot">·</span>Safari included<span class="dot">·</span>Jeep tours</div>
+          <div class="resort-footer"><div class="price">₹4,100 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Forest Edge Safari Lodge')">Book now</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY DANDELI -->
+<section class="section why-section">
+  <div class="section-inner">
+    <div class="section-top"><div><div class="section-label">Why visit</div><div class="section-title">Dandeli has it all</div></div></div>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-icon">🏞️</div><div class="why-title">Untouched nature</div><div class="why-desc">Home to the Dandeli Wildlife Sanctuary and Anshi National Park — one of Karnataka's richest biodiversity zones.</div></div>
+      <div class="why-card"><div class="why-icon">🚣</div><div class="why-title">India's best river rafting</div><div class="why-desc">The Kali River offers thrilling Grade 3–4 rapids, making it a top destination for adventure seekers across India.</div></div>
+      <div class="why-card"><div class="why-icon">🌿</div><div class="why-title">Affordable & close</div><div class="why-desc">Just 5 hours from Goa, Bangalore, and Pune — perfect for a quick long weekend without burning your wallet.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <div class="cta-banner">
+    <div class="cta-left">
+      <h2>Own a resort or lodge in Dandeli?</h2>
+      <p>Get listed on DandeliWild and reach thousands of tourists every month.</p>
+      <div style="display:flex; align-items:center; gap:1.2rem; margin-top:1.2rem; flex-wrap:wrap;">
+        <div style="display:flex; align-items:baseline; gap:4px;">
+          <span style="font-family:'DM Serif Display',serif; font-size:36px; color:#fff; line-height:1;">₹499</span>
+          <span style="font-size:14px; color:rgba(255,255,255,0.5);">/ month</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <span style="font-size:13px; color:rgba(255,255,255,0.7);">✓ Live availability management</span>
+          <span style="font-size:13px; color:rgba(255,255,255,0.7);">✓ Direct tourist enquiries</span>
+          <span style="font-size:13px; color:rgba(255,255,255,0.7);">✓ Featured on homepage</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+      <button class="btn-light">Start listing — ₹499/mo →</button>
+      <span style="font-size:12px; color:rgba(255,255,255,0.4);">Cancel anytime · No hidden fees</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dandeli<em>Wild</em></div>
+  <div class="footer-copy">© 2026 DandeliWild. Made with ♥ in Karnataka.</div>
+  <div class="footer-links">
+    <a onclick="openModal('privacy')">Privacy</a>
+    <a onclick="openModal('terms')">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<!-- PRIVACY MODAL -->
+<div class="modal-overlay" id="modal-privacy">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('privacy')">✕</button>
+    <h2>Privacy Policy</h2>
+    <p>At <strong>DandeliWild</strong>, your privacy matters to us. Here's how we handle your information:</p>
+    <p><strong>What we collect:</strong> When you use our website, we may collect basic information such as your name, email address, travel dates, and preferences — only when you choose to share them.</p>
+    <p><strong>How we use it:</strong> Your information is used <strong>only</strong> for two purposes — to personalise your experience on DandeliWild (show you relevant resorts, activities, and recommendations) and for internal research to improve our platform for future visitors.</p>
+    <p><strong>What we never do:</strong> We do not sell, rent, or share your personal data with third parties for advertising or commercial purposes.</p>
+    <p><strong>Contact details:</strong> Contact information will be updated shortly. If you have any privacy concerns, reach out to us via the Contact page.</p>
+    <p style="font-size:13px; color:var(--text-faint);">Last updated: January 2026</p>
+  </div>
+</div>
+
+<!-- TERMS MODAL -->
+<div class="modal-overlay" id="modal-terms">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('terms')">✕</button>
+    <h2>Terms of Use</h2>
+    <p>By using <strong>DandeliWild</strong>, you agree to the following terms:</p>
+    <p><strong>Purpose:</strong> This website is a tourism discovery platform for Dandeli, Karnataka. It lists resorts, lodges, and activities to help travellers plan their visit.</p>
+    <p><strong>Your data:</strong> Any information you provide is used solely for improving your experience on this platform and for internal research. We do not use it for any other commercial purpose.</p>
+    <p><strong>Listings:</strong> Resort and activity listings are provided for informational purposes. Please verify availability and pricing directly with the property before booking.</p>
+    <p><strong>Resort owners:</strong> By listing your property on DandeliWild, you agree to keep your availability and pricing information accurate and up to date.</p>
+    <p><strong>Contact details:</strong> Full legal contact information will be updated shortly.</p>
+    <p style="font-size:13px; color:var(--text-faint);">Last updated: January 2026</p>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="modal-booking">
+  <div class="modal" style="max-width:420px; padding:0; overflow:hidden;">
+    <div style="background:var(--green-deep); padding:1.4rem 1.6rem; display:flex; align-items:center; justify-content:space-between;">
+      <h2 style="font-size:20px; color:#fff; margin:0;">Book your stay</h2>
+      <button onclick="closeBooking()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; width:30px; height:30px; border-radius:50%; cursor:pointer; font-size:16px;">✕</button>
+    </div>
+    <div style="padding:1.4rem 1.6rem;">
+      <p style="margin-bottom:1rem;">You're booking: <strong id="booking-resort-name" style="color:var(--text-primary);">—</strong></p>
+      <div style="background:var(--bg-soft); border:1px dashed var(--border); border-radius:10px; padding:1.2rem; text-align:center; margin-bottom:1.2rem;">
+        <div style="font-size:36px; margin-bottom:8px;">🚧</div>
+        <h4 style="font-size:16px; font-weight:500; color:var(--text-primary); margin-bottom:4px;">Online booking coming soon</h4>
+        <p style="font-size:13px; color:var(--text-muted); margin:0;">We're building a direct booking system connected to the resort's admin panel. Check back soon!</p>
+      </div>
+      <p style="margin-bottom:0;">In the meantime, you can contact the resort directly or ask us for their number via the Contact page.</p>
+    </div>
+    <div style="padding:0 1.6rem 1.4rem; display:flex; gap:8px;">
+      <button onclick="closeBooking()" style="flex:1; background:var(--bg-soft); border:1px solid var(--border); color:var(--text-muted); padding:11px; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer;">Close</button>
+      <button style="flex:1; background:var(--green-mid); border:none; color:#fff; padding:11px; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer; font-weight:500;">Notify me when live</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-label').textContent = isDark ? 'Dark mode' : 'Light mode';
+  }
+  function openModal(id) {
+    document.getElementById('modal-' + id).classList.add('open');
+  }
+  function closeModal(id) {
+    document.getElementById('modal-' + id).classList.remove('open');
+  }
+  function openBooking(name) {
+    document.getElementById('booking-resort-name').textContent = name;
+    document.getElementById('modal-booking').classList.add('open');
+  }
+  function closeBooking() {
+    document.getElementById('modal-booking').classList.remove('open');
+  }
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', function(e) {
+      if (e.target === el) el.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

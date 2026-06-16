@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resorts & Lodges — DandeliWild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root, [data-theme="light"] {
+    --green-deep:   #04342C;
+    --green-dark:   #0F6E56;
+    --green-mid:    #1D9E75;
+    --green-light:  #5DCAA5;
+    --green-pale:   #E1F5EE;
+    --amber:        #EF9F27;
+    --text-primary: #111;
+    --text-muted:   #6b7280;
+    --text-faint:   #9ca3af;
+    --border:       rgba(0,0,0,0.09);
+    --bg:           #ffffff;
+    --bg-soft:      #f9f9f8;
+    --bg-nav:       rgba(255,255,255,0.92);
+    --card-bg:      #ffffff;
+    --input-bg:     #f3f4f6;
+    --radius:       14px;
+  }
+  [data-theme="dark"] {
+    --text-primary: #f0f0ee;
+    --text-muted:   #9ca3af;
+    --text-faint:   #6b7280;
+    --border:       rgba(255,255,255,0.1);
+    --bg:           #0d1f1a;
+    --bg-soft:      #111f1a;
+    --bg-nav:       rgba(13,31,26,0.92);
+    --card-bg:      #162820;
+    --input-bg:     #1e3328;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-primary); background: var(--bg); line-height: 1.6; transition: background 0.3s, color 0.3s; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 64px;
+    background: var(--bg-nav); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green-deep); text-decoration: none; }
+  [data-theme="dark"] .logo { color: var(--green-light); }
+  .logo em { color: var(--green-mid); font-style: normal; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--green-mid); }
+  .nav-actions { display: flex; gap: 10px; align-items: center; }
+  .theme-toggle { display: flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--border); border-radius: 50px; padding: 5px 12px; cursor: pointer; font-size: 13px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; }
+  .toggle-track { width: 32px; height: 18px; border-radius: 50px; background: var(--border); position: relative; transition: background 0.3s; flex-shrink: 0; }
+  [data-theme="dark"] .toggle-track { background: var(--green-mid); }
+  .toggle-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; position: absolute; top: 3px; left: 3px; transition: transform 0.3s; }
+  [data-theme="dark"] .toggle-thumb { transform: translateX(14px); }
+  .btn-ghost { background: none; border: 1px solid var(--border); padding: 8px 18px; border-radius: 50px; font-size: 14px; cursor: pointer; color: var(--text-primary); font-family: 'DM Sans', sans-serif; }
+  .btn-primary { background: var(--green-mid); color: #fff; border: none; padding: 9px 22px; border-radius: 50px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    background: var(--green-deep); padding: 3.5rem 2.5rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(105deg, #04342C 0%, #0F6E56 40%, #1D9E75 70%, #04342C 100%);
+    opacity: 0.9; pointer-events: none;
+  }
+  .page-hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(93,202,165,0.15) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .page-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .breadcrumb { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 1rem; }
+  .breadcrumb a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--green-light); }
+  .page-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(30px, 5vw, 52px); color: #fff; line-height: 1.1; letter-spacing: -1px; margin-bottom: 0.8rem; }
+  .page-hero h1 em { color: var(--green-light); font-style: italic; }
+  .page-hero p { font-size: 16px; color: rgba(255,255,255,0.55); max-width: 500px; font-weight: 300; }
+  .hero-stats-row { display: flex; gap: 2rem; margin-top: 1.8rem; flex-wrap: wrap; }
+  .hstat { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 18px; }
+  .hstat-num { font-family: 'DM Serif Display', serif; font-size: 22px; color: #fff; }
+  .hstat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+
+  /* ── FILTER PANEL ── */
+  .filter-panel { background: var(--bg); border-bottom: 1px solid var(--border); padding: 1rem 2.5rem; position: sticky; top: 64px; z-index: 90; }
+  .filter-inner { max-width: 1100px; margin: 0 auto; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .filter-group { display: flex; align-items: center; gap: 6px; }
+  .filter-label { font-size: 12px; color: var(--text-faint); white-space: nowrap; }
+
+  .filter-select {
+    background: var(--input-bg); border: 1px solid var(--border);
+    color: var(--text-primary); font-family: 'DM Sans', sans-serif;
+    font-size: 13px; padding: 7px 12px; border-radius: 50px; cursor: pointer;
+    outline: none; transition: border-color 0.2s;
+  }
+  .filter-select:focus { border-color: var(--green-mid); }
+
+  .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    background: none; border: 1px solid var(--border);
+    color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+    font-size: 12px; padding: 5px 14px; border-radius: 50px; cursor: pointer;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--green-mid); color: var(--green-mid); }
+  .chip.active { background: var(--green-mid); border-color: var(--green-mid); color: #fff; }
+
+  .search-input-wrap { flex: 1; min-width: 200px; position: relative; }
+  .search-input { width: 100%; background: var(--input-bg); border: 1px solid var(--border); color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 8px 14px 8px 36px; border-radius: 50px; outline: none; transition: border-color 0.2s; }
+  .search-input:focus { border-color: var(--green-mid); }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; color: var(--text-faint); pointer-events: none; }
+
+  .sort-wrap { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+  .sort-label { font-size: 12px; color: var(--text-faint); white-space: nowrap; }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 2rem 2.5rem 4rem; }
+
+  /* ── SECTION LABEL ── */
+  .list-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
+  .list-title { font-size: 13px; color: var(--text-muted); }
+  .list-title strong { color: var(--text-primary); }
+  .recommended-label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--amber); background: rgba(239,159,39,0.1); border: 1px solid rgba(239,159,39,0.2); padding: 4px 12px; border-radius: 50px; }
+
+  /* ── RESORT CARDS ── */
+  .resorts-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 2.5rem; }
+
+  .resort-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    display: flex; transition: box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .resort-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.12); transform: translateY(-2px); }
+  .resort-card.recommended { border-color: rgba(239,159,39,0.3); }
+
+  .rec-badge {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    background: var(--amber); color: #fff;
+    font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 50px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  .resort-thumb {
+    width: 260px; min-width: 260px; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px; position: relative; flex-shrink: 0;
+  }
+  .thumb-g1 { background: linear-gradient(135deg, #E1F5EE, #9FE1CB); }
+  .thumb-g2 { background: linear-gradient(135deg, #d4ede8, #9FE1CB); }
+  .thumb-g3 { background: linear-gradient(135deg, #FAEEDA, #FAC775); }
+  .thumb-g4 { background: linear-gradient(135deg, #c9e8df, #5DCAA5); }
+  .thumb-g5 { background: linear-gradient(135deg, #f5e8cc, #EF9F27); }
+  .thumb-g6 { background: linear-gradient(135deg, #dbeafe, #93c5fd); }
+
+  .avail-pill { position: absolute; bottom: 10px; left: 10px; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 50px; }
+  .avail-open { background: #EAF3DE; color: #3B6D11; }
+  .avail-few  { background: #FAEEDA; color: #854F0B; }
+  .avail-full { background: #FCEBEB; color: #A32D2D; }
+
+  .wish-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.85); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; }
+
+  .resort-body { padding: 1.2rem 1.4rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .resort-top { margin-bottom: 0.6rem; }
+  .resort-type { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--green-mid); font-weight: 500; margin-bottom: 4px; }
+  .resort-name { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text-primary); letter-spacing: -0.3px; margin-bottom: 5px; }
+  .resort-meta { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .rating-star { color: #BA7517; }
+  .dot { color: var(--text-faint); }
+  .resort-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 10px 0; }
+
+  .amenity-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .amenity-tag { font-size: 11px; background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-muted); padding: 3px 10px; border-radius: 50px; }
+
+  .resort-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); }
+  .price-block .price { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text-primary); }
+  .price-block .price-sub { font-size: 12px; color: var(--text-muted); }
+  .price-block .price-note { font-size: 11px; color: var(--text-faint); margin-top: 1px; }
+
+  .book-actions { display: flex; gap: 8px; align-items: center; }
+  .btn-book { background: var(--green-mid); color: #fff; border: none; padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+  .btn-book:hover { background: var(--green-dark); }
+  .btn-book.full { background: var(--bg-soft); color: var(--text-muted); cursor: not-allowed; border: 1px solid var(--border); }
+  .btn-details { background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 10px 18px; border-radius: 50px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: border-color 0.2s; }
+  .btn-details:hover { border-color: var(--green-mid); color: var(--green-mid); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-sep { display: flex; align-items: center; gap: 12px; margin: 1.5rem 0; }
+  .section-sep-line { flex: 1; height: 1px; background: var(--border); }
+  .section-sep-text { font-size: 12px; color: var(--text-faint); white-space: nowrap; }
+
+  /* ── PAGINATION ── */
+  .pagination { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 2rem; }
+  .page-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: none; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .page-btn:hover { border-color: var(--green-mid); color: var(--green-mid); }
+  .page-btn.active { background: var(--green-mid); border-color: var(--green-mid); color: #fff; }
+  .page-btn.arrow { font-size: 16px; }
+  .page-dots { color: var(--text-faint); font-size: 14px; padding: 0 4px; }
+
+  /* ── BOOKING MODAL ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 999; align-items: center; justify-content: center; padding: 1.5rem; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--card-bg); border-radius: var(--radius); max-width: 440px; width: 100%; border: 1px solid var(--border); overflow: hidden; }
+  .modal-head { background: var(--green-deep); padding: 1.4rem 1.6rem; display: flex; align-items: center; justify-content: space-between; }
+  .modal-head h3 { font-family: 'DM Serif Display', serif; font-size: 20px; color: #fff; }
+  .modal-close-btn { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 16px; }
+  .modal-body { padding: 1.4rem 1.6rem; }
+  .modal-body p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
+  .modal-coming { background: var(--bg-soft); border: 1px dashed var(--border); border-radius: 10px; padding: 1.2rem; text-align: center; margin-bottom: 1.2rem; }
+  .modal-coming .big-icon { font-size: 36px; margin-bottom: 8px; }
+  .modal-coming h4 { font-size: 16px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+  .modal-coming p { font-size: 13px; color: var(--text-muted); margin: 0; }
+  .modal-resort-name { font-weight: 500; color: var(--text-primary); }
+  .modal-footer { padding: 0 1.6rem 1.4rem; display: flex; gap: 8px; }
+  .btn-modal-close { flex: 1; background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-muted); padding: 11px; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; }
+  .btn-modal-notify { flex: 1; background: var(--green-mid); border: none; color: #fff; padding: 11px; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; font-weight: 500; }
+
+  /* ── NO RESULTS ── */
+  .no-results { text-align: center; padding: 4rem 2rem; display: none; }
+  .no-results .big { font-size: 48px; margin-bottom: 12px; }
+  .no-results h3 { font-size: 18px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
+  .no-results p { font-size: 14px; color: var(--text-muted); }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--green-deep); }
+  [data-theme="dark"] .footer-logo { color: var(--green-light); }
+  .footer-logo em { color: var(--green-mid); font-style: normal; }
+  .footer-copy { font-size: 13px; color: var(--text-faint); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .btn-ghost { display: none; }
+    .theme-toggle span { display: none; }
+    .page-hero { padding: 2.5rem 1.2rem 2rem; }
+    .filter-panel { padding: 0.8rem 1.2rem; }
+    .filter-inner { gap: 8px; }
+    .sort-wrap { margin-left: 0; }
+    .main { padding: 1.5rem 1.2rem 3rem; }
+    .resort-card { flex-direction: column; }
+    .resort-thumb { width: 100%; min-width: unset; height: 180px; }
+    .resort-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .book-actions { width: 100%; }
+    .btn-book, .btn-details { flex: 1; text-align: center; }
+    footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+    .footer-links { justify-content: center; }
+    .hero-stats-row { gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Dandeli<em>Wild</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="things-to-do.html">Activities</a></li>
+    <li><a href="#" class="active">Resorts</a></li>
+    <li><a href="things-to-do.html#view">Viewpoints</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+      <span id="theme-label">Light mode</span>
+    </button>
+    <button class="btn-ghost">Sign in</button>
+    <button class="btn-primary">List your property</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Resorts & Lodges</div>
+    <h1>Resorts & Lodges<br>in <em>Dandeli</em></h1>
+    <p>From riverside resorts to jungle camps — find your perfect stay in the wild.</p>
+    <div class="hero-stats-row">
+      <div class="hstat"><div class="hstat-num">40+</div><div class="hstat-label">Properties listed</div></div>
+      <div class="hstat"><div class="hstat-num">28</div><div class="hstat-label">Available today</div></div>
+      <div class="hstat"><div class="hstat-num">4.7★</div><div class="hstat-label">Avg rating</div></div>
+      <div class="hstat"><div class="hstat-num">₹800+</div><div class="hstat-label">Starting price</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER PANEL -->
+<div class="filter-panel">
+  <div class="filter-inner">
+    <!-- Search -->
+    <div class="search-input-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" placeholder="Search resorts..." oninput="applyFilters()" id="search-input" />
+    </div>
+
+    <!-- Availability -->
+    <select class="filter-select" onchange="applyFilters()" id="filter-avail">
+      <option value="all">All availability</option>
+      <option value="open">Available</option>
+      <option value="few">Limited rooms</option>
+      <option value="full">Fully booked</option>
+    </select>
+
+    <!-- Type -->
+    <select class="filter-select" onchange="applyFilters()" id="filter-type">
+      <option value="all">All types</option>
+      <option value="resort">Resort</option>
+      <option value="lodge">Lodge</option>
+      <option value="camp">Camp</option>
+      <option value="cottage">Cottage</option>
+    </select>
+
+    <!-- Price -->
+    <select class="filter-select" onchange="applyFilters()" id="filter-price">
+      <option value="all">Any price</option>
+      <option value="budget">Under ₹1,500</option>
+      <option value="mid">₹1,500 – ₹3,500</option>
+      <option value="premium">₹3,500+</option>
+    </select>
+
+    <!-- Rating -->
+    <select class="filter-select" onchange="applyFilters()" id="filter-rating">
+      <option value="all">Any rating</option>
+      <option value="4.5">4.5★ & above</option>
+      <option value="4.0">4.0★ & above</option>
+    </select>
+
+    <!-- Amenities chips -->
+    <div class="filter-chips">
+      <button class="chip" onclick="toggleAmenity('pool', this)">🏊 Pool</button>
+      <button class="chip" onclick="toggleAmenity('ac', this)">❄️ AC</button>
+      <button class="chip" onclick="toggleAmenity('meals', this)">🍽️ Meals</button>
+      <button class="chip" onclick="toggleAmenity('safari', this)">🐆 Safari</button>
+      <button class="chip" onclick="toggleAmenity('wifi', this)">📶 WiFi</button>
+    </div>
+
+    <!-- Sort -->
+    <div class="sort-wrap">
+      <span class="sort-label">Sort:</span>
+      <select class="filter-select" onchange="applyFilters()" id="sort-select">
+        <option value="availability">Availability first</option>
+        <option value="rating">Highest rated</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="list-header">
+    <div class="list-title">Showing <strong id="result-count">12</strong> properties</div>
+    <div class="recommended-label">⭐ First 5 are Recommended</div>
+  </div>
+
+  <div class="resorts-list" id="resorts-list">
+
+    <!-- ── RECOMMENDED 1 ── -->
+    <div class="resort-card recommended"
+      data-avail="open" data-type="resort" data-price="3500" data-rating="4.8"
+      data-amenities="pool,ac,meals,safari,wifi" data-recommended="true">
+      <div class="resort-thumb thumb-g1">
+        🌿
+        <div class="rec-badge">⭐ Recommended</div>
+        <span class="avail-pill avail-open">Available</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Riverside Resort</div>
+            <div class="resort-name">Kali River Resort</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.8</span><span class="dot">·</span>
+              Riverside<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">A premium riverside resort with stunning Kali River views, luxurious AC rooms and a large pool. Perfect for families and couples looking for comfort in the wild.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🏊 Pool</span>
+            <span class="amenity-tag">❄️ AC</span>
+            <span class="amenity-tag">🍽️ Meals included</span>
+            <span class="amenity-tag">🐆 Safari packages</span>
+            <span class="amenity-tag">📶 WiFi</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹3,500 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per room · Taxes extra</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Kali River Resort')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RECOMMENDED 2 ── -->
+    <div class="resort-card recommended"
+      data-avail="open" data-type="camp" data-price="5200" data-rating="4.9"
+      data-amenities="pool,ac,meals,safari,wifi" data-recommended="true">
+      <div class="resort-thumb thumb-g3">
+        🏕️
+        <div class="rec-badge">⭐ Recommended</div>
+        <span class="avail-pill avail-open">Available</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Luxury Camp</div>
+            <div class="resort-name">Dandeli Wild Camp</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.9</span><span class="dot">·</span>
+              Forest edge<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">Dandeli's most premium luxury camp — private tents with en-suite bathrooms, spa, gourmet meals and exclusive safari packages. The ultimate jungle glamping experience.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🏊 Pool</span>
+            <span class="amenity-tag">❄️ AC tents</span>
+            <span class="amenity-tag">🍽️ Gourmet meals</span>
+            <span class="amenity-tag">🐆 Exclusive safari</span>
+            <span class="amenity-tag">💆 Spa</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹5,200 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per tent · All inclusive</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Dandeli Wild Camp')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RECOMMENDED 3 ── -->
+    <div class="resort-card recommended"
+      data-avail="few" data-type="resort" data-price="2900" data-rating="4.7"
+      data-amenities="meals,safari,wifi" data-recommended="true">
+      <div class="resort-thumb thumb-g4">
+        🌊
+        <div class="rec-badge">⭐ Recommended</div>
+        <span class="avail-pill avail-few">Only 3 left</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">River Camp</div>
+            <div class="resort-name">Kali Riverside Camp</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.7</span><span class="dot">·</span>
+              Riverside<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">Cosy riverside camp with rafting and kayaking right at your doorstep. All meals included, great for adventure groups and weekend travellers.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🚣 Rafting included</span>
+            <span class="amenity-tag">🍽️ Meals included</span>
+            <span class="amenity-tag">🐆 Safari add-on</span>
+            <span class="amenity-tag">📶 WiFi</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹2,900 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per person · Meals included</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Kali Riverside Camp')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RECOMMENDED 4 ── -->
+    <div class="resort-card recommended"
+      data-avail="open" data-type="resort" data-price="4100" data-rating="4.8"
+      data-amenities="ac,meals,safari,wifi" data-recommended="true">
+      <div class="resort-thumb thumb-g5">
+        🦁
+        <div class="rec-badge">⭐ Recommended</div>
+        <span class="avail-pill avail-open">Available</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Safari Lodge</div>
+            <div class="resort-name">Forest Edge Safari Lodge</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.8</span><span class="dot">·</span>
+              Forest edge<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">Located right at the edge of the Dandeli forest with daily jeep safari included. Spacious AC rooms, jungle-view dining and expert naturalist guides.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">❄️ AC</span>
+            <span class="amenity-tag">🍽️ Meals included</span>
+            <span class="amenity-tag">🐆 Safari included</span>
+            <span class="amenity-tag">🌿 Nature walks</span>
+            <span class="amenity-tag">📶 WiFi</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹4,100 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per room · Safari included</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Forest Edge Safari Lodge')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RECOMMENDED 5 ── -->
+    <div class="resort-card recommended"
+      data-avail="open" data-type="cottage" data-price="2400" data-rating="4.7"
+      data-amenities="wifi,meals" data-recommended="true">
+      <div class="resort-thumb thumb-g4">
+        🦜
+        <div class="rec-badge">⭐ Recommended</div>
+        <span class="avail-pill avail-open">Available</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Eco Resort</div>
+            <div class="resort-name">Supa Wilderness Stay</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.7</span><span class="dot">·</span>
+              Near Supa Dam<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">A serene eco resort near Supa Dam with forest cottages, bird watching trails and home-cooked meals. Ideal for birdwatchers and nature lovers seeking peace.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🦅 Bird watching</span>
+            <span class="amenity-tag">🍽️ Home meals</span>
+            <span class="amenity-tag">📶 WiFi</span>
+            <span class="amenity-tag">🌿 Nature trails</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹2,400 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per cottage · Meals included</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Supa Wilderness Stay')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SEPARATOR ── -->
+    <div class="section-sep">
+      <div class="section-sep-line"></div>
+      <div class="section-sep-text">More properties</div>
+      <div class="section-sep-line"></div>
+    </div>
+
+    <!-- ── REGULAR 6 ── -->
+    <div class="resort-card"
+      data-avail="few" data-type="lodge" data-price="1800" data-rating="4.6"
+      data-amenities="wifi" data-recommended="false">
+      <div class="resort-thumb thumb-g2">
+        🌳
+        <span class="avail-pill avail-few">Only 2 left</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Forest Lodge</div>
+            <div class="resort-name">Jungle Nest Lodge</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.6</span><span class="dot">·</span>
+              Deep forest<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">Budget-friendly forest lodge with basic amenities and direct forest access. Great for backpackers and solo travellers who want to be close to nature.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🌲 Forest view</span>
+            <span class="amenity-tag">🏕️ Tented rooms</span>
+            <span class="amenity-tag">📶 WiFi</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹1,800 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per tent · Basic amenities</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Jungle Nest Lodge')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REGULAR 7 ── -->
+    <div class="resort-card"
+      data-avail="full" data-type="resort" data-price="3200" data-rating="4.5"
+      data-amenities="pool,ac,wifi,meals" data-recommended="false">
+      <div class="resort-thumb thumb-g6">
+        🌅
+        <span class="avail-pill avail-full">Fully booked</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Resort</div>
+            <div class="resort-name">Kali Adventure Resort</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.5</span><span class="dot">·</span>
+              Riverside<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">Popular resort with a large pool and adventure activity packages. Currently fully booked — check back soon or call directly to join a waitlist.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🏊 Pool</span>
+            <span class="amenity-tag">❄️ AC</span>
+            <span class="amenity-tag">🍽️ Meals</span>
+            <span class="amenity-tag">📶 WiFi</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹3,200 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per room · Taxes extra</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book full" disabled>Fully booked</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REGULAR 8 ── -->
+    <div class="resort-card"
+      data-avail="open" data-type="lodge" data-price="1200" data-rating="4.2"
+      data-amenities="meals" data-recommended="false">
+      <div class="resort-thumb thumb-g2">
+        🌿
+        <span class="avail-pill avail-open">Available</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Budget Lodge</div>
+            <div class="resort-name">Green Valley Lodge</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.2</span><span class="dot">·</span>
+              Town area<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">Affordable lodge in town with clean rooms and home-cooked meals. A great base for budget travellers who want easy access to all of Dandeli's attractions.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🍽️ Home meals</span>
+            <span class="amenity-tag">🏠 Clean rooms</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹1,200 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per room · Budget stay</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Green Valley Lodge')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REGULAR 9 ── -->
+    <div class="resort-card"
+      data-avail="open" data-type="camp" data-price="1600" data-rating="4.4"
+      data-amenities="meals,safari" data-recommended="false">
+      <div class="resort-thumb thumb-g3">
+        🔥
+        <span class="avail-pill avail-open">Available</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Camping</div>
+            <div class="resort-name">Kali Jungle Camping</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.4</span><span class="dot">·</span>
+              Forest<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">Authentic camping experience with bonfires, outdoor meals and night jungle sounds. Great for groups and adventure lovers on a tight budget.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🔥 Bonfire</span>
+            <span class="amenity-tag">🍽️ Outdoor meals</span>
+            <span class="amenity-tag">🐆 Safari add-on</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹1,600 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per person · Group friendly</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Kali Jungle Camping')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REGULAR 10 ── -->
+    <div class="resort-card"
+      data-avail="few" data-type="resort" data-price="2600" data-rating="4.5"
+      data-amenities="ac,pool,wifi" data-recommended="false">
+      <div class="resort-thumb thumb-g1">
+        🌺
+        <span class="avail-pill avail-few">2 rooms left</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Resort</div>
+            <div class="resort-name">Dandeli Meadows Resort</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.5</span><span class="dot">·</span>
+              Garden view<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">A peaceful resort with garden views, AC rooms and a pool. Close to the town centre and all major activity spots. Popular with families.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">❄️ AC</span>
+            <span class="amenity-tag">🏊 Pool</span>
+            <span class="amenity-tag">📶 WiFi</span>
+            <span class="amenity-tag">🌸 Garden view</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹2,600 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per room · Taxes extra</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Dandeli Meadows Resort')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REGULAR 11 ── -->
+    <div class="resort-card"
+      data-avail="open" data-type="cottage" data-price="900" data-rating="4.1"
+      data-amenities="meals" data-recommended="false">
+      <div class="resort-thumb thumb-g2">
+        🏡
+        <span class="avail-pill avail-open">Available</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Homestay</div>
+            <div class="resort-name">Dandeli Forest Homestay</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.1</span><span class="dot">·</span>
+              Town<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">A cosy local homestay with authentic Karnataka meals and warm hospitality. Most affordable option in Dandeli — perfect for solo or budget travellers.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🍽️ Home meals</span>
+            <span class="amenity-tag">🏡 Local hospitality</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹900 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per person · Meals included</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Dandeli Forest Homestay')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REGULAR 12 ── -->
+    <div class="resort-card"
+      data-avail="open" data-type="resort" data-price="3800" data-rating="4.6"
+      data-amenities="pool,ac,meals,wifi,safari" data-recommended="false">
+      <div class="resort-thumb thumb-g5">
+        🌙
+        <span class="avail-pill avail-open">Available</span>
+        <button class="wish-btn" aria-label="Save">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">Premium Resort</div>
+            <div class="resort-name">Wildernest Nature Resort</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ 4.6</span><span class="dot">·</span>
+              Forest border<span class="dot">·</span>Dandeli
+            </div>
+          </div>
+          <div class="resort-desc">Elegant resort on the forest border with stunning sunset views, a large pool, restaurant and full safari packages. Great for honeymooners and premium travellers.</div>
+          <div class="amenity-row">
+            <span class="amenity-tag">🏊 Pool</span>
+            <span class="amenity-tag">❄️ AC</span>
+            <span class="amenity-tag">🍽️ Restaurant</span>
+            <span class="amenity-tag">🐆 Safari</span>
+            <span class="amenity-tag">📶 WiFi</span>
+          </div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹3,800 <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per room · All inclusive</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details">View details</button>
+            <button class="btn-book" onclick="openBooking('Wildernest Nature Resort')">Book now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end resorts-list -->
+
+  <!-- NO RESULTS -->
+  <div class="no-results" id="no-results">
+    <div class="big">🏕️</div>
+    <h3>No resorts found</h3>
+    <p>Try adjusting your filters or search term.</p>
+  </div>
+
+  <!-- PAGINATION -->
+  <div class="pagination" id="pagination">
+    <button class="page-btn arrow" onclick="changePage(-1)">‹</button>
+    <button class="page-btn active" onclick="setPage(1, this)">1</button>
+    <button class="page-btn" onclick="setPage(2, this)">2</button>
+    <button class="page-btn" onclick="setPage(3, this)">3</button>
+    <span class="page-dots">···</span>
+    <button class="page-btn" onclick="setPage(8, this)">8</button>
+    <button class="page-btn arrow" onclick="changePage(1)">›</button>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="booking-modal" onclick="closeBooking()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <h3>Book your stay</h3>
+      <button class="modal-close-btn" onclick="closeBooking()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>You're booking: <span class="modal-resort-name" id="modal-resort-name">—</span></p>
+      <div class="modal-coming">
+        <div class="big-icon">🚧</div>
+        <h4>Online booking coming soon</h4>
+        <p>We're building a direct booking system connected to the resort's admin panel. Check back soon!</p>
+      </div>
+      <p>In the meantime, you can contact the resort directly or ask us for their number via the Contact page.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-close" onclick="closeBooking()">Close</button>
+      <button class="btn-modal-notify">Notify me when live</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dandeli<em>Wild</em></div>
+  <div class="footer-copy">© 2026 DandeliWild. Made with ♥ in Karnataka.</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // ── THEME ──
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-label').textContent = isDark ? 'Dark mode' : 'Light mode';
+  }
+
+  // ── AMENITY CHIPS ──
+  const activeAmenities = new Set();
+  function toggleAmenity(amenity, btn) {
+    if (activeAmenities.has(amenity)) {
+      activeAmenities.delete(amenity);
+      btn.classList.remove('active');
+    } else {
+      activeAmenities.add(amenity);
+      btn.classList.add('active');
+    }
+    applyFilters();
+  }
+
+  // ── FILTERS + SORT ──
+  // ── SELECTED RESORT FROM HOMEPAGE ──
+  function getSelectedResort() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('selected');
+  }
+  const selectedResortName = getSelectedResort();
+
+  function applyFilters() {
+    const search   = document.getElementById('search-input').value.toLowerCase();
+    const avail    = document.getElementById('filter-avail').value;
+    const type     = document.getElementById('filter-type').value;
+    const price    = document.getElementById('filter-price').value;
+    const rating   = document.getElementById('filter-rating').value;
+    const sort     = document.getElementById('sort-select').value;
+
+    const cards = Array.from(document.querySelectorAll('#resorts-list .resort-card'));
+    const sep   = document.querySelector('.section-sep');
+    let visible = 0;
+
+    // Filter
+    cards.forEach(card => {
+      const name      = card.querySelector('.resort-name').textContent.toLowerCase();
+      const cAvail    = card.dataset.avail;
+      const cType     = card.dataset.type;
+      const cPrice    = parseFloat(card.dataset.price);
+      const cRating   = parseFloat(card.dataset.rating);
+      const cAmenities= card.dataset.amenities || '';
+
+      let show = true;
+      if (search && !name.includes(search)) show = false;
+      if (avail !== 'all' && cAvail !== avail) show = false;
+      if (type  !== 'all' && cType  !== type)  show = false;
+      if (rating !== 'all' && cRating < parseFloat(rating)) show = false;
+      if (price === 'budget' && cPrice >= 1500) show = false;
+      if (price === 'mid'    && (cPrice < 1500 || cPrice > 3500)) show = false;
+      if (price === 'premium'&& cPrice < 3500) show = false;
+      if (activeAmenities.size > 0) {
+        for (const a of activeAmenities) {
+          if (!cAmenities.includes(a)) { show = false; break; }
+        }
+      }
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    // Sorting
+    const list = document.getElementById('resorts-list');
+    const visibleCards = cards.filter(c => c.style.display !== 'none');
+    visibleCards.sort((a, b) => {
+      // Selected resort (clicked on homepage) always comes first
+      if (selectedResortName) {
+        const aSel = a.querySelector('.resort-name').textContent.trim() === selectedResortName ? 0 : 1;
+        const bSel = b.querySelector('.resort-name').textContent.trim() === selectedResortName ? 0 : 1;
+        if (aSel !== bSel) return aSel - bSel;
+      }
+      if (sort === 'rating') return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+      if (sort === 'price-asc') return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+      if (sort === 'price-desc') return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+      // availability: open > few > full, recommended first
+      const recA = a.dataset.recommended === 'true' ? 0 : 1;
+      const recB = b.dataset.recommended === 'true' ? 0 : 1;
+      if (recA !== recB) return recA - recB;
+      const order = { open: 0, few: 1, full: 2 };
+      return (order[a.dataset.avail] || 0) - (order[b.dataset.avail] || 0);
+    });
+    visibleCards.forEach(c => list.appendChild(c));
+
+    // Show/hide separator
+    if (sep) sep.style.display = sort === 'availability' && avail === 'all' ? '' : 'none';
+
+    // Update count
+    document.getElementById('result-count').textContent = visible;
+    document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+    document.getElementById('pagination').style.display = visible === 0 ? 'none' : 'flex';
+  }
+
+  // ── BOOKING MODAL ──
+  function openBooking(name) {
+    document.getElementById('modal-resort-name').textContent = name;
+    document.getElementById('booking-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeBooking() {
+    document.getElementById('booking-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── PAGINATION ──
+  let currentPage = 1;
+  function setPage(n, btn) {
+    currentPage = n;
+    document.querySelectorAll('.page-btn:not(.arrow)').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function changePage(dir) {
+    const btns = Array.from(document.querySelectorAll('.page-btn:not(.arrow)'));
+    const active = btns.findIndex(b => b.classList.contains('active'));
+    const next = Math.max(0, Math.min(btns.length - 1, active + dir));
+    setPage(parseInt(btns[next].textContent), btns[next]);
+  }
+
+  // ── INIT: highlight + sort selected resort from homepage ──
+  function initSelectedResort() {
+    if (!selectedResortName) return;
+    const cards = Array.from(document.querySelectorAll('#resorts-list .resort-card'));
+    const match = cards.find(c => c.querySelector('.resort-name').textContent.trim() === selectedResortName);
+    if (match) {
+      // Add a "Your pick" badge if not already recommended-badge
+      if (!match.querySelector('.rec-badge')) {
+        const badge = document.createElement('div');
+        badge.className = 'rec-badge';
+        badge.style.background = 'var(--green-mid)';
+        badge.textContent = '📍 You selected this';
+        match.querySelector('.resort-thumb').appendChild(badge);
+      }
+      match.style.outline = '2px solid var(--green-mid)';
+      match.style.outlineOffset = '2px';
+    }
+    applyFilters();
+    // Scroll to it after sorting completes
+    setTimeout(() => {
+      if (match) match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 150);
+  }
+  window.addEventListener('DOMContentLoaded', initSelectedResort);
+</script>
+</body>
+</html>

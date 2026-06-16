@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Things to Do in Dandeli — DandeliWild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root, [data-theme="light"] {
+    --green-deep:   #04342C;
+    --green-dark:   #0F6E56;
+    --green-mid:    #1D9E75;
+    --green-light:  #5DCAA5;
+    --green-pale:   #E1F5EE;
+    --text-primary: #111;
+    --text-muted:   #6b7280;
+    --text-faint:   #9ca3af;
+    --border:       rgba(0,0,0,0.09);
+    --bg:           #ffffff;
+    --bg-soft:      #f9f9f8;
+    --bg-nav:       rgba(255,255,255,0.92);
+    --card-bg:      #ffffff;
+    --radius:       14px;
+  }
+
+  [data-theme="dark"] {
+    --text-primary: #f0f0ee;
+    --text-muted:   #9ca3af;
+    --text-faint:   #6b7280;
+    --border:       rgba(255,255,255,0.1);
+    --bg:           #0d1f1a;
+    --bg-soft:      #111f1a;
+    --bg-nav:       rgba(13,31,26,0.92);
+    --card-bg:      #162820;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-primary); background: var(--bg); line-height: 1.6; transition: background 0.3s, color 0.3s; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 64px;
+    background: var(--bg-nav);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green-deep); letter-spacing: -0.5px; text-decoration: none; }
+  [data-theme="dark"] .logo { color: var(--green-light); }
+  .logo em { color: var(--green-mid); font-style: normal; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--green-mid); }
+  .nav-actions { display: flex; gap: 10px; align-items: center; }
+  .theme-toggle {
+    display: flex; align-items: center; gap: 6px;
+    background: none; border: 1px solid var(--border);
+    border-radius: 50px; padding: 5px 12px;
+    cursor: pointer; font-size: 13px; color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif; transition: border-color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--green-mid); color: var(--green-mid); }
+  .toggle-track { width: 32px; height: 18px; border-radius: 50px; background: var(--border); position: relative; transition: background 0.3s; flex-shrink: 0; }
+  [data-theme="dark"] .toggle-track { background: var(--green-mid); }
+  .toggle-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; position: absolute; top: 3px; left: 3px; transition: transform 0.3s; }
+  [data-theme="dark"] .toggle-thumb { transform: translateX(14px); }
+  .btn-ghost { background: none; border: 1px solid var(--border); padding: 8px 18px; border-radius: 50px; font-size: 14px; cursor: pointer; color: var(--text-primary); font-family: 'DM Sans', sans-serif; }
+  .btn-primary { background: var(--green-mid); color: #fff; border: none; padding: 9px 22px; border-radius: 50px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    background: var(--green-deep);
+    padding: 3.5rem 2.5rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, #04342C 0%, #0F6E56 40%, #1D9E75 70%, #04342C 100%);
+    opacity: 0.9; pointer-events: none;
+  }
+  .page-hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(93,202,165,0.15) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .page-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .breadcrumb { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 1rem; }
+  .breadcrumb a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--green-light); }
+  .page-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 5vw, 54px); color: #fff; line-height: 1.1; letter-spacing: -1px; margin-bottom: 0.8rem; }
+  .page-hero h1 em { color: var(--green-light); font-style: italic; }
+  .page-hero p { font-size: 16px; color: rgba(255,255,255,0.55); max-width: 500px; font-weight: 300; }
+  .hero-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1.5rem; }
+  .hero-chip { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.75); font-size: 12px; padding: 5px 14px; border-radius: 50px; }
+
+  /* ── FILTER BAR ── */
+  .filter-bar { background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 64px; z-index: 90; }
+  .filter-inner { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; display: flex; gap: 8px; overflow-x: auto; padding-top: 14px; padding-bottom: 14px; scrollbar-width: none; }
+  .filter-inner::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    flex-shrink: 0;
+    background: none; border: 1px solid var(--border);
+    padding: 7px 18px; border-radius: 50px;
+    font-size: 13px; font-family: 'DM Sans', sans-serif;
+    color: var(--text-muted); cursor: pointer;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .filter-btn:hover { border-color: var(--green-mid); color: var(--green-mid); }
+  .filter-btn.active { background: var(--green-mid); border-color: var(--green-mid); color: #fff; }
+
+  /* ── MAIN CONTENT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 3rem 2.5rem 4rem; }
+
+  /* ── CATEGORY SECTION ── */
+  .cat-section { margin-bottom: 3.5rem; }
+  .cat-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.4rem; }
+  .cat-left { display: flex; align-items: center; gap: 12px; }
+  .cat-icon-big { font-size: 28px; }
+  .cat-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green-mid); font-weight: 500; margin-bottom: 3px; }
+  .cat-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--text-primary); letter-spacing: -0.3px; }
+  .cat-count { font-size: 13px; color: var(--text-faint); }
+
+  /* ── ACTIVITY CARDS ── */
+  .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .cards-grid.wide { grid-template-columns: repeat(3, 1fr); }
+
+  .act-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    text-decoration: none;
+    display: block;
+  }
+  .act-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); border-color: var(--green-light); }
+  .act-card.external:hover { border-color: #60a5fa; }
+
+  .card-thumb {
+    height: 110px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px; position: relative;
+  }
+  .thumb-water  { background: linear-gradient(135deg, #dbeafe, #93c5fd); }
+  .thumb-safari { background: linear-gradient(135deg, #dcfce7, #86efac); }
+  .thumb-view   { background: linear-gradient(135deg, #fef9c3, #fde047); }
+  .thumb-trek   { background: linear-gradient(135deg, #ffedd5, #fdba74); }
+  .thumb-park   { background: linear-gradient(135deg, #E1F5EE, #9FE1CB); }
+  .thumb-unique { background: linear-gradient(135deg, #f3e8ff, #d8b4fe); }
+  .thumb-nuclear { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+
+  .card-badge {
+    position: absolute; top: 8px; right: 8px;
+    font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 50px;
+  }
+  .badge-popular { background: #EAF3DE; color: #3B6D11; }
+  .badge-thrill  { background: #FCEBEB; color: #A32D2D; }
+  .badge-scenic  { background: #fef9c3; color: #854d0e; }
+  .badge-unique  { background: #f3e8ff; color: #7e22ce; }
+  .badge-ext     { background: #dbeafe; color: #1e40af; }
+
+  .ext-icon { position: absolute; top: 8px; left: 8px; background: rgba(255,255,255,0.85); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+
+  .card-body { padding: 0.9rem 1rem 1rem; }
+  .card-name { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 3px; }
+  .card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .card-price { font-size: 12px; color: var(--green-mid); margin-top: 6px; font-weight: 500; }
+
+  /* ── WIDE CARDS (parks/places) ── */
+  .place-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    text-decoration: none;
+  }
+  .place-card:hover { transform: translateY(-2px); border-color: var(--green-light); }
+  .place-card.external:hover { border-color: #60a5fa; }
+  .place-emoji { font-size: 32px; flex-shrink: 0; margin-top: 2px; }
+  .place-info { flex: 1; }
+  .place-name { font-size: 15px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .place-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .place-tag { font-size: 11px; background: var(--green-pale); color: var(--green-dark); padding: 2px 10px; border-radius: 50px; white-space: nowrap; }
+  [data-theme="dark"] .place-tag { background: #0F6E5633; color: var(--green-light); }
+  .place-tag.blue { background: #dbeafe; color: #1e40af; }
+  .place-tag.purple { background: #f3e8ff; color: #7e22ce; }
+  .place-tag.amber { background: #fef9c3; color: #854d0e; }
+  .ext-label { font-size: 11px; color: #60a5fa; }
+
+  /* ── DIVIDER ── */
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0 0 3.5rem; }
+
+  /* ── CTA ── */
+  .bottom-cta {
+    background: var(--green-deep);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .bottom-cta h2 { font-family: 'DM Serif Display', serif; font-size: 26px; color: #fff; margin-bottom: 8px; }
+  .bottom-cta p { font-size: 15px; color: rgba(255,255,255,0.55); margin-bottom: 1.5rem; }
+  .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-white { background: #fff; color: var(--green-deep); border: none; padding: 11px 26px; border-radius: 50px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .btn-outline-white { background: none; color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 11px 26px; border-radius: 50px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--green-deep); }
+  [data-theme="dark"] .footer-logo { color: var(--green-light); }
+  .footer-logo em { color: var(--green-mid); font-style: normal; }
+  .footer-copy { font-size: 13px; color: var(--text-faint); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--green-mid); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .btn-ghost { display: none; }
+    .theme-toggle span { display: none; }
+    .page-hero { padding: 2.5rem 1.2rem 2rem; }
+    .main { padding: 2rem 1.2rem 3rem; }
+    .filter-inner { padding: 12px 1.2rem; }
+    .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .cards-grid.wide { grid-template-columns: 1fr; }
+    .card-thumb { height: 90px; font-size: 32px; }
+    .cat-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+    .footer-links { justify-content: center; }
+    .cta-btns { flex-direction: column; align-items: center; }
+  }
+  @media (max-width: 400px) {
+    .cards-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .card-desc { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Dandeli<em>Wild</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="things-to-do.html" class="active">Activities</a></li>
+    <li><a href="resorts.html">Resorts</a></li>
+    <li><a href="#view" onclick="event.preventDefault(); goToCategory('view')">Viewpoints</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+      <span id="theme-label">Light mode</span>
+    </button>
+    <button class="btn-ghost">Sign in</button>
+    <button class="btn-primary">List your property</button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Things to do</div>
+    <h1>Things to do in<br><em>Dandeli</em></h1>
+    <p>From white-water rapids to silent jungle trails — every kind of adventure waits here.</p>
+    <div class="hero-chips">
+      <span class="hero-chip">🌊 Water activities</span>
+      <span class="hero-chip">🐆 Safari & wildlife</span>
+      <span class="hero-chip">🌄 Viewpoints</span>
+      <span class="hero-chip">🥾 Trekking</span>
+      <span class="hero-chip">🏛️ Parks & places</span>
+      <span class="hero-chip">🏕️ Unique experiences</span>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" onclick="filterCat('all', this)">All activities</button>
+    <button class="filter-btn" onclick="filterCat('water', this)">🌊 Water activities</button>
+    <button class="filter-btn" onclick="filterCat('safari', this)">🐆 Safari & wildlife</button>
+    <button class="filter-btn" onclick="filterCat('view', this)">🌄 Viewpoints</button>
+    <button class="filter-btn" onclick="filterCat('trek', this)">🥾 Trekking</button>
+    <button class="filter-btn" onclick="filterCat('park', this)">🏛️ Parks & places</button>
+    <button class="filter-btn" onclick="filterCat('unique', this)">🏕️ Unique experiences</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- 1. WATER ACTIVITIES -->
+  <div class="cat-section" data-cat="water">
+    <div class="cat-header">
+      <div class="cat-left">
+        <div class="cat-icon-big">🌊</div>
+        <div>
+          <div class="cat-label">On the Kali River</div>
+          <div class="cat-title">Water activities</div>
+        </div>
+      </div>
+      <div class="cat-count">10 activities</div>
+    </div>
+    <div class="cards-grid">
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>🚣</span><span class="card-badge badge-popular">Most popular</span></div>
+        <div class="card-body"><div class="card-name">White-water rafting</div><div class="card-desc">Grade 3–4 rapids on the Kali River. Best Nov–June.</div><div class="card-price">From ₹600/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>🚤</span><span class="card-badge badge-popular">Family friendly</span></div>
+        <div class="card-body"><div class="card-name">Boating</div><div class="card-desc">Peaceful motorboat rides on the Kali River backwaters.</div><div class="card-price">From ₹200/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>🛶</span></div>
+        <div class="card-body"><div class="card-name">Kayaking</div><div class="card-desc">Solo paddle through calm and rapid sections of the river.</div><div class="card-price">From ₹500/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>🪀</span><span class="card-badge badge-thrill">Thrilling</span></div>
+        <div class="card-body"><div class="card-name">Zorbing</div><div class="card-desc">Roll inside a giant transparent ball on water or land.</div><div class="card-price">From ₹300/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>🌀</span></div>
+        <div class="card-body"><div class="card-name">Coracle ride</div><div class="card-desc">Traditional round boat ride — spot crocodiles on the banks.</div><div class="card-price">From ₹400/coracle</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>🤸</span><span class="card-badge badge-thrill">Adrenaline</span></div>
+        <div class="card-body"><div class="card-name">Water zipline</div><div class="card-desc">Glide over the river on a steel cable at speed.</div><div class="card-price">From ₹400/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>🚵</span></div>
+        <div class="card-body"><div class="card-name">Air cycling</div><div class="card-desc">Pedal a cycle suspended above the river on a wire.</div><div class="card-price">From ₹250/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>💦</span><span class="card-badge badge-unique">Natural</span></div>
+        <div class="card-body"><div class="card-name">Natural jacuzzi rapids</div><div class="card-desc">Let the river currents massage you at natural rock pools.</div><div class="card-price">Free / with rafting</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>🧗</span></div>
+        <div class="card-body"><div class="card-name">River crossing</div><div class="card-desc">Cross the Kali River on ropes — tests strength and balance.</div><div class="card-price">From ₹200/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-water"><span>🚣‍♀️</span></div>
+        <div class="card-body"><div class="card-name">Canoeing</div><div class="card-desc">Guided canoe through calm island-dotted stretches of the Kali.</div><div class="card-price">From ₹400/person</div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- 2. SAFARI & WILDLIFE -->
+  <div class="cat-section" data-cat="safari">
+    <div class="cat-header">
+      <div class="cat-left">
+        <div class="cat-icon-big">🐆</div>
+        <div>
+          <div class="cat-label">Kali Tiger Reserve</div>
+          <div class="cat-title">Safari & wildlife</div>
+        </div>
+      </div>
+      <div class="cat-count">3 experiences</div>
+    </div>
+    <div class="cards-grid">
+      <div class="act-card" onclick="openPopup('bird')" style="cursor:pointer;">
+        <div class="card-thumb thumb-safari"><span>🦅</span><span class="card-badge badge-unique">350+ species</span></div>
+        <div class="card-body"><div class="card-name">Bird watching at Ganeshgudi</div><div class="card-desc">Managed by Old Magazine House — 350+ species including rare hornbills.</div><div class="card-price" style="color:var(--green-mid);">From ₹500+ · Tap for details →</div></div>
+      </div>
+
+      <!-- BIRD POPUP -->
+      <div id="bird-overlay" onclick="closePopup('bird')" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <div style="position:relative;height:190px;overflow:hidden;">
+            <img src="birdimg5.png" alt="Bird watching Ganeshgudi" style="width:100%;height:100%;object-fit:cover;object-position:center center;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,52,44,0.92) 0%,rgba(4,52,44,0.2) 55%,transparent 100%);"></div>
+            <button onclick="closePopup('bird')" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Bird Watching at Ganeshgudi</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Managed by Old Magazine House</div>
+            </div>
+          </div>
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🎟️</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Entry ticket</div>
+                  <div style="font-size:16px;font-weight:500;color:var(--text-primary);">From ₹500 <span style="font-size:13px;font-weight:400;color:var(--text-muted);">per person</span></div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#FCEBEB;border-radius:10px;">
+                <span style="font-size:22px;">📵</span>
+                <div>
+                  <div style="font-size:11px;color:#A32D2D;text-transform:uppercase;letter-spacing:0.8px;">Online booking</div>
+                  <div style="font-size:14px;font-weight:500;color:#A32D2D;">Operator currently unavailable</div>
+                  <div style="font-size:12px;color:#A32D2D;opacity:0.8;margin-top:2px;">Book on arrival at Old Magazine House</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🦅</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Highlights</div>
+                  <div style="font-size:13px;color:var(--text-muted);">350+ species · Hornbills · Kingfishers · Rare birds</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/vDKeohXa9mgHsRDm8" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route — Old Magazine House
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- WILDLIFE SANCTUARY CARD -->
+      <div class="act-card" onclick="openPopup('wildlife')" style="cursor:pointer;">
+        <div class="card-thumb thumb-safari"><span>🐯</span><span class="card-badge badge-popular">834 sq km</span></div>
+        <div class="card-body"><div class="card-name">Dandeli Wildlife Sanctuary</div><div class="card-desc">Karnataka's 2nd largest sanctuary — tigers, leopards, elephants.</div><div class="card-price" style="color:var(--green-mid);">From ₹999+ · Tap for details →</div></div>
+      </div>
+
+      <!-- WILDLIFE POPUP -->
+      <div id="wildlife-overlay" onclick="closePopup('wildlife')" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <div style="position:relative;height:190px;overflow:hidden;">
+            <img src="tiger.jpg" alt="Dandeli Wildlife Sanctuary" style="width:100%;height:100%;object-fit:cover;object-position:center center;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,52,44,0.92) 0%,rgba(4,52,44,0.2) 55%,transparent 100%);"></div>
+            <button onclick="closePopup('wildlife')" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Dandeli Wildlife Sanctuary</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Kali Tiger Reserve · 834 sq km</div>
+            </div>
+          </div>
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🎟️</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Entry ticket</div>
+                  <div style="font-size:16px;font-weight:500;color:var(--text-primary);">From ₹999 <span style="font-size:13px;font-weight:400;color:var(--text-muted);">per person</span></div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#FCEBEB;border-radius:10px;">
+                <span style="font-size:22px;">📵</span>
+                <div>
+                  <div style="font-size:11px;color:#A32D2D;text-transform:uppercase;letter-spacing:0.8px;">Online booking</div>
+                  <div style="font-size:14px;font-weight:500;color:#A32D2D;">No package providers currently</div>
+                  <div style="font-size:12px;color:#A32D2D;opacity:0.8;margin-top:2px;">Book on arrival</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🐯</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Wildlife</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Tigers · Leopards · Black Panthers · Elephants · 350+ birds</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/SacuywmXaGFKVXre7" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route on Google Maps
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions to Dandeli Wildlife Sanctuary</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANSHI NATIONAL PARK CARD -->
+      <div class="act-card" onclick="openPopup('anshi')" style="cursor:pointer;">
+        <div class="card-thumb thumb-safari"><span>🌳</span><span class="card-badge badge-popular">500 sq km</span></div>
+        <div class="card-body"><div class="card-name">Anshi National Park</div><div class="card-desc">Kali Tiger Reserve — rich Western Ghats biodiversity.</div><div class="card-price" style="color:var(--green-mid);">From ₹1,500+ · Tap for details →</div></div>
+      </div>
+
+      <!-- ANSHI POPUP -->
+      <div id="anshi-overlay" onclick="closePopup('anshi')" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <div style="position:relative;height:190px;overflow:hidden;">
+            <img src="anshi12.jpg" alt="Anshi National Park" style="width:100%;height:100%;object-fit:cover;object-position:center center;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,52,44,0.92) 0%,rgba(4,52,44,0.2) 55%,transparent 100%);"></div>
+            <button onclick="closePopup('anshi')" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Anshi National Park</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Kali Tiger Reserve · 500 sq km</div>
+            </div>
+          </div>
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🎟️</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Entry ticket</div>
+                  <div style="font-size:16px;font-weight:500;color:var(--text-primary);">From ₹1,500 <span style="font-size:13px;font-weight:400;color:var(--text-muted);">per person</span></div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#FCEBEB;border-radius:10px;">
+                <span style="font-size:22px;">📵</span>
+                <div>
+                  <div style="font-size:11px;color:#A32D2D;text-transform:uppercase;letter-spacing:0.8px;">Online booking</div>
+                  <div style="font-size:14px;font-weight:500;color:#A32D2D;">No package providers currently</div>
+                  <div style="font-size:12px;color:#A32D2D;opacity:0.8;margin-top:2px;">Book on arrival</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🌿</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Biodiversity</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Rare Western Ghats flora & fauna · Dense shola forests</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/y3SiHp65dbZP8d2W8" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route on Google Maps
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions to Anshi National Park</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- 3. VIEWPOINTS -->
+  <div class="cat-section" data-cat="view" id="viewpoints-section">
+    <div class="cat-header">
+      <div class="cat-left">
+        <div class="cat-icon-big">🌄</div>
+        <div>
+          <div class="cat-label">Scenic spots</div>
+          <div class="cat-title">Viewpoints</div>
+        </div>
+      </div>
+      <div class="cat-count">5 viewpoints</div>
+    </div>
+    <div class="cards-grid">
+      <div class="act-card">
+        <div class="card-thumb thumb-view"><span>🏔️</span><span class="card-badge badge-scenic">Highest peak</span></div>
+        <div class="card-body"><div class="card-name">Shiroli Peak</div><div class="card-desc">Highest point in the Kali Tiger Reserve — panoramic Western Ghats view.</div><div class="card-price">Via jungle safari</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-view"><span>🪨</span><span class="card-badge badge-unique">Geological wonder</span></div>
+        <div class="card-body"><div class="card-name">Syntheri Rocks</div><div class="card-desc">Massive monolithic granite rock carved by the Kaneri River over millennia.</div><div class="card-price">Free entry</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-view"><span>💧</span><span class="card-badge badge-scenic">200m drop</span></div>
+        <div class="card-body"><div class="card-name">Magod Falls</div><div class="card-desc">Bedti River cascades 200m through lush forest — best in monsoon season.</div><div class="card-price">Free entry</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-view"><span>🌊</span></div>
+        <div class="card-body"><div class="card-name">Sykes Point</div><div class="card-desc">Dramatic view of the Kali River valley — permit required from KPCL.</div><div class="card-price">Permit required</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-view"><span>🏞️</span></div>
+        <div class="card-body"><div class="card-name">Supa Dam</div><div class="card-desc">One of Karnataka's largest dams — stunning backwater views and picnic spot.</div><div class="card-price">Free entry</div></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- 4. TREKKING -->
+  <div class="cat-section" data-cat="trek">
+    <div class="cat-header">
+      <div class="cat-left">
+        <div class="cat-icon-big">🥾</div>
+        <div>
+          <div class="cat-label">Into the wild</div>
+          <div class="cat-title">Trekking trails</div>
+        </div>
+      </div>
+      <div class="cat-count">5 trails</div>
+    </div>
+    <div class="cards-grid">
+      <div class="act-card">
+        <div class="card-thumb thumb-trek"><span>🕳️</span><span class="card-badge badge-thrill">Underground</span></div>
+        <div class="card-body"><div class="card-name">Kavala Caves trek</div><div class="card-desc">Massive limestone caves deep in the jungle — ancient and mystical.</div><div class="card-price">From ₹300/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-trek"><span>🏔️</span><span class="card-badge badge-popular">Popular</span></div>
+        <div class="card-body"><div class="card-name">Shiroli Peak trek</div><div class="card-desc">Through dense forest to the highest viewpoint in Dandeli.</div><div class="card-price">From ₹800/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-trek"><span>💧</span></div>
+        <div class="card-body"><div class="card-name">Sada Falls trek</div><div class="card-desc">2-hour trail through streams and boulders ending at a hidden waterfall.</div><div class="card-price">From ₹800/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-trek"><span>⛰️</span></div>
+        <div class="card-body"><div class="card-name">Huli Gudda Hill</div><div class="card-desc">Moderate hill trek with great views of the forest and river below.</div><div class="card-price">From ₹600/person</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-trek"><span>🌲</span></div>
+        <div class="card-body"><div class="card-name">Kulgi-Nagzari Valley</div><div class="card-desc">Dense forest valley trail — excellent for birding and wildlife spotting.</div><div class="card-price">From ₹700/person</div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- 5. PARKS & PLACES -->
+  <div class="cat-section" data-cat="park">
+    <div class="cat-header">
+      <div class="cat-left">
+        <div class="cat-icon-big">🏛️</div>
+        <div>
+          <div class="cat-label">Must visit</div>
+          <div class="cat-title">Parks & places</div>
+        </div>
+      </div>
+      <div class="cat-count">8 places</div>
+    </div>
+    <div class="cards-grid wide">
+      <div class="place-card" onclick="openPopup('danda')" style="cursor:pointer;">
+        <div class="place-emoji">🦊</div>
+        <div class="place-info">
+          <div class="place-name">Dandakaranya Park <span class="place-tag amber">Disney Park</span></div>
+          <div class="place-desc">Locally known as Dandeli's Disney Park — a fun family destination with animals, nature walks and recreational activities.</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--green-mid);font-weight:500;">Tap for details & directions →</div>
+        </div>
+      </div>
+      <!-- DANDA POPUP -->
+      <div id="danda-overlay" onclick="closePopup('danda')" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <div style="position:relative;height:180px;overflow:hidden;">
+            <img src="dandakaranya.png" alt="Dandakaranya Eco Park" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,52,44,0.92) 0%,rgba(4,52,44,0.3) 50%,transparent 100%);"></div>
+            <button onclick="closePopup('danda')" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Dandakaranya Eco Park</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Locally called Dandeli's Disney Park</div>
+            </div>
+          </div>
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🎟️</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Entry ticket</div>
+                  <div style="font-size:13px;color:var(--text-muted);">₹50 per person</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">👨‍👩‍👧</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Best for</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Families · Children · Nature walks</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🦜</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Highlights</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Animals · Birds · Eco trails · Fun activities</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/bBUZq8UVFUoBXNqx5" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route on Google Maps
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions to Dandakaranya Eco Park</p>
+          </div>
+        </div>
+      </div>
+      <div class="place-card" onclick="openCroc()" style="cursor:pointer;">
+        <div class="place-emoji">🐊</div>
+        <div class="place-info">
+          <div class="place-name">Crocodile Park <span class="place-tag">Reptile sanctuary</span></div>
+          <div class="place-desc">Watch mugger crocodiles up close in a dedicated park. A fascinating stop for wildlife lovers and families.</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--green-mid);font-weight:500;">Tap for details & directions →</div>
+        </div>
+      </div>
+
+
+      <!-- MOULANGI ECO PARK -->
+      <div class="place-card" onclick="openPopup('moulangi')" style="cursor:pointer;">
+        <div class="place-emoji">🌿</div>
+        <div class="place-info">
+          <div class="place-name">Moulangi Eco Park <span class="place-tag">340 acres</span></div>
+          <div class="place-desc">Lush 340-acre eco park with kayaking, nature trails, waterfalls and forest walks along the Kali River backwaters.</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--green-mid);font-weight:500;">Tap for details & directions →</div>
+        </div>
+      </div>
+
+      <div id="moulangi-overlay" onclick="closePopup('moulangi')" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <div style="position:relative;height:190px;overflow:hidden;">
+            <img src="MoulangiEcopark.png" alt="Moulangi Eco Park" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,52,44,0.92) 0%,rgba(4,52,44,0.2) 55%,transparent 100%);"></div>
+            <button onclick="closePopup('moulangi')" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Moulangi Eco Park</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Dandeli, Karnataka</div>
+            </div>
+          </div>
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🚣</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Activities</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Kayaking · Nature trails · Waterfalls · Forest walks</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#FCEBEB;border-radius:10px;">
+                <span style="font-size:22px;">📵</span>
+                <div>
+                  <div style="font-size:11px;color:#A32D2D;text-transform:uppercase;letter-spacing:0.8px;">Online booking</div>
+                  <div style="font-size:14px;font-weight:500;color:#A32D2D;">Not available</div>
+                  <div style="font-size:12px;color:#A32D2D;opacity:0.8;margin-top:2px;">Book on arrival at the park</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🌿</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Best for</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Families · Nature lovers · Day trips</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/YCRCDNByvrt9gaB77" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route on Google Maps
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions to Moulangi Eco Park</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CROC POPUP -->
+      <div id="croc-overlay" onclick="closeCroc()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <!-- Hero image with gradient overlay and title -->
+          <div style="position:relative;height:180px;overflow:hidden;">
+            <img src="croc.png" alt="Crocodile at Dandeli" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(4,52,44,0.92) 0%, rgba(4,52,44,0.3) 50%, transparent 100%);"></div>
+            <button onclick="closeCroc()" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Crocodile Park</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Dandeli, Karnataka</div>
+            </div>
+          </div>
+          <!-- Info -->
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🐊</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">What you will see</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Mugger crocodiles · Reptile species · Forest setting</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#FCEBEB;border-radius:10px;">
+                <span style="font-size:22px;">📵</span>
+                <div>
+                  <div style="font-size:11px;color:#A32D2D;text-transform:uppercase;letter-spacing:0.8px;">Online booking</div>
+                  <div style="font-size:14px;font-weight:500;color:#A32D2D;">Not available</div>
+                  <div style="font-size:12px;color:#A32D2D;opacity:0.8;margin-top:2px;">Walk in only — visit the park directly</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">👨‍👩‍👧</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Best for</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Families · Wildlife lovers · Photography</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/kHxV9epZ6WZMGgyx8" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route on Google Maps
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions to Crocodile Park</p>
+          </div>
+        </div>
+      </div>
+      <div class="place-card" onclick="openPansoli()" style="cursor:pointer;">
+        <div class="place-emoji">🐘</div>
+        <div class="place-info">
+          <div class="place-name">Pansoli Elephant Camp <span class="place-tag">Interactive</span></div>
+          <div class="place-desc">Meet, feed and bathe elephants at this unique camp. One of Dandeli's most memorable family experiences.</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--green-mid);font-weight:500;">Tap for details & directions →</div>
+        </div>
+      </div>
+
+      <!-- PANSOLI POPUP -->
+      <div id="pansoli-overlay" onclick="closePansoli()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <div style="position:relative;height:180px;overflow:hidden;">
+            <img src="elephant.png" alt="Pansoli Elephant Camp" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,52,44,0.92) 0%,rgba(4,52,44,0.3) 50%,transparent 100%);"></div>
+            <button onclick="closePansoli()" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Pansoli Elephant Camp</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Pansoli-Dandeli, Karnataka</div>
+            </div>
+          </div>
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🎟️</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Entry ticket</div>
+                  <div style="font-size:17px;font-weight:500;color:var(--text-primary);">₹50 <span style="font-size:13px;font-weight:400;color:var(--text-muted);">per person</span></div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#FCEBEB;border-radius:10px;">
+                <span style="font-size:22px;">📵</span>
+                <div>
+                  <div style="font-size:11px;color:#A32D2D;text-transform:uppercase;letter-spacing:0.8px;">Online booking</div>
+                  <div style="font-size:14px;font-weight:500;color:#A32D2D;">Not available</div>
+                  <div style="font-size:12px;color:#A32D2D;opacity:0.8;margin-top:2px;">Walk in only — book your slot on arrival</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🐘</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">What you can do</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Meet · Feed · Bathe elephants</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/GcTznD1Gd9LZE2V58" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route on Google Maps
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions to Pansoli Elephant Camp</p>
+          </div>
+        </div>
+      </div>
+      <div class="place-card" onclick="openPopup('fort')" style="cursor:pointer;">
+        <div class="place-emoji">🏯</div>
+        <div class="place-info">
+          <div class="place-name">Shivaji Fort <span class="place-tag amber">Heritage</span></div>
+          <div class="place-desc">Built during the reign of Chhatrapati Shivaji Maharaj — one of Karnataka's oldest forts, popular with trekkers and history lovers.</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--green-mid);font-weight:500;">Tap for details & directions →</div>
+        </div>
+      </div>
+      <!-- FORT POPUP -->
+      <div id="fort-overlay" onclick="closePopup('fort')" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <div style="position:relative;height:180px;overflow:hidden;">
+            <img src="yellurfort.jpg" alt="Shivaji Fort" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,52,44,0.92) 0%,rgba(4,52,44,0.3) 50%,transparent 100%);"></div>
+            <button onclick="closePopup('fort')" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Shivaji Fort</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Yellur · Belagavi · Heritage site</div>
+            </div>
+          </div>
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🎟️</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Entry</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Free entry</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🥾</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Best activity</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Trekking · Photography · History walks</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🏯</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">About</div>
+                  <div style="font-size:13px;color:var(--text-muted);">One of Karnataka's oldest forts — built in the Maratha era</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/5JnQtPMWcnpWswbV8" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route on Google Maps
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions to Shivaji Fort</p>
+          </div>
+        </div>
+      </div>
+      <div class="place-card" onclick="openPopup('ulavi')" style="cursor:pointer;">
+        <div class="place-emoji">🛕</div>
+        <div class="place-info">
+          <div class="place-name">Ulavi Temple <span class="place-tag amber">Spiritual</span></div>
+          <div class="place-desc">Ancient temple deep in the forest — dedicated to Lord Chennbasavanna, serene and architecturally beautiful.</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--green-mid);font-weight:500;">Tap for details & directions →</div>
+        </div>
+      </div>
+      <!-- ULAVI POPUP -->
+      <div id="ulavi-overlay" onclick="closePopup('ulavi')" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <div style="position:relative;height:180px;overflow:hidden;">
+            <img src="temple.png" alt="Ulavi Temple" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,52,44,0.92) 0%,rgba(4,52,44,0.3) 50%,transparent 100%);"></div>
+            <button onclick="closePopup('ulavi')" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Ulavi Temple</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Ancient forest temple · Ulavi</div>
+            </div>
+          </div>
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🎟️</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Entry</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Free entry</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🕌</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Deity</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Lord Chennbasavanna</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🌿</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Setting</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Nestled deep in the Western Ghats forest · 45 km from Dandeli</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/svxdCKKB4RqP5AcY8" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route on Google Maps
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions to Ulavi Temple</p>
+          </div>
+        </div>
+      </div>
+      <div class="place-card" onclick="openPopup('dandelappa')" style="cursor:pointer;">
+        <div class="place-emoji">🛕</div>
+        <div class="place-info">
+          <div class="place-name">Dandelappa Temple <span class="place-tag amber">Spiritual</span></div>
+          <div class="place-desc">Local deity temple — the spiritual heart of Dandeli town, visited by locals and tourists alike.</div>
+          <div style="margin-top:8px;font-size:12px;color:var(--green-mid);font-weight:500;">Tap for details & directions →</div>
+        </div>
+      </div>
+      <!-- DANDELAPPA POPUP -->
+      <div id="dandelappa-overlay" onclick="closePopup('dandelappa')" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:1.5rem;">
+        <div onclick="event.stopPropagation()" style="background:var(--card-bg);border-radius:var(--radius);max-width:400px;width:100%;border:1px solid var(--border);overflow:hidden;">
+          <div style="position:relative;height:180px;overflow:hidden;">
+            <img src="shivatemple12.jpg" alt="Dandelappa Temple" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,52,44,0.92) 0%,rgba(4,52,44,0.3) 50%,transparent 100%);"></div>
+            <button onclick="closePopup('dandelappa')" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;color:#fff;line-height:30px;">✕</button>
+            <div style="position:absolute;bottom:14px;left:16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:21px;color:#fff;">Dandelappa Temple</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:2px;">Dandeli town · Local deity</div>
+            </div>
+          </div>
+          <div style="padding:1.2rem 1.4rem;">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.2rem;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🎟️</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Entry</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Free entry</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">🕌</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Significance</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Local guardian deity of Dandeli — deeply revered</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-soft);border-radius:10px;">
+                <span style="font-size:22px;">📍</span>
+                <div>
+                  <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.8px;">Location</div>
+                  <div style="font-size:13px;color:var(--text-muted);">Located in the heart of Dandeli town</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/A4KpYtBfphG2jeYYA" target="_blank" rel="noopener noreferrer"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green-mid);color:#fff;text-decoration:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;">
+              🗺️ View route on Google Maps
+            </a>
+            <p style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px;">Opens Google Maps with directions to Dandelappa Temple</p>
+          </div>
+        </div>
+      </div>
+      <a class="place-card external" href="https://www.npcil.nic.in/main/Interested.aspx" target="_blank" rel="noopener noreferrer">
+        <div class="place-emoji">⚛️</div>
+        <div class="place-info">
+          <div class="place-name">Kaiga Nuclear Power Plant <span class="place-tag blue">Unique attraction</span></div>
+          <div class="place-desc">One of India's cleanest nuclear plants — open to educational visitor tours. A truly one-of-a-kind experience near Dandeli. <span class="ext-label">↗ Visit official NPCIL site to register</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- 6. UNIQUE EXPERIENCES -->
+  <div class="cat-section" data-cat="unique">
+    <div class="cat-header">
+      <div class="cat-left">
+        <div class="cat-icon-big">🏕️</div>
+        <div>
+          <div class="cat-label">Only in Dandeli</div>
+          <div class="cat-title">Unique experiences</div>
+        </div>
+      </div>
+      <div class="cat-count">6 experiences</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,#E1F5EE,#c9e8df);border:1px solid rgba(29,158,117,0.2);border-radius:10px;padding:10px 16px;margin-bottom:1.2rem;">
+      <span style="font-size:20px;">🏨</span>
+      <span style="font-size:13px;color:var(--green-dark);font-weight:500;">Most of these experiences are <strong>included in resort packages</strong> — check with your resort before booking separately.</span>
+    </div>
+    <div class="cards-grid">
+      <div class="act-card">
+        <div class="card-thumb thumb-unique"><span>🌌</span><span class="card-badge badge-unique">Overnight</span></div>
+        <div class="card-body"><div class="card-name">Night camping</div><div class="card-desc">Sleep under jungle stars with bonfire, storytelling and forest sounds.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-unique"><span>🏹</span></div>
+        <div class="card-body"><div class="card-name">Archery</div><div class="card-desc">Try traditional and modern archery in a forest setting.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-unique"><span>🚵</span></div>
+        <div class="card-body"><div class="card-name">Mountain biking</div><div class="card-desc">Rent bikes and ride through jungle trails and forest paths.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-unique"><span>🧗</span><span class="card-badge badge-thrill">Vertical</span></div>
+        <div class="card-body"><div class="card-name">Rappelling</div><div class="card-desc">Descend rock faces with professional guides in the forest.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-unique"><span>🌿</span></div>
+        <div class="card-body"><div class="card-name">Nature walk</div><div class="card-desc">Guided walks through the forest learning about flora, fauna and ecology.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
+      </div>
+      <div class="act-card">
+        <div class="card-thumb thumb-unique"><span>🪂</span><span class="card-badge badge-thrill">Sky high</span></div>
+        <div class="card-body"><div class="card-name">Zip lining</div><div class="card-desc">Soar over the forest canopy for a bird's eye view of Dandeli.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <h2>Ready to explore Dandeli?</h2>
+    <p>Find a resort with your activities included, or book experiences separately.</p>
+    <div class="cta-btns">
+      <button class="btn-white" onclick="window.location.href='index.html'">Browse resorts →</button>
+      <button class="btn-outline-white">Plan my trip</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dandeli<em>Wild</em></div>
+  <div class="footer-copy">© 2026 DandeliWild. Made with ♥ in Karnataka.</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  function openPopup(id) {
+    document.getElementById(id + '-overlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closePopup(id) {
+    document.getElementById(id + '-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function openWildlife() {
+    const el = document.getElementById('wildlife-overlay');
+    el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeWildlife() {
+    const el = document.getElementById('wildlife-overlay');
+    el.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function openAnshi() {
+    const el = document.getElementById('anshi-overlay');
+    el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeAnshi() {
+    const el = document.getElementById('anshi-overlay');
+    el.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function openDanda() {
+    const el = document.getElementById('danda-overlay');
+    el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDanda() {
+    const el = document.getElementById('danda-overlay');
+    el.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function openFort() {
+    const el = document.getElementById('fort-overlay');
+    el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeFort() {
+    const el = document.getElementById('fort-overlay');
+    el.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function openUlavi() {
+    const el = document.getElementById('ulavi-overlay');
+    el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeUlavi() {
+    const el = document.getElementById('ulavi-overlay');
+    el.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function openDandeappa() {
+    const el = document.getElementById('dandeappa-overlay');
+    el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDandeappa() {
+    const el = document.getElementById('dandeappa-overlay');
+    el.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function openCroc() {
+    const el = document.getElementById('croc-overlay');
+    el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCroc() {
+    const el = document.getElementById('croc-overlay');
+    el.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function openPansoli() {
+    const el = document.getElementById('pansoli-overlay');
+    el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closePansoli() {
+    const el = document.getElementById('pansoli-overlay');
+    el.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-label').textContent = isDark ? 'Dark mode' : 'Light mode';
+  }
+
+  function filterCat(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.cat-section').forEach(sec => {
+      if (cat === 'all' || sec.dataset.cat === cat) {
+        sec.style.display = '';
+      } else {
+        sec.style.display = 'none';
+      }
+    });
+    document.querySelectorAll('.section-divider').forEach(d => d.style.display = cat === 'all' ? '' : 'none');
+  }
+
+  // ── HANDLE DEEP LINKS LIKE things-to-do.html#view ──
+  function goToCategory(cat) {
+    const btn = Array.from(document.querySelectorAll('.filter-btn'))
+      .find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${cat}'`));
+    if (btn) {
+      filterCat(cat, btn);
+      const target = document.getElementById(cat + '-section') || document.querySelector(`.cat-section[data-cat="${cat}"]`);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+  function applyHashFilter() {
+    const hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+    const btn = Array.from(document.querySelectorAll('.filter-btn'))
+      .find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${hash}'`));
+    if (btn) {
+      filterCat(hash, btn);
+      setTimeout(() => {
+        const target = document.getElementById(hash + '-section') || document.querySelector(`.cat-section[data-cat="${hash}"]`);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', applyHashFilter);
+  window.addEventListener('hashchange', applyHashFilter);
+</script>
+</body>
+</html>
