@@ -246,7 +246,7 @@
   @media (max-width: 768px) {
     nav { padding: 0 1rem; }
     .nav-links { display: none; }
-    .btn-ghost { display: none; }
+    .nav-list-property { display: none; }
     .theme-toggle span { display: none; }
     .page-hero { padding: 2.5rem 1.2rem 2rem; }
     .filter-panel { padding: 0.8rem 1.2rem; }
@@ -280,7 +280,7 @@
       <div class="toggle-track"><div class="toggle-thumb"></div></div>
       <span id="theme-label">Light mode</span>
     </button>
-    <a href="login.html" class="btn-ghost" id="nav-signin" style="text-decoration:none;">Sign in</a>
+    <a href="login.html" class="btn-primary" id="nav-signin" style="text-decoration:none;">Sign in</a>
     <div id="nav-user" style="display:none;position:relative;">
       <button onclick="toggleUserMenu()" style="display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--border);border-radius:50px;padding:5px 14px 5px 6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-primary);">
         <div id="nav-avatar" style="width:28px;height:28px;border-radius:50%;background:var(--green-mid);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:500;overflow:hidden;"></div>
@@ -295,7 +295,7 @@
         <button onclick="signOutUser()" style="width:100%;text-align:left;background:none;border:none;padding:8px 10px;font-size:13px;color:#ef4444;cursor:pointer;font-family:'DM Sans',sans-serif;border-radius:6px;" onmouseover="this.style.background='rgba(239,68,68,0.08)'" onmouseout="this.style.background='none'">Sign out</button>
       </div>
     </div>
-    <button class="btn-primary">List your property</button>
+    <button class="btn-primary nav-list-property">List your property</button>
   </div>
 </nav>
 
