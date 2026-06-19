@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign In — DandeliWild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root, [data-theme="light"] {
+    --green-deep:    #04342C;
+    --green-dark:    #0F6E56;
+    --green-mid:     #1D9E75;
+    --green-light:   #5DCAA5;
+    --green-pale:    #E1F5EE;
+    --amber:         #EF9F27;
+    --text-primary:  #111;
+    --text-muted:    #6b7280;
+    --text-faint:    #9ca3af;
+    --border:        rgba(0,0,0,0.09);
+    --bg:            #ffffff;
+    --bg-soft:       #f9f9f8;
+    --bg-nav:        rgba(255,255,255,0.92);
+    --card-bg:       #ffffff;
+    --radius:        14px;
+  }
+
+  [data-theme="dark"] {
+    --text-primary:  #f0f0ee;
+    --text-muted:    #9ca3af;
+    --text-faint:    #6b7280;
+    --border:        rgba(255,255,255,0.1);
+    --bg:            #0d1f1a;
+    --bg-soft:       #111f1a;
+    --bg-nav:        rgba(13,31,26,0.92);
+    --card-bg:       #162820;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-primary);
+    background: var(--bg);
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 64px;
+    background: var(--bg-nav);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green-deep); letter-spacing: -0.5px; text-decoration: none; }
+  [data-theme="dark"] .logo { color: var(--green-light); }
+  .logo em { color: var(--green-mid); font-style: normal; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green-mid); }
+  .nav-actions { display: flex; gap: 10px; align-items: center; }
+  .theme-toggle {
+    display: flex; align-items: center; gap: 6px;
+    background: none; border: 1px solid var(--border);
+    border-radius: 50px; padding: 5px 12px;
+    cursor: pointer; font-size: 13px; color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif; transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--green-mid); color: var(--green-mid); }
+  .toggle-track {
+    width: 32px; height: 18px; border-radius: 50px;
+    background: var(--border); position: relative; transition: background 0.3s; flex-shrink: 0;
+  }
+  [data-theme="dark"] .toggle-track { background: var(--green-mid); }
+  .toggle-thumb {
+    width: 12px; height: 12px; border-radius: 50%; background: #fff;
+    position: absolute; top: 3px; left: 3px; transition: transform 0.3s;
+  }
+  [data-theme="dark"] .toggle-thumb { transform: translateX(14px); }
+  .btn-primary {
+    background: var(--green-mid); color: #fff; border: none;
+    padding: 9px 22px; border-radius: 50px; font-size: 14px;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500;
+    transition: background 0.2s; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--green-dark); }
+
+  /* PAGE LAYOUT */
+  .page-wrap {
+    min-height: calc(100vh - 64px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 3rem 1.5rem;
+    position: relative; overflow: hidden;
+  }
+
+  /* background glow matching hero style */
+  .page-wrap::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(29,158,117,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 20%, rgba(93,202,165,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* LOGIN CARD */
+  .login-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.8rem 2.4rem 2.4rem;
+    width: 100%; max-width: 420px;
+    position: relative;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.15);
+  }
+
+  .card-brand {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1.8rem;
+  }
+  .card-brand-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; color: var(--green-deep);
+  }
+  [data-theme="dark"] .card-brand-logo { color: var(--green-light); }
+  .card-brand-logo em { color: var(--green-mid); font-style: normal; }
+  .card-brand-divider {
+    width: 1px; height: 20px;
+    background: var(--border); margin: 0 2px;
+  }
+  .card-brand-tag {
+    font-size: 12px; color: var(--text-faint);
+    letter-spacing: 0.03em;
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px; line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .card-sub {
+    font-size: 14px; color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  /* GOOGLE BUTTON */
+  .btn-google {
+    width: 100%;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    background: #fff;
+    border: 1.5px solid #dadce0;
+    border-radius: 50px;
+    padding: 13px 20px;
+    font-size: 15px; font-weight: 500;
+    color: #3c4043;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .btn-google:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    border-color: #bbb;
+  }
+  .btn-google:active { box-shadow: none; }
+  .btn-google svg { flex-shrink: 0; }
+
+  /* LOADING STATE */
+  .btn-google.loading {
+    opacity: 0.7; cursor: not-allowed; pointer-events: none;
+  }
+
+  .divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 1.6rem 0;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .divider span { font-size: 12px; color: var(--text-faint); white-space: nowrap; }
+
+  .benefits {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 1.8rem;
+  }
+  .benefit-row {
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .benefit-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--bg-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0; margin-top: 1px;
+  }
+  .benefit-text { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .benefit-text strong { color: var(--text-primary); font-weight: 500; }
+
+  .fine-print {
+    font-size: 12px; color: var(--text-faint);
+    text-align: center; line-height: 1.6;
+  }
+  .fine-print a { color: var(--green-mid); text-decoration: none; }
+  .fine-print a:hover { text-decoration: underline; }
+
+  /* STATUS MESSAGES */
+  .status-msg {
+    display: none;
+    padding: 12px 14px; border-radius: 10px;
+    font-size: 13px; margin-bottom: 1rem;
+  }
+  .status-msg.error {
+    display: block;
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.25);
+    color: #ef4444;
+  }
+  .status-msg.success {
+    display: block;
+    background: rgba(29,158,117,0.1);
+    border: 1px solid rgba(29,158,117,0.25);
+    color: var(--green-mid);
+  }
+
+  /* ALREADY LOGGED IN STATE */
+  .logged-in-card { text-align: center; }
+  .logged-in-avatar {
+    width: 72px; height: 72px; border-radius: 50%;
+    margin: 0 auto 1rem;
+    border: 3px solid var(--green-mid);
+    object-fit: cover;
+  }
+  .logged-in-avatar-placeholder {
+    width: 72px; height: 72px; border-radius: 50%;
+    margin: 0 auto 1rem;
+    background: var(--green-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: #fff;
+    font-family: 'DM Serif Display', serif;
+  }
+  .logged-in-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; margin-bottom: 4px;
+  }
+  .logged-in-email { font-size: 13px; color: var(--text-muted); margin-bottom: 1.6rem; }
+  .btn-home {
+    width: 100%;
+    background: var(--green-mid); color: #fff; border: none;
+    padding: 13px 20px; border-radius: 50px; font-size: 15px;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500;
+    transition: background 0.2s; margin-bottom: 10px;
+    text-decoration: none; display: block; text-align: center;
+  }
+  .btn-home:hover { background: var(--green-dark); }
+  .btn-signout {
+    width: 100%;
+    background: none; color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 11px 20px; border-radius: 50px; font-size: 14px;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-signout:hover { border-color: #ef4444; color: #ef4444; }
+
+  @media (max-width: 480px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .login-card { padding: 2rem 1.4rem; border-radius: 16px; }
+    .card-title { font-size: 22px; }
+    .theme-toggle span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Dandeli<em>Wild</em></a>
+  <ul class="nav-links">
+    <li><a href="resorts.html">Resorts</a></li>
+    <li><a href="things-to-do.html">Activities</a></li>
+    <li><a href="things-to-do.html#view">Viewpoints</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+      <span id="theme-label">Light mode</span>
+    </button>
+    <a href="index.html" class="btn-primary">Back to home</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="page-wrap">
+  <div class="login-card" id="login-view">
+
+    <div class="card-brand">
+      <span class="card-brand-logo">Dandeli<em>Wild</em></span>
+      <div class="card-brand-divider"></div>
+      <span class="card-brand-tag">Customer account</span>
+    </div>
+
+    <h1 class="card-title">Welcome back<br>to the jungle 🌿</h1>
+    <p class="card-sub">Sign in to save your favourite places and get personalised trip ideas.</p>
+
+    <div class="benefits">
+      <div class="benefit-row">
+        <div class="benefit-icon">🏕️</div>
+        <div class="benefit-text"><strong>Save your favourites</strong> — bookmark resorts and activities for your next trip</div>
+      </div>
+      <div class="benefit-row">
+        <div class="benefit-icon">🔔</div>
+        <div class="benefit-text"><strong>Get notified</strong> — be the first to know when online booking goes live</div>
+      </div>
+      <div class="benefit-row">
+        <div class="benefit-icon">🗺️</div>
+        <div class="benefit-text"><strong>Personalised picks</strong> — recommendations based on what you've explored</div>
+      </div>
+    </div>
+
+    <div id="status-msg" class="status-msg"></div>
+
+    <button class="btn-google" id="btn-google" onclick="signInWithGoogle()">
+      <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Continue with Google
+    </button>
+
+    <p class="fine-print" style="margin-top:1.2rem;">
+      By signing in, you agree to our <a href="#" onclick="openModal('privacy'); return false;">Privacy Policy</a> and <a href="#" onclick="openModal('terms'); return false;">Terms of Use</a>.
+    </p>
+
+  </div>
+
+  <!-- ALREADY LOGGED IN VIEW (hidden by default) -->
+  <div class="login-card logged-in-card" id="loggedin-view" style="display:none;">
+    <div id="user-avatar-wrap">
+      <div class="logged-in-avatar-placeholder" id="avatar-placeholder">?</div>
+    </div>
+    <div class="logged-in-name" id="user-name">—</div>
+    <div class="logged-in-email" id="user-email">—</div>
+    <a href="index.html" class="btn-home">Go to homepage</a>
+    <button class="btn-signout" onclick="signOut()">Sign out</button>
+  </div>
+</div>
+
+<!-- PRIVACY MODAL -->
+<div class="modal-overlay" id="modal-privacy" style="position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:999;opacity:0;pointer-events:none;transition:opacity 0.25s;">
+  <div style="background:var(--modal-bg,var(--card-bg));border-radius:16px;padding:2rem;max-width:420px;width:90%;max-height:80vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <h3 style="font-family:'DM Serif Display',serif;font-size:20px;">Privacy Policy</h3>
+      <button onclick="closeModal('privacy')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted);">✕</button>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);line-height:1.7;">Any information collected through DandeliWild — including your name and email from Google Sign‑In — is used solely for personalising your experience and internal research to improve the platform. We do not sell or share your data with third parties. Contact: <em>to be updated</em>.</p>
+  </div>
+</div>
+
+<!-- TERMS MODAL -->
+<div class="modal-overlay" id="modal-terms" style="position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:999;opacity:0;pointer-events:none;transition:opacity 0.25s;">
+  <div style="background:var(--modal-bg,var(--card-bg));border-radius:16px;padding:2rem;max-width:420px;width:90%;max-height:80vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <h3 style="font-family:'DM Serif Display',serif;font-size:20px;">Terms of Use</h3>
+      <button onclick="closeModal('terms')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted);">✕</button>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);line-height:1.7;">DandeliWild is a tourism information and discovery platform for Dandeli, Karnataka. Resort listings and activity information are provided for reference only. Pricing and availability are subject to change. DandeliWild is not responsible for any arrangements made directly with resort or activity operators. Contact: <em>to be updated</em>.</p>
+  </div>
+</div>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  const SUPABASE_URL = 'https://lbgejzuzfqhdfytyumwh.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_U9skEdu0mTUHQiLXGhZEQw__JeEk3NI';
+  const { createClient } = supabase;
+  const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // ── THEME TOGGLE ──
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-label').textContent = isDark ? 'Dark mode' : 'Light mode';
+  }
+
+  // ── MODAL HELPERS ──
+  function openModal(id) {
+    const el = document.getElementById('modal-' + id);
+    el.style.pointerEvents = 'auto';
+    el.style.opacity = '1';
+  }
+  function closeModal(id) {
+    const el = document.getElementById('modal-' + id);
+    el.style.opacity = '0';
+    el.style.pointerEvents = 'none';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', function(e) {
+      if (e.target === el) {
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+      }
+    });
+  });
+
+  // ── STATUS MESSAGE ──
+  function showStatus(msg, type) {
+    const el = document.getElementById('status-msg');
+    el.className = 'status-msg ' + type;
+    el.textContent = msg;
+  }
+
+  // ── SIGN IN WITH GOOGLE ──
+  async function signInWithGoogle() {
+    const btn = document.getElementById('btn-google');
+    btn.classList.add('loading');
+    btn.textContent = 'Redirecting to Google…';
+
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: 'https://dandelitourism.vercel.app/login.html'
+      }
+    });
+
+    if (error) {
+      showStatus('Something went wrong: ' + error.message, 'error');
+      btn.classList.remove('loading');
+      btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Continue with Google`;
+    }
+  }
+
+  // ── SIGN OUT ──
+  async function signOut() {
+    await sb.auth.signOut();
+    document.getElementById('loggedin-view').style.display = 'none';
+    document.getElementById('login-view').style.display = 'block';
+  }
+
+  // ── CHECK SESSION ON LOAD ──
+  async function checkSession() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      showLoggedInState(session.user);
+    }
+  }
+
+  function showLoggedInState(user) {
+    document.getElementById('login-view').style.display = 'none';
+    const wrap = document.getElementById('loggedin-view');
+    wrap.style.display = 'block';
+
+    const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Explorer';
+    const email = user.email || '';
+    const avatar = user.user_metadata?.avatar_url;
+
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-email').textContent = email;
+
+    const avatarWrap = document.getElementById('user-avatar-wrap');
+    if (avatar) {
+      avatarWrap.innerHTML = `<img src="${avatar}" class="logged-in-avatar" alt="${name}" />`;
+    } else {
+      const initial = name.charAt(0).toUpperCase();
+      avatarWrap.innerHTML = `<div class="logged-in-avatar-placeholder">${initial}</div>`;
+    }
+  }
+
+  // Listen for auth changes (handles redirect back from Google)
+  sb.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      showLoggedInState(session.user);
+    }
+  });
+
+  checkSession();
+</script>
+</body>
+</html>
