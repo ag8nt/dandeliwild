@@ -210,8 +210,9 @@
   .avail-open { background: #EAF3DE; color: #3B6D11; }
   .avail-few  { background: #FAEEDA; color: #854F0B; }
   .avail-full { background: #FCEBEB; color: #A32D2D; }
-  .wishlist-btn { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.85); border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; transition: background 0.2s; }
-  .wishlist-btn:hover { background: #fff; }
+  .wishlist-btn { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.85); border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; transition: background 0.2s, transform 0.15s; }
+  .wishlist-btn:hover { background: #fff; transform: scale(1.12); }
+  .wishlist-btn.faved { background: #fff; color: #ef4444; }
   .resort-body { padding: 1.1rem 1.2rem 1.2rem; }
   .resort-type { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--green-mid); font-weight: 500; margin-bottom: 4px; }
   .resort-name { font-size: 16px; font-weight: 500; color: var(--text-primary); margin-bottom: 5px; }
@@ -358,10 +359,15 @@
           <div style="font-size:13px;font-weight:500;color:var(--text-primary);" id="dd-name">—</div>
           <div style="font-size:12px;color:var(--text-faint);" id="dd-email">—</div>
         </div>
+        <div style="padding:6px 10px 10px;border-bottom:1px solid var(--border);margin-bottom:6px;">
+          <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;">❤️ Favourites</div>
+          <div id="dd-favourites" style="font-size:13px;color:var(--text-muted);line-height:1.8;">No favourites yet</div>
+        </div>
         <button onclick="signOutUser()" style="width:100%;text-align:left;background:none;border:none;padding:8px 10px;font-size:13px;color:#ef4444;cursor:pointer;font-family:'DM Sans',sans-serif;border-radius:6px;" onmouseover="this.style.background='rgba(239,68,68,0.08)'" onmouseout="this.style.background='none'">Sign out</button>
       </div>
     </div>
-    <button class="btn-primary nav-list-property">List your property</button>
+  </div>
+  <button class="btn-primary nav-list-property">List your property</button>
   </div>
 </nav>
 
@@ -443,7 +449,7 @@
     </div>
     <div class="resorts-grid">
       <div class="resort-card" onclick="window.location.href='resorts.html?selected=Kali+River+Resort'">
-        <div class="resort-thumb thumb-green">🌿<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-open">Available</span></div>
+        <div class="resort-thumb thumb-green">🌿<button class="wishlist-btn" aria-label="Save" data-resort="Kali River Resort" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
         <div class="resort-body">
           <div class="resort-type">Riverside resort</div><div class="resort-name">Kali River Resort</div>
           <div class="resort-meta"><span class="rating-star">★ 4.8</span><span class="dot">·</span>AC rooms<span class="dot">·</span>Pool</div>
@@ -451,7 +457,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href='resorts.html?selected=Jungle+Nest+Lodge'">
-        <div class="resort-thumb thumb-teal">🌳<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-few">Only 2 left</span></div>
+        <div class="resort-thumb thumb-teal">🌳<button class="wishlist-btn" aria-label="Save" data-resort="Jungle Nest Lodge" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-few">Only 2 left</span></div>
         <div class="resort-body">
           <div class="resort-type">Forest lodge</div><div class="resort-name">Jungle Nest Lodge</div>
           <div class="resort-meta"><span class="rating-star">★ 4.6</span><span class="dot">·</span>Forest view<span class="dot">·</span>Tents</div>
@@ -459,7 +465,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href='resorts.html?selected=Dandeli+Wild+Camp'">
-        <div class="resort-thumb thumb-amber">🏕️<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-full">Fully booked</span></div>
+        <div class="resort-thumb thumb-amber">🏕️<button class="wishlist-btn" aria-label="Save" data-resort="Dandeli Wild Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-full">Fully booked</span></div>
         <div class="resort-body">
           <div class="resort-type">Luxury camp</div><div class="resort-name">Dandeli Wild Camp</div>
           <div class="resort-meta"><span class="rating-star">★ 4.9</span><span class="dot">·</span>Luxury tents<span class="dot">·</span>Spa</div>
@@ -467,7 +473,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href='resorts.html?selected=Supa+Wilderness+Stay'">
-        <div class="resort-thumb thumb-deep">🦜<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-open">Available</span></div>
+        <div class="resort-thumb thumb-deep">🦜<button class="wishlist-btn" aria-label="Save" data-resort="Supa Wilderness Stay" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
         <div class="resort-body">
           <div class="resort-type">Eco resort</div><div class="resort-name">Supa Wilderness Stay</div>
           <div class="resort-meta"><span class="rating-star">★ 4.7</span><span class="dot">·</span>Bird watching<span class="dot">·</span>Cottages</div>
@@ -475,7 +481,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href='resorts.html?selected=Kali+Riverside+Camp'">
-        <div class="resort-thumb thumb-green" style="background:linear-gradient(135deg,#c9e8df,#9FE1CB)">🌊<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-few">3 rooms left</span></div>
+        <div class="resort-thumb thumb-green" style="background:linear-gradient(135deg,#c9e8df,#9FE1CB)">🌊<button class="wishlist-btn" aria-label="Save" data-resort="Kali Riverside Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-few">3 rooms left</span></div>
         <div class="resort-body">
           <div class="resort-type">River camp</div><div class="resort-name">Kali Riverside Camp</div>
           <div class="resort-meta"><span class="rating-star">★ 4.5</span><span class="dot">·</span>Rafting included<span class="dot">·</span>Meals</div>
@@ -483,7 +489,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href='resorts.html?selected=Forest+Edge+Safari+Lodge'">
-        <div class="resort-thumb thumb-amber" style="background:linear-gradient(135deg,#f5e8cc,#EF9F27)">🦁<button class="wishlist-btn" aria-label="Save" onclick="event.stopPropagation()">♡</button><span class="avail-pill avail-open">Available</span></div>
+        <div class="resort-thumb thumb-amber" style="background:linear-gradient(135deg,#f5e8cc,#EF9F27)">🦁<button class="wishlist-btn" aria-label="Save" data-resort="Forest Edge Safari Lodge" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
         <div class="resort-body">
           <div class="resort-type">Safari lodge</div><div class="resort-name">Forest Edge Safari Lodge</div>
           <div class="resort-meta"><span class="rating-star">★ 4.8</span><span class="dot">·</span>Safari included<span class="dot">·</span>Jeep tours</div>
@@ -603,17 +609,22 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
-  // ── SUPABASE AUTH ──
+  // ── SUPABASE ──
   const _sb = supabase.createClient('https://lbgejzuzfqhdfytyumwh.supabase.co', 'sb_publishable_U9skEdu0mTUHQiLXGhZEQw__JeEk3NI');
+  let _session = null;
+
   function _initNavAuth() {
     _sb.auth.getSession().then(({ data: { session } }) => {
-      if (session) _showNavUser(session.user);
+      _session = session;
+      if (session) { _showNavUser(session.user); _loadFavourites(); }
     });
     _sb.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) _showNavUser(session.user);
-      if (event === 'SIGNED_OUT') _showNavSignIn();
+      _session = session;
+      if (event === 'SIGNED_IN' && session) { _showNavUser(session.user); _loadFavourites(); }
+      if (event === 'SIGNED_OUT') { _showNavSignIn(); _clearFavouritesUI(); }
     });
   }
+
   function _showNavUser(user) {
     const name = user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0] || 'You';
     const email = user.email || '';
@@ -631,6 +642,54 @@
     document.getElementById('nav-signin').style.display = 'inline-flex';
     document.getElementById('nav-user').style.display = 'none';
   }
+  function _clearFavouritesUI() {
+    document.querySelectorAll('.wishlist-btn.faved').forEach(btn => {
+      btn.classList.remove('faved'); btn.textContent = '♡';
+    });
+    document.getElementById('dd-favourites').textContent = 'No favourites yet';
+  }
+
+  // ── FAVOURITES ──
+  async function _loadFavourites() {
+    if (!_session) return;
+    const { data } = await _sb.from('favorites').select('resort_name').eq('user_id', _session.user.id);
+    if (!data || data.length === 0) {
+      document.getElementById('dd-favourites').innerHTML = '<span style="color:var(--text-faint);font-size:12px;">No favourites yet</span>';
+      return;
+    }
+    const names = data.map(f => f.resort_name);
+    // Fill hearts on cards
+    document.querySelectorAll('.wishlist-btn[data-resort]').forEach(btn => {
+      if (names.includes(btn.dataset.resort)) {
+        btn.classList.add('faved'); btn.textContent = '♥';
+      }
+    });
+    // Update dropdown list
+    document.getElementById('dd-favourites').innerHTML = names.map(n =>
+      `<div style="display:flex;align-items:center;gap:6px;padding:2px 0;">
+        <span style="color:#ef4444;font-size:11px;">♥</span>
+        <a href="resorts.html?selected=${encodeURIComponent(n)}" style="color:var(--text-primary);text-decoration:none;font-size:13px;" onclick="document.getElementById('user-dropdown').style.display='none'">${n}</a>
+      </div>`
+    ).join('');
+  }
+
+  async function toggleFavourite(e, btn) {
+    e.stopPropagation();
+    if (!_session) { window.location.href = 'login.html'; return; }
+    const resortName = btn.dataset.resort;
+    if (!resortName) return;
+    const isFaved = btn.classList.contains('faved');
+    // Optimistic UI update
+    btn.classList.toggle('faved');
+    btn.textContent = isFaved ? '♡' : '♥';
+    if (isFaved) {
+      await _sb.from('favorites').delete().eq('user_id', _session.user.id).eq('resort_name', resortName);
+    } else {
+      await _sb.from('favorites').insert({ user_id: _session.user.id, resort_name: resortName });
+    }
+    _loadFavourites(); // refresh dropdown list
+  }
+
   function toggleUserMenu() {
     const dd = document.getElementById('user-dropdown');
     dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
@@ -654,23 +713,15 @@
     html.setAttribute('data-theme', isDark ? 'light' : 'dark');
     document.getElementById('theme-label').textContent = isDark ? 'Dark mode' : 'Light mode';
   }
-  function openModal(id) {
-    document.getElementById('modal-' + id).classList.add('open');
-  }
-  function closeModal(id) {
-    document.getElementById('modal-' + id).classList.remove('open');
-  }
+  function openModal(id) { document.getElementById('modal-' + id).classList.add('open'); }
+  function closeModal(id) { document.getElementById('modal-' + id).classList.remove('open'); }
   function openBooking(name) {
     document.getElementById('booking-resort-name').textContent = name;
     document.getElementById('modal-booking').classList.add('open');
   }
-  function closeBooking() {
-    document.getElementById('modal-booking').classList.remove('open');
-  }
+  function closeBooking() { document.getElementById('modal-booking').classList.remove('open'); }
   document.querySelectorAll('.modal-overlay').forEach(el => {
-    el.addEventListener('click', function(e) {
-      if (e.target === el) el.classList.remove('open');
-    });
+    el.addEventListener('click', function(e) { if (e.target === el) el.classList.remove('open'); });
   });
 </script>
 </body>
