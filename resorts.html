@@ -170,7 +170,9 @@
   .avail-few  { background: #FAEEDA; color: #854F0B; }
   .avail-full { background: #FCEBEB; color: #A32D2D; }
 
-  .wish-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.85); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; }
+  .wish-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.85); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; transition: background 0.2s, transform 0.15s; }
+  .wish-btn:hover { background: #fff; transform: scale(1.12); }
+  .wish-btn.faved { background: #fff; color: #ef4444; }
 
   .resort-body { padding: 1.2rem 1.4rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
   .resort-top { margin-bottom: 0.6rem; }
@@ -292,6 +294,10 @@
           <div style="font-size:13px;font-weight:500;color:var(--text-primary);" id="dd-name">—</div>
           <div style="font-size:12px;color:var(--text-faint);" id="dd-email">—</div>
         </div>
+        <div style="padding:6px 10px 10px;border-bottom:1px solid var(--border);margin-bottom:6px;">
+          <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;">❤️ Favourites</div>
+          <div id="dd-favourites" style="font-size:13px;color:var(--text-muted);line-height:1.8;">No favourites yet</div>
+        </div>
         <button onclick="signOutUser()" style="width:100%;text-align:left;background:none;border:none;padding:8px 10px;font-size:13px;color:#ef4444;cursor:pointer;font-family:'DM Sans',sans-serif;border-radius:6px;" onmouseover="this.style.background='rgba(239,68,68,0.08)'" onmouseout="this.style.background='none'">Sign out</button>
       </div>
     </div>
@@ -394,7 +400,7 @@
         🌿
         <div class="rec-badge">⭐ Recommended</div>
         <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Kali River Resort" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -436,7 +442,7 @@
         🏕️
         <div class="rec-badge">⭐ Recommended</div>
         <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Dandeli Wild Camp" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -478,7 +484,7 @@
         🌊
         <div class="rec-badge">⭐ Recommended</div>
         <span class="avail-pill avail-few">Only 3 left</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Kali Riverside Camp" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -519,7 +525,7 @@
         🦁
         <div class="rec-badge">⭐ Recommended</div>
         <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Forest Edge Safari Lodge" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -561,7 +567,7 @@
         🦜
         <div class="rec-badge">⭐ Recommended</div>
         <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Supa Wilderness Stay" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -608,7 +614,7 @@
       <div class="resort-thumb thumb-g2">
         🌳
         <span class="avail-pill avail-few">Only 2 left</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Jungle Nest Lodge" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -647,7 +653,7 @@
       <div class="resort-thumb thumb-g6">
         🌅
         <span class="avail-pill avail-full">Fully booked</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Kali Adventure Resort" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -687,7 +693,7 @@
       <div class="resort-thumb thumb-g2">
         🌿
         <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Green Valley Lodge" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -725,7 +731,7 @@
       <div class="resort-thumb thumb-g3">
         🔥
         <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Kali Jungle Camping" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -764,7 +770,7 @@
       <div class="resort-thumb thumb-g1">
         🌺
         <span class="avail-pill avail-few">2 rooms left</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Dandeli Meadows Resort" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -804,7 +810,7 @@
       <div class="resort-thumb thumb-g2">
         🏡
         <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Dandeli Forest Homestay" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -842,7 +848,7 @@
       <div class="resort-thumb thumb-g5">
         🌙
         <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save">♡</button>
+        <button class="wish-btn" aria-label="Save" data-resort="Wildernest Nature Resort" onclick="toggleFavourite(event,this)">♡</button>
       </div>
       <div class="resort-body">
         <div>
@@ -931,13 +937,23 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
-  // ── SUPABASE AUTH ──
+  // ── SUPABASE AUTH + FAVOURITES ──
   const _sb = supabase.createClient('https://lbgejzuzfqhdfytyumwh.supabase.co', 'sb_publishable_U9skEdu0mTUHQiLXGhZEQw__JeEk3NI');
+  let _session = null;
+
   function _initNavAuth() {
-    _sb.auth.getSession().then(({ data: { session } }) => { if (session) _showNavUser(session.user); });
+    _sb.auth.getSession().then(({ data: { session } }) => {
+      _session = session;
+      if (session) { _showNavUser(session.user); _loadFavourites(); }
+    });
     _sb.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) _showNavUser(session.user);
-      if (event === 'SIGNED_OUT') { document.getElementById('nav-signin').style.display = 'inline-flex'; document.getElementById('nav-user').style.display = 'none'; }
+      _session = session;
+      if (event === 'SIGNED_IN' && session) { _showNavUser(session.user); _loadFavourites(); }
+      if (event === 'SIGNED_OUT') {
+        document.getElementById('nav-signin').style.display = 'inline-flex';
+        document.getElementById('nav-user').style.display = 'none';
+        document.querySelectorAll('.wish-btn.faved').forEach(b => { b.classList.remove('faved'); b.textContent = '♡'; });
+      }
     });
   }
   function _showNavUser(user) {
@@ -951,6 +967,40 @@
     const avatar = user.user_metadata?.avatar_url;
     if (avatar) { av.innerHTML = `<img src="${avatar}" style="width:100%;height:100%;object-fit:cover;" />`; }
     else { av.textContent = name.charAt(0).toUpperCase(); }
+  }
+  async function _loadFavourites() {
+    if (!_session) return;
+    const { data } = await _sb.from('favorites').select('resort_name').eq('user_id', _session.user.id);
+    if (!data || data.length === 0) {
+      document.getElementById('dd-favourites').innerHTML = '<span style="font-size:12px;color:var(--text-faint);">No favourites yet</span>';
+      return;
+    }
+    const names = new Set(data.map(f => f.resort_name));
+    document.querySelectorAll('.wish-btn[data-resort]').forEach(btn => {
+      if (names.has(btn.dataset.resort)) { btn.classList.add('faved'); btn.textContent = '♥'; }
+      else { btn.classList.remove('faved'); btn.textContent = '♡'; }
+    });
+    document.getElementById('dd-favourites').innerHTML = [...names].map(n =>
+      `<div style="display:flex;align-items:center;gap:6px;padding:2px 0;">
+        <span style="color:#ef4444;font-size:11px;">♥</span>
+        <span style="color:var(--text-primary);font-size:13px;cursor:pointer;" onclick="document.getElementById('user-dropdown').style.display='none'; highlightResort('${n.replace(/'/g, "\\'")}')">${n}</span>
+      </div>`
+    ).join('');
+  }
+  async function toggleFavourite(e, btn) {
+    e.stopPropagation();
+    if (!_session) { window.location.href = 'login.html'; return; }
+    const resortName = btn.dataset.resort;
+    if (!resortName) return;
+    const isFaved = btn.classList.contains('faved');
+    btn.classList.toggle('faved');
+    btn.textContent = isFaved ? '♡' : '♥';
+    if (isFaved) {
+      await _sb.from('favorites').delete().eq('user_id', _session.user.id).eq('resort_name', resortName);
+    } else {
+      await _sb.from('favorites').insert({ user_id: _session.user.id, resort_name: resortName });
+    }
+    _loadFavourites();
   }
   function toggleUserMenu() { const dd = document.getElementById('user-dropdown'); dd.style.display = dd.style.display === 'none' ? 'block' : 'none'; }
   async function signOutUser() { await _sb.auth.signOut(); document.getElementById('user-dropdown').style.display = 'none'; }
