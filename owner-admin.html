@@ -263,31 +263,69 @@
   let _session = null, _ownerRecord = null, _currentAvail = 'open', _photoUrls = [];
 
   // ── INIT ──
-  async function init() {
-    const { data: { session } } = await sb.auth.getSession();
-    if (!session) { show('noauth-view'); return; }
+  let _initiated = false;
+
+  async function checkOwnerStatus(session) {
     _session = session;
     document.getElementById('owner-email-tag').textContent = session.user.email || '';
 
-    // Check if owner is registered
-    const { data: owner } = await sb.from('resort_owners').select('*').eq('user_id', session.user.id).single().catch(() => ({ data: null }));
+    const { data: owner, error } = await sb
+      .from('resort_owners')
+      .select('*')
+      .eq('user_id', session.user.id)
+      .maybeSingle();
 
+    if (error) { console.error('Owner lookup:', error); show('register-view'); return; }
     if (!owner) { show('register-view'); return; }
-    _ownerRecord = owner;
 
+    _ownerRecord = owner;
     if (!owner.approved) {
       document.getElementById('pending-resort-name').textContent = owner.resort_name;
       show('pending-view'); return;
     }
 
-    // Approved — load admin panel
     document.getElementById('dash-resort-name').textContent = owner.resort_name;
     await loadResortDetails(owner.resort_name);
     show('admin-view');
   }
 
+  async function init() {
+    // First try getSession() — works if user was already logged in
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      _initiated = true;
+      await checkOwnerStatus(session);
+      return;
+    }
+
+    // No session yet — this happens after Google OAuth redirect
+    // Wait for Supabase to process the token from the URL hash
+    sb.auth.onAuthStateChange(async (event, session) => {
+      if (_initiated) return;
+      _initiated = true;
+      if (session) {
+        await checkOwnerStatus(session);
+      } else {
+        show('noauth-view');
+      }
+    });
+
+    // Safety fallback: if no auth event fires within 6 seconds, show not-logged-in
+    setTimeout(() => {
+      if (!_initiated) {
+        _initiated = true;
+        show('noauth-view');
+      }
+    }, 6000);
+  }
+
   async function loadResortDetails(resortName) {
-    const { data } = await sb.from('resort_details').select('*').eq('resort_name', resortName).single().catch(() => ({ data: null }));
+    const { data } = await sb
+      .from('resort_details')
+      .select('*')
+      .eq('resort_name', resortName)
+      .maybeSingle();
+
     if (data) {
       _currentAvail = data.availability || 'open';
       _photoUrls = data.photo_urls || [];
