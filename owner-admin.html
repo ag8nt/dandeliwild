@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Owner Dashboard — DandeliWild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  :root,[data-theme="light"]{--green-deep:#04342C;--green-dark:#0F6E56;--green-mid:#1D9E75;--green-light:#5DCAA5;--amber:#EF9F27;--text-primary:#111;--text-muted:#6b7280;--text-faint:#9ca3af;--border:rgba(0,0,0,0.09);--bg:#ffffff;--bg-soft:#f9f9f8;--card-bg:#ffffff;--radius:14px;}
+  [data-theme="dark"]{--text-primary:#f0f0ee;--text-muted:#9ca3af;--text-faint:#6b7280;--border:rgba(255,255,255,0.1);--bg:#0d1f1a;--bg-soft:#111f1a;--card-bg:#162820;}
+  body{font-family:'DM Sans',sans-serif;color:var(--text-primary);background:var(--bg);min-height:100vh;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:50;}
+  .logo{font-family:'DM Serif Display',serif;font-size:22px;color:var(--green-deep);text-decoration:none;}
+  [data-theme="dark"] .logo{color:var(--green-light);}
+  .logo em{color:var(--green-mid);font-style:normal;}
+  .nav-right{display:flex;align-items:center;gap:12px;}
+  .owner-tag{font-size:12px;color:var(--text-faint);background:var(--bg-soft);border:1px solid var(--border);padding:4px 12px;border-radius:50px;}
+  .btn-signout{background:none;border:1px solid var(--border);color:var(--text-muted);padding:7px 16px;border-radius:50px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:border-color 0.2s;}
+  .btn-signout:hover{border-color:#ef4444;color:#ef4444;}
+  .btn-view-site{background:var(--green-mid);color:#fff;border:none;padding:8px 18px;border-radius:50px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;text-decoration:none;transition:background 0.2s;}
+  .btn-view-site:hover{background:var(--green-dark);}
+
+  /* LOADING / STATES */
+  .state-screen{min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;padding:2rem;text-align:center;}
+  .state-icon{font-size:48px;margin-bottom:8px;}
+  .state-title{font-family:'DM Serif Display',serif;font-size:24px;}
+  .state-sub{font-size:14px;color:var(--text-muted);max-width:380px;line-height:1.6;}
+  .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--green-mid);border-radius:50%;animation:spin 0.7s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* REGISTER FORM */
+  .register-card{background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:2.4rem;width:100%;max-width:480px;box-shadow:0 4px 40px rgba(0,0,0,0.12);}
+  .register-card h2{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:0.4rem;}
+  .register-card p{font-size:14px;color:var(--text-muted);margin-bottom:1.6rem;line-height:1.6;}
+  .form-field{margin-bottom:1.2rem;}
+  .form-label{display:block;font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:6px;}
+  .form-input,.form-select{width:100%;background:var(--bg-soft);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
+  .form-input:focus,.form-select:focus{border-color:var(--green-mid);}
+  .form-hint{font-size:12px;color:var(--text-faint);margin-top:5px;}
+  .btn-register{width:100%;background:var(--green-mid);color:#fff;border:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;margin-top:0.5rem;}
+  .btn-register:hover{background:var(--green-dark);}
+  .btn-register:disabled{opacity:0.6;cursor:not-allowed;}
+
+  /* ADMIN DASHBOARD */
+  #admin-view{display:none;}
+  .dashboard{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem;}
+  .dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
+  .dash-resort-name{font-family:'DM Serif Display',serif;font-size:28px;}
+  .live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(29,158,117,0.12);border:1px solid rgba(29,158,117,0.3);color:var(--green-mid);font-size:12px;font-weight:500;padding:4px 12px;border-radius:50px;}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green-mid);animation:pulse 1.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+  /* SECTION CARDS */
+  .section-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;margin-bottom:1.2rem;}
+  .section-card h3{font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:4px;}
+  .section-card .section-desc{font-size:13px;color:var(--text-faint);margin-bottom:1.4rem;}
+
+  /* AVAILABILITY TOGGLE */
+  .avail-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .avail-btn{padding:14px 8px;border-radius:12px;border:2px solid var(--border);background:var(--bg-soft);cursor:pointer;text-align:center;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+  .avail-btn .avail-emoji{font-size:22px;display:block;margin-bottom:6px;}
+  .avail-btn .avail-label{font-size:13px;font-weight:500;color:var(--text-muted);}
+  .avail-btn .avail-sub{font-size:11px;color:var(--text-faint);margin-top:3px;}
+  .avail-btn.selected.open{border-color:#1D9E75;background:rgba(29,158,117,0.08);}
+  .avail-btn.selected.open .avail-label{color:#1D9E75;}
+  .avail-btn.selected.few{border-color:#EF9F27;background:rgba(239,159,39,0.08);}
+  .avail-btn.selected.few .avail-label{color:#EF9F27;}
+  .avail-btn.selected.full{border-color:#ef4444;background:rgba(239,68,68,0.08);}
+  .avail-btn.selected.full .avail-label{color:#ef4444;}
+  .avail-btn:hover:not(.selected){border-color:var(--green-mid);}
+
+  /* PHOTO UPLOAD */
+  .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:1.2rem;}
+  .photo-thumb{aspect-ratio:4/3;border-radius:10px;object-fit:cover;position:relative;border:1px solid var(--border);}
+  .photo-thumb-wrap{position:relative;}
+  .photo-thumb-wrap img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;}
+  .photo-remove{position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.6);border:none;color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;}
+  .photo-remove:hover{background:rgba(239,68,68,0.85);}
+  .upload-zone{border:2px dashed var(--border);border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;}
+  .upload-zone:hover,.upload-zone.drag-over{border-color:var(--green-mid);background:rgba(29,158,117,0.04);}
+  .upload-zone input{display:none;}
+  .upload-zone .upload-icon{font-size:32px;margin-bottom:8px;}
+  .upload-zone p{font-size:13px;color:var(--text-muted);}
+  .upload-zone span{font-size:12px;color:var(--text-faint);}
+  .upload-progress{margin-top:8px;font-size:13px;color:var(--green-mid);display:none;}
+
+  /* DETAILS FORM */
+  .form-textarea{width:100%;background:var(--bg-soft);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;resize:vertical;min-height:120px;outline:none;transition:border-color 0.2s;line-height:1.6;}
+  .form-textarea:focus{border-color:var(--green-mid);}
+  .price-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+  /* SAVE BUTTON */
+  .save-bar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;z-index:40;}
+  .save-status{font-size:13px;color:var(--text-faint);}
+  .save-status.saved{color:var(--green-mid);}
+  .save-status.saving{color:var(--amber);}
+  .btn-save{background:var(--green-mid);color:#fff;border:none;padding:12px 32px;border-radius:50px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;}
+  .btn-save:hover{background:var(--green-dark);}
+  .btn-save:disabled{opacity:0.5;cursor:not-allowed;}
+
+  .status-msg{padding:12px 14px;border-radius:10px;font-size:13px;margin-bottom:1rem;display:none;}
+  .status-msg.error{display:block;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#ef4444;}
+  .status-msg.success{display:block;background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25);color:var(--green-mid);}
+
+  @media(max-width:600px){
+    nav{padding:0 1rem;}
+    .avail-options{grid-template-columns:1fr;}
+    .price-row{grid-template-columns:1fr;}
+    .dash-header{flex-direction:column;align-items:flex-start;}
+    .save-bar{flex-direction:column;}
+    .btn-save{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Dandeli<em>Wild</em></a>
+  <div class="nav-right">
+    <span class="owner-tag" id="owner-email-tag">—</span>
+    <a href="resorts.html" class="btn-view-site">View site</a>
+    <button class="btn-signout" onclick="signOut()">Sign out</button>
+  </div>
+</nav>
+
+<!-- LOADING STATE -->
+<div id="loading-view" class="state-screen">
+  <div class="spinner"></div>
+  <div style="font-size:14px;color:var(--text-muted);">Loading your dashboard…</div>
+</div>
+
+<!-- NOT LOGGED IN STATE -->
+<div id="noauth-view" class="state-screen" style="display:none;">
+  <div class="state-icon">🔒</div>
+  <div class="state-title">Access required</div>
+  <div class="state-sub">Please sign in as a resort owner to access the dashboard.</div>
+  <a href="owner-login.html" style="margin-top:1rem;background:var(--green-mid);color:#fff;padding:12px 28px;border-radius:50px;text-decoration:none;font-weight:500;">Go to Owner Login</a>
+</div>
+
+<!-- REGISTER STATE (logged in but no resort registered) -->
+<div id="register-view" class="state-screen" style="display:none;">
+  <div class="register-card">
+    <h2>Register your resort 🏨</h2>
+    <p>You're signed in. Now tell us which resort you own — your listing will go live after we review and approve your application.</p>
+    <div id="reg-status" class="status-msg"></div>
+    <div class="form-field">
+      <label class="form-label">Resort name *</label>
+      <input class="form-input" id="reg-resort-name" type="text" placeholder="e.g. Kali River Resort" />
+      <div class="form-hint">Must match your resort's name exactly as listed or as you'd like it listed.</div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Your role</label>
+      <select class="form-select" id="reg-role">
+        <option value="owner">Owner</option>
+        <option value="manager">Manager</option>
+        <option value="front-desk">Front desk / staff</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Contact phone</label>
+      <input class="form-input" id="reg-phone" type="tel" placeholder="+91 98765 43210" />
+    </div>
+    <button class="btn-register" id="btn-register" onclick="registerResort()">Submit for approval →</button>
+  </div>
+</div>
+
+<!-- PENDING APPROVAL STATE -->
+<div id="pending-view" class="state-screen" style="display:none;">
+  <div class="state-icon">⏳</div>
+  <div class="state-title">Application under review</div>
+  <div class="state-sub" id="pending-resort-name" style="font-weight:500;color:var(--text-primary);font-size:16px;margin-bottom:4px;"></div>
+  <div class="state-sub">Your resort registration is being reviewed. We'll approve it within 24 hours. You'll be able to manage your listing once approved.</div>
+  <button onclick="signOut()" style="margin-top:1.5rem;background:none;border:1px solid var(--border);color:var(--text-muted);padding:10px 24px;border-radius:50px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;">Sign out</button>
+</div>
+
+<!-- ADMIN DASHBOARD (approved owners) -->
+<div id="admin-view">
+  <div class="dashboard">
+
+    <div class="dash-header">
+      <div>
+        <div style="font-size:13px;color:var(--text-faint);margin-bottom:4px;">Managing</div>
+        <div class="dash-resort-name" id="dash-resort-name">—</div>
+      </div>
+      <div class="live-badge"><div class="live-dot"></div> Listed on DandeliWild</div>
+    </div>
+
+    <!-- AVAILABILITY -->
+    <div class="section-card">
+      <h3>Availability</h3>
+      <div class="section-desc">Update this whenever your availability changes — it shows live on the site.</div>
+      <div class="avail-options">
+        <button class="avail-btn open" data-val="open" onclick="selectAvail(this)">
+          <span class="avail-emoji">✅</span>
+          <div class="avail-label">Available</div>
+          <div class="avail-sub">Rooms open</div>
+        </button>
+        <button class="avail-btn few" data-val="few" onclick="selectAvail(this)">
+          <span class="avail-emoji">⚠️</span>
+          <div class="avail-label">Limited rooms</div>
+          <div class="avail-sub">Only a few left</div>
+        </button>
+        <button class="avail-btn full" data-val="full" onclick="selectAvail(this)">
+          <span class="avail-emoji">❌</span>
+          <div class="avail-label">Fully booked</div>
+          <div class="avail-sub">No rooms available</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- PHOTOS -->
+    <div class="section-card">
+      <h3>Photos</h3>
+      <div class="section-desc">Upload photos of your resort. These appear in the image gallery when tourists click "View details". First photo is shown first.</div>
+      <div class="photo-grid" id="photo-grid"></div>
+      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('photo-input').click()">
+        <input type="file" id="photo-input" accept="image/*" multiple onchange="uploadPhotos(this.files)" />
+        <div class="upload-icon">📸</div>
+        <p>Click to upload photos</p>
+        <span>JPG, PNG up to 5MB each · Multiple allowed</span>
+      </div>
+      <div class="upload-progress" id="upload-progress">Uploading…</div>
+    </div>
+
+    <!-- RESORT DETAILS -->
+    <div class="section-card">
+      <h3>Resort details</h3>
+      <div class="section-desc">This text appears in the "View details" panel when tourists browse your resort.</div>
+      <div class="form-field">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="det-description" placeholder="Describe your resort — location, vibe, what makes it special…"></textarea>
+      </div>
+      <div class="price-row">
+        <div class="form-field">
+          <label class="form-label">Starting price (₹ / night)</label>
+          <input class="form-input" type="number" id="det-price" placeholder="e.g. 2500" min="0" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Contact phone</label>
+          <input class="form-input" type="tel" id="det-phone" placeholder="+91 98765 43210" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Packages (one per line, format: Name | Price | What's included)</label>
+        <textarea class="form-textarea" id="det-packages" placeholder="Overnight | ₹2,500 | Room + breakfast&#10;Weekend | ₹5,000 | 2 nights + all meals&#10;Group (6 pax) | ₹12,000 | All inclusive" style="min-height:90px;"></textarea>
+        <div class="form-hint">Example: Overnight | ₹2,500 | Room + breakfast</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="save-bar">
+    <div class="save-status" id="save-status">Unsaved changes</div>
+    <button class="btn-save" id="btn-save" onclick="saveAll()">Save all changes</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  const sb = supabase.createClient('https://lbgejzuzfqhdfytyumwh.supabase.co','sb_publishable_U9skEdu0mTUHQiLXGhZEQw__JeEk3NI');
+  let _session = null, _ownerRecord = null, _currentAvail = 'open', _photoUrls = [];
+
+  // ── INIT ──
+  async function init() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { show('noauth-view'); return; }
+    _session = session;
+    document.getElementById('owner-email-tag').textContent = session.user.email || '';
+
+    // Check if owner is registered
+    const { data: owner } = await sb.from('resort_owners').select('*').eq('user_id', session.user.id).single().catch(() => ({ data: null }));
+
+    if (!owner) { show('register-view'); return; }
+    _ownerRecord = owner;
+
+    if (!owner.approved) {
+      document.getElementById('pending-resort-name').textContent = owner.resort_name;
+      show('pending-view'); return;
+    }
+
+    // Approved — load admin panel
+    document.getElementById('dash-resort-name').textContent = owner.resort_name;
+    await loadResortDetails(owner.resort_name);
+    show('admin-view');
+  }
+
+  async function loadResortDetails(resortName) {
+    const { data } = await sb.from('resort_details').select('*').eq('resort_name', resortName).single().catch(() => ({ data: null }));
+    if (data) {
+      _currentAvail = data.availability || 'open';
+      _photoUrls = data.photo_urls || [];
+      document.getElementById('det-description').value = data.description || '';
+      document.getElementById('det-price').value = data.price || '';
+      document.getElementById('det-phone').value = data.contact_phone || '';
+      document.getElementById('det-packages').value = data.packages || '';
+    }
+    selectAvail(document.querySelector(`.avail-btn[data-val="${_currentAvail}"]`), true);
+    renderPhotoGrid();
+    setSaveStatus('All changes saved', 'saved');
+  }
+
+  // ── REGISTER ──
+  async function registerResort() {
+    const name = document.getElementById('reg-resort-name').value.trim();
+    if (!name) { showMsg('reg-status','error','Please enter your resort name.'); return; }
+    const btn = document.getElementById('btn-register');
+    btn.disabled = true; btn.textContent = 'Submitting…';
+    const { error } = await sb.from('resort_owners').insert({
+      user_id: _session.user.id,
+      resort_name: name,
+      approved: false
+    });
+    if (error) {
+      showMsg('reg-status','error', error.code === '23505' ? 'You already have a registration on file.' : error.message);
+      btn.disabled = false; btn.textContent = 'Submit for approval →';
+    } else {
+      document.getElementById('pending-resort-name').textContent = name;
+      show('pending-view');
+    }
+  }
+
+  // ── AVAILABILITY ──
+  function selectAvail(btn, silent) {
+    if (!btn) return;
+    document.querySelectorAll('.avail-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    _currentAvail = btn.dataset.val;
+    if (!silent) setSaveStatus('Unsaved changes');
+  }
+
+  // ── PHOTOS ──
+  function renderPhotoGrid() {
+    const grid = document.getElementById('photo-grid');
+    if (_photoUrls.length === 0) { grid.innerHTML = ''; return; }
+    grid.innerHTML = _photoUrls.map((url, i) => `
+      <div class="photo-thumb-wrap">
+        <img src="${url}" alt="Photo ${i+1}" />
+        <button class="photo-remove" onclick="removePhoto(${i})">✕</button>
+      </div>`).join('');
+  }
+  function removePhoto(i) {
+    _photoUrls.splice(i, 1);
+    renderPhotoGrid();
+    setSaveStatus('Unsaved changes');
+  }
+  async function uploadPhotos(files) {
+    if (!files || files.length === 0) return;
+    const prog = document.getElementById('upload-progress');
+    prog.style.display = 'block';
+    let uploaded = 0;
+    for (const file of files) {
+      if (file.size > 5 * 1024 * 1024) { alert(`${file.name} is over 5MB, skipping.`); continue; }
+      const ext = file.name.split('.').pop();
+      const path = `${_ownerRecord.resort_name.replace(/\s+/g,'-').toLowerCase()}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      prog.textContent = `Uploading ${uploaded + 1}/${files.length}…`;
+      const { data, error } = await sb.storage.from('resort-photos').upload(path, file, { upsert: false });
+      if (!error) {
+        const { data: urlData } = sb.storage.from('resort-photos').getPublicUrl(data.path);
+        _photoUrls.push(urlData.publicUrl);
+        uploaded++;
+      } else {
+        console.error('Upload error:', error.message);
+      }
+    }
+    prog.textContent = `${uploaded} photo${uploaded !== 1 ? 's' : ''} uploaded!`;
+    setTimeout(() => { prog.style.display = 'none'; }, 2500);
+    renderPhotoGrid();
+    setSaveStatus('Unsaved changes');
+    document.getElementById('photo-input').value = '';
+  }
+
+  // Drag & drop
+  const zone = document.getElementById('upload-zone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); uploadPhotos(e.dataTransfer.files); });
+
+  // ── SAVE ALL ──
+  async function saveAll() {
+    const btn = document.getElementById('btn-save');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    setSaveStatus('Saving…', 'saving');
+    const resortName = _ownerRecord.resort_name;
+    const payload = {
+      resort_name: resortName,
+      availability: _currentAvail,
+      description: document.getElementById('det-description').value.trim(),
+      price: parseInt(document.getElementById('det-price').value) || null,
+      contact_phone: document.getElementById('det-phone').value.trim(),
+      packages: document.getElementById('det-packages').value.trim(),
+      photo_urls: _photoUrls,
+      updated_at: new Date().toISOString()
+    };
+    const { error } = await sb.from('resort_details').upsert(payload, { onConflict: 'resort_name' });
+    btn.disabled = false; btn.textContent = 'Save all changes';
+    if (error) { setSaveStatus('Error saving: ' + error.message); }
+    else { setSaveStatus('All changes saved ✓', 'saved'); }
+  }
+
+  // ── SIGN OUT ──
+  async function signOut() { await sb.auth.signOut(); window.location.href = 'owner-login.html'; }
+
+  // ── HELPERS ──
+  function show(id) {
+    ['loading-view','noauth-view','register-view','pending-view','admin-view'].forEach(v => {
+      const el = document.getElementById(v);
+      if (el) el.style.display = v === id ? (id === 'admin-view' ? 'block' : 'flex') : 'none';
+    });
+  }
+  function setSaveStatus(msg, cls) {
+    const el = document.getElementById('save-status');
+    el.textContent = msg;
+    el.className = 'save-status' + (cls ? ' ' + cls : '');
+  }
+  function showMsg(id, type, msg) {
+    const el = document.getElementById(id);
+    el.className = 'status-msg ' + type;
+    el.textContent = msg;
+  }
+
+  // Auto-save status on any input
+  document.querySelectorAll('.form-input,.form-textarea,.form-select').forEach(el => {
+    el.addEventListener('input', () => setSaveStatus('Unsaved changes'));
+  });
+
+  init();
+</script>
+</body>
+</html>

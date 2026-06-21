@@ -276,6 +276,10 @@
           <div style="font-size:13px;font-weight:500;color:var(--text-primary);" id="dd-name">—</div>
           <div style="font-size:12px;color:var(--text-faint);" id="dd-email">—</div>
         </div>
+        <div style="padding:6px 10px 10px;border-bottom:1px solid var(--border);margin-bottom:6px;">
+          <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;font-weight:500;">❤️ Favourites</div>
+          <div id="dd-favourites" style="font-size:13px;color:var(--text-muted);line-height:1.8;">No favourites yet</div>
+        </div>
         <button onclick="signOutUser()" style="width:100%;text-align:left;background:none;border:none;padding:8px 10px;font-size:13px;color:#ef4444;cursor:pointer;font-family:'DM Sans',sans-serif;border-radius:6px;" onmouseover="this.style.background='rgba(239,68,68,0.08)'" onmouseout="this.style.background='none'">Sign out</button>
       </div>
     </div>
@@ -1091,14 +1095,34 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
-  // ── SUPABASE AUTH ──
+  // ── SUPABASE AUTH + FAVOURITES ──
   const _sb = supabase.createClient('https://lbgejzuzfqhdfytyumwh.supabase.co', 'sb_publishable_U9skEdu0mTUHQiLXGhZEQw__JeEk3NI');
+  let _session = null;
   function _initNavAuth() {
-    _sb.auth.getSession().then(({ data: { session } }) => { if (session) _showNavUser(session.user); });
+    _sb.auth.getSession().then(({ data: { session } }) => {
+      _session = session;
+      if (session) { _showNavUser(session.user); _loadFavourites(); }
+    });
     _sb.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) _showNavUser(session.user);
+      _session = session;
+      if (event === 'SIGNED_IN' && session) { _showNavUser(session.user); _loadFavourites(); }
       if (event === 'SIGNED_OUT') { document.getElementById('nav-signin').style.display = 'inline-flex'; document.getElementById('nav-user').style.display = 'none'; }
     });
+  }
+  async function _loadFavourites() {
+    if (!_session) return;
+    const { data } = await _sb.from('favorites').select('resort_name').eq('user_id', _session.user.id);
+    const el = document.getElementById('dd-favourites');
+    if (!data || data.length === 0) {
+      el.innerHTML = '<span style="font-size:12px;color:var(--text-faint);">No favourites yet</span>';
+      return;
+    }
+    el.innerHTML = data.map(f =>
+      `<div style="display:flex;align-items:center;gap:6px;padding:2px 0;">
+        <span style="color:#ef4444;font-size:11px;">♥</span>
+        <a href="resorts.html?selected=${encodeURIComponent(f.resort_name)}" style="color:var(--text-primary);text-decoration:none;font-size:13px;" onclick="document.getElementById('user-dropdown').style.display='none'">${f.resort_name}</a>
+      </div>`
+    ).join('');
   }
   function _showNavUser(user) {
     const name = user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0] || 'You';

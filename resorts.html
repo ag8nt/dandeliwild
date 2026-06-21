@@ -235,6 +235,77 @@
   .no-results h3 { font-size: 18px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
   .no-results p { font-size: 14px; color: var(--text-muted); }
 
+  /* ── VIEW DETAILS MODAL ── */
+  .details-overlay {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+    align-items: flex-end; justify-content: center;
+    padding: 0;
+  }
+  .details-overlay.open { display: flex; }
+  .details-sheet {
+    background: var(--card-bg); width: 100%; max-width: 680px;
+    max-height: 92vh; border-radius: 24px 24px 0 0;
+    overflow: hidden; display: flex; flex-direction: column;
+    animation: sheetUp 0.35s cubic-bezier(0.32,0.72,0,1);
+  }
+  @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+  /* Photo gallery */
+  .gallery-wrap { position: relative; height: 280px; flex-shrink: 0; background: var(--bg-soft); overflow: hidden; }
+  .gallery-track { display: flex; height: 100%; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); will-change: transform; }
+  .gallery-slide { min-width: 100%; height: 100%; object-fit: cover; display: flex; align-items: center; justify-content: center; font-size: 72px; background: var(--bg-soft); flex-shrink: 0; }
+  .gallery-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gallery-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-faint); }
+  .gallery-placeholder span:first-child { font-size: 56px; }
+  .gallery-placeholder span:last-child { font-size: 13px; }
+  .gallery-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.45); border: none; color: #fff;
+    width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+    font-size: 16px; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s; backdrop-filter: blur(4px);
+  }
+  .gallery-btn:hover { background: rgba(0,0,0,0.65); }
+  .gallery-btn.prev { left: 12px; }
+  .gallery-btn.next { right: 12px; }
+  .gallery-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+  .gallery-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.45); cursor: pointer; transition: background 0.2s, transform 0.2s; }
+  .gallery-dot.active { background: #fff; transform: scale(1.2); }
+  .gallery-count { position: absolute; top: 14px; right: 14px; background: rgba(0,0,0,0.5); color: #fff; font-size: 12px; padding: 3px 10px; border-radius: 50px; backdrop-filter: blur(4px); }
+  .gallery-close { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.5); border: none; color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: background 0.2s; }
+  .gallery-close:hover { background: rgba(0,0,0,0.75); }
+
+  /* Details content */
+  .details-content { overflow-y: auto; flex: 1; padding: 1.6rem; }
+  .details-content::-webkit-scrollbar { width: 4px; }
+  .details-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .details-header { margin-bottom: 1.2rem; }
+  .details-type { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--green-mid); font-weight: 500; margin-bottom: 4px; }
+  .details-name { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text-primary); line-height: 1.2; margin-bottom: 6px; }
+  .details-meta { font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .details-divider { height: 1px; background: var(--border); margin: 1.2rem 0; }
+  .details-section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); font-weight: 500; margin-bottom: 10px; }
+  .details-desc { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+  .details-amenities { display: flex; flex-wrap: wrap; gap: 8px; }
+  .details-amenity { font-size: 13px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 50px; padding: 5px 14px; color: var(--text-muted); }
+  .packages-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .pkg-card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+  .pkg-name { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+  .pkg-price { font-size: 18px; font-weight: 600; color: var(--green-mid); margin-bottom: 4px; font-family: 'DM Serif Display', serif; }
+  .pkg-includes { font-size: 12px; color: var(--text-faint); line-height: 1.5; }
+  .details-footer { display: flex; gap: 10px; margin-top: 1.6rem; padding-top: 1.2rem; border-top: 1px solid var(--border); }
+  .btn-maps { flex: 1; background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 12px; border-radius: 50px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: border-color 0.2s; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .btn-maps:hover { border-color: var(--green-mid); color: var(--green-mid); }
+  .btn-book-details { flex: 2; background: var(--green-mid); border: none; color: #fff; padding: 12px; border-radius: 50px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+  .btn-book-details:hover { background: var(--green-dark); }
+
+  @media (min-width: 640px) {
+    .details-overlay { align-items: center; padding: 1.5rem; }
+    .details-sheet { border-radius: 20px; max-height: 88vh; }
+    .gallery-wrap { height: 320px; }
+  }
+
   /* ── FOOTER ── */
   footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
   .footer-logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--green-deep); }
@@ -427,7 +498,7 @@
             <div class="price-note">Per room · Taxes extra</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Kali River Resort')">View details</button>
             <button class="btn-book" onclick="openBooking('Kali River Resort')">Book now</button>
           </div>
         </div>
@@ -469,7 +540,7 @@
             <div class="price-note">Per tent · All inclusive</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Dandeli Wild Camp')">View details</button>
             <button class="btn-book" onclick="openBooking('Dandeli Wild Camp')">Book now</button>
           </div>
         </div>
@@ -510,7 +581,7 @@
             <div class="price-note">Per person · Meals included</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Kali Riverside Camp')">View details</button>
             <button class="btn-book" onclick="openBooking('Kali Riverside Camp')">Book now</button>
           </div>
         </div>
@@ -552,7 +623,7 @@
             <div class="price-note">Per room · Safari included</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Forest Edge Safari Lodge')">View details</button>
             <button class="btn-book" onclick="openBooking('Forest Edge Safari Lodge')">Book now</button>
           </div>
         </div>
@@ -593,7 +664,7 @@
             <div class="price-note">Per cottage · Meals included</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Supa Wilderness Stay')">View details</button>
             <button class="btn-book" onclick="openBooking('Supa Wilderness Stay')">Book now</button>
           </div>
         </div>
@@ -639,7 +710,7 @@
             <div class="price-note">Per tent · Basic amenities</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Jungle Nest Lodge')">View details</button>
             <button class="btn-book" onclick="openBooking('Jungle Nest Lodge')">Book now</button>
           </div>
         </div>
@@ -679,7 +750,7 @@
             <div class="price-note">Per room · Taxes extra</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Kali Adventure Resort')">View details</button>
             <button class="btn-book full" disabled>Fully booked</button>
           </div>
         </div>
@@ -717,7 +788,7 @@
             <div class="price-note">Per room · Budget stay</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Green Valley Lodge')">View details</button>
             <button class="btn-book" onclick="openBooking('Green Valley Lodge')">Book now</button>
           </div>
         </div>
@@ -756,7 +827,7 @@
             <div class="price-note">Per person · Group friendly</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Kali Jungle Camping')">View details</button>
             <button class="btn-book" onclick="openBooking('Kali Jungle Camping')">Book now</button>
           </div>
         </div>
@@ -796,7 +867,7 @@
             <div class="price-note">Per room · Taxes extra</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Dandeli Meadows Resort')">View details</button>
             <button class="btn-book" onclick="openBooking('Dandeli Meadows Resort')">Book now</button>
           </div>
         </div>
@@ -834,7 +905,7 @@
             <div class="price-note">Per person · Meals included</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Dandeli Forest Homestay')">View details</button>
             <button class="btn-book" onclick="openBooking('Dandeli Forest Homestay')">Book now</button>
           </div>
         </div>
@@ -875,7 +946,7 @@
             <div class="price-note">Per room · All inclusive</div>
           </div>
           <div class="book-actions">
-            <button class="btn-details">View details</button>
+            <button class="btn-details" onclick="openDetails('Wildernest Nature Resort')">View details</button>
             <button class="btn-book" onclick="openBooking('Wildernest Nature Resort')">Book now</button>
           </div>
         </div>
@@ -923,6 +994,55 @@
       <button class="btn-modal-close" onclick="closeBooking()">Close</button>
       <button class="btn-modal-notify">Notify me when live</button>
     </div>
+  </div>
+</div>
+
+<!-- VIEW DETAILS MODAL -->
+<div class="details-overlay" id="details-overlay">
+  <div class="details-sheet">
+
+    <!-- Photo Gallery -->
+    <div class="gallery-wrap">
+      <div class="gallery-track" id="gallery-track"></div>
+      <button class="gallery-close" onclick="closeDetails()">✕</button>
+      <button class="gallery-btn prev" id="gallery-prev" onclick="galleryMove(-1)" style="display:none;">‹</button>
+      <button class="gallery-btn next" id="gallery-next" onclick="galleryMove(1)" style="display:none;">›</button>
+      <div class="gallery-dots" id="gallery-dots"></div>
+      <div class="gallery-count" id="gallery-count" style="display:none;"></div>
+    </div>
+
+    <!-- Details Content -->
+    <div class="details-content">
+      <div class="details-header">
+        <div class="details-type" id="det-type"></div>
+        <div class="details-name" id="det-name"></div>
+        <div class="details-meta">
+          <span id="det-rating" style="color:#BA7517;"></span>
+          <span style="color:var(--text-faint);">·</span>
+          <span id="det-location"></span>
+          <span style="color:var(--text-faint);">·</span>
+          <span id="det-avail-label"></span>
+        </div>
+      </div>
+
+      <div class="details-divider"></div>
+      <div class="details-section-label">About</div>
+      <div class="details-desc" id="det-desc"></div>
+
+      <div class="details-divider"></div>
+      <div class="details-section-label">Amenities</div>
+      <div class="details-amenities" id="det-amenities"></div>
+
+      <div class="details-divider"></div>
+      <div class="details-section-label">Packages & Pricing</div>
+      <div class="packages-grid" id="det-packages"></div>
+
+      <div class="details-footer">
+        <a class="btn-maps" id="det-maps-btn" href="#" target="_blank" rel="noopener">🗺️ Maps</a>
+        <button class="btn-book-details" id="det-book-btn" onclick="">Book now →</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1008,6 +1128,115 @@
   _initNavAuth();
 
   // ── THEME ──
+  // ── RESORT DATA (defaults; overridden by Supabase if owner has set details) ──
+  const RESORT_DATA = {
+    'Kali River Resort': { type:'Riverside Resort', location:'Kali River, Dandeli', rating:'★ 4.8', mapsUrl:'https://maps.google.com/?q=Kali+River+Resort+Dandeli', emoji:'🌿', desc:'A premium riverside resort with stunning Kali River views, luxurious AC rooms and a large pool. Set amidst dense forest, it\'s perfect for families and couples seeking comfort in the wild. The resort offers guided nature walks, coracle rides, and evening bonfires.', amenities:['🏊 Pool','❄️ AC','🍽️ Meals included','🐆 Safari packages','📶 WiFi','🛁 En-suite bathrooms','🔥 Bonfire evenings'], packages:[{name:'Day Visit',price:'₹500',includes:'Entry + coracle ride'},{name:'Overnight',price:'₹3,500',includes:'Room + all meals + safari'},{name:'Weekend',price:'₹6,500',includes:'2 nights + full board + 2 safaris'}] },
+    'Dandeli Wild Camp': { type:'Luxury Camp', location:'Forest Edge, Dandeli', rating:'★ 4.9', mapsUrl:'https://maps.google.com/?q=Dandeli+Wild+Camp', emoji:'🏕️', desc:'Dandeli\'s most premium luxury camp — private tents with en-suite bathrooms, spa treatments, gourmet meals, and exclusive safari packages. The ultimate jungle glamping experience with zero compromise on comfort.', amenities:['🏊 Pool','❄️ AC tents','🍽️ Gourmet meals','🐆 Exclusive safari','💆 Spa','🔥 Campfire','📶 WiFi'], packages:[{name:'Glamping Night',price:'₹5,200',includes:'Luxury tent + gourmet meals'},{name:'Wild Weekend',price:'₹9,800',includes:'2 nights + spa + safari'},{name:'Honeymoon',price:'₹12,000',includes:'Private tent + candle dinner'}] },
+    'Kali Riverside Camp': { type:'River Camp', location:'Riverside, Dandeli', rating:'★ 4.7', mapsUrl:'https://maps.google.com/?q=Kali+Riverside+Camp+Dandeli', emoji:'🌊', desc:'Cosy riverside camp with white-water rafting and kayaking right at your doorstep. All meals included, perfect for adventure groups and weekend travellers who want an action-packed stay without breaking the bank.', amenities:['🚣 Rafting included','🍽️ Meals included','📶 WiFi','🔥 Bonfire','🏕️ Tented stay'], packages:[{name:'Rafting Day',price:'₹1,200',includes:'Rafting + lunch'},{name:'Camp Night',price:'₹2,900',includes:'Tent + all meals + rafting'},{name:'Group (6 pax)',price:'₹15,000',includes:'All inclusive package'}] },
+    'Forest Edge Safari Lodge': { type:'Safari Lodge', location:'Forest Edge, Dandeli', rating:'★ 4.8', mapsUrl:'https://maps.google.com/?q=Forest+Edge+Safari+Lodge+Dandeli', emoji:'🦁', desc:'A boutique safari lodge right on the boundary of the wildlife sanctuary. Known for its expert naturalist-guided jeep safaris and exceptional birdwatching, this lodge is the go-to for serious wildlife enthusiasts.', amenities:['🐆 Safari included','🦜 Birdwatching','🍽️ Meals included','❄️ AC cottages','📶 WiFi','🔭 Naturalist guides'], packages:[{name:'Safari Day',price:'₹1,800',includes:'Jeep safari + naturalist guide'},{name:'Wildlife Night',price:'₹4,100',includes:'Cottage + meals + 2 safaris'},{name:'Bird Week',price:'₹22,000',includes:'5 nights + daily safaris'}] },
+    'Supa Wilderness Stay': { type:'Eco Resort', location:'Near Supa Dam, Dandeli', rating:'★ 4.7', mapsUrl:'https://maps.google.com/?q=Supa+Wilderness+Stay+Dandeli', emoji:'🦜', desc:'A serene eco resort near Supa Dam with forest cottages, bird watching trails, and home-cooked meals. Ideal for birdwatchers and nature lovers seeking peace, away from the crowds. Home to over 200 bird species.', amenities:['🦜 Birdwatching trails','🍽️ Home-cooked meals','📶 WiFi','🌿 Eco cottages','🔭 Bird guides'], packages:[{name:'Bird Walk',price:'₹600',includes:'Guided birding + breakfast'},{name:'Cottage Night',price:'₹2,400',includes:'Cottage + all meals'},{name:'Birding Weekend',price:'₹4,500',includes:'2 nights + 3 guided walks'}] },
+    'Jungle Nest Lodge': { type:'Forest Lodge', location:'Deep Forest, Dandeli', rating:'★ 4.6', mapsUrl:'https://maps.google.com/?q=Jungle+Nest+Lodge+Dandeli', emoji:'🌳', desc:'Charming forest lodge with treehouse-style rooms nestled deep in the jungle. Popular with backpackers and college groups for its affordable stays, excellent food, and genuine jungle experience.', amenities:['🌲 Forest view','🏕️ Tented rooms','🔥 Bonfire','🍽️ Home meals','📶 WiFi'], packages:[{name:'Budget Night',price:'₹1,800',includes:'Room + breakfast'},{name:'Full Board',price:'₹2,600',includes:'Room + all meals'},{name:'Group Camping',price:'₹1,200/person',includes:'Tent + bonfire + breakfast'}] },
+    'Kali Adventure Resort': { type:'Adventure Resort', location:'Kali River, Dandeli', rating:'★ 4.5', mapsUrl:'https://maps.google.com/?q=Kali+Adventure+Resort+Dandeli', emoji:'🚣', desc:'Purpose-built adventure resort offering the widest range of activities on the Kali River. Rappelling, river crossing, kayaking, coracle, zip-line — all in one place. Best for corporate groups and adventure clubs.', amenities:['🚣 Kayaking','🧗 Rappelling','🤿 River crossing','🏕️ Camping','🍽️ Meals','📶 WiFi'], packages:[{name:'Adventure Half Day',price:'₹1,600',includes:'3 activities + lunch'},{name:'Full Adventure Day',price:'₹2,800',includes:'All activities + meals'},{name:'Corporate Package',price:'₹POA',includes:'Custom team activities'}] },
+    'Green Valley Lodge': { type:'Valley Lodge', location:'Green Valley, Dandeli', rating:'★ 4.2', mapsUrl:'https://maps.google.com/?q=Green+Valley+Lodge+Dandeli', emoji:'🏡', desc:'A peaceful mid-range lodge surrounded by paddy fields and forested hills. Excellent base for exploring Dandeli at a relaxed pace, with honest home-cooked food and comfortable rooms.', amenities:['🌄 Valley views','🍽️ Home meals','❄️ AC rooms','📶 WiFi','🅿️ Parking'], packages:[{name:'Budget Room',price:'₹1,200',includes:'Room + breakfast'},{name:'Deluxe',price:'₹2,200',includes:'Room + all meals'},{name:'Family Room',price:'₹3,000',includes:'Family room + meals'}] },
+    'Kali Jungle Camping': { type:'Jungle Camping', location:'Kali Forest, Dandeli', rating:'★ 4.4', mapsUrl:'https://maps.google.com/?q=Kali+Jungle+Camping+Dandeli', emoji:'⛺', desc:'No-frills jungle camping right inside the forest. Tents, bonfire, night sounds of the jungle, and simple but hearty meals. Perfect for those who want the real outdoor experience at an unbeatable price.', amenities:['⛺ Canvas tents','🔥 Bonfire','🍽️ Simple meals','🌿 Jungle walks','⭐ Stargazing'], packages:[{name:'Camping Night',price:'₹1,600',includes:'Tent + bonfire + meals'},{name:'Group Camp',price:'₹1,200/person',includes:'Min 6 pax, all inclusive'},{name:'Overnight Trek',price:'₹2,000',includes:'Trek + night camp + breakfast'}] },
+    'Dandeli Meadows Resort': { type:'Meadows Resort', location:'Dandeli Town Area', rating:'★ 4.5', mapsUrl:'https://maps.google.com/?q=Dandeli+Meadows+Resort', emoji:'🌸', desc:'Well-appointed resort in a large meadow setting with excellent facilities. Popular with families for its spacious grounds, kids\' play area, and proximity to main Dandeli attractions.', amenities:['🏊 Pool','🌸 Garden','🍽️ Restaurant','❄️ AC','📶 WiFi','🅿️ Large parking'], packages:[{name:'Standard Room',price:'₹2,600',includes:'Room + breakfast'},{name:'Family Package',price:'₹4,800',includes:'Family room + all meals + pool'},{name:'Weekend Getaway',price:'₹5,500',includes:'2 nights + pool + meals'}] },
+    'Dandeli Forest Homestay': { type:'Forest Homestay', location:'Forest Outskirts, Dandeli', rating:'★ 4.1', mapsUrl:'https://maps.google.com/?q=Dandeli+Forest+Homestay', emoji:'🏠', desc:'Cosy homestay run by a local family, giving you an authentic Karnataka experience. Home-cooked traditional meals, warm hospitality, and a genuinely local feel that no resort can replicate.', amenities:['🍛 Traditional meals','🌿 Forest walks','🏡 Homely rooms','☕ Tea/Coffee','🐄 Farm animals'], packages:[{name:'Homestay Night',price:'₹900',includes:'Room + all meals'},{name:'2 Night Stay',price:'₹1,600',includes:'Both nights + meals + village walk'},{name:'Cultural Tour',price:'₹1,200',includes:'1 night + cooking class + meals'}] },
+    'Wildernest Nature Resort': { type:'Nature Resort', location:'Western Ghats Edge, Dandeli', rating:'★ 4.6', mapsUrl:'https://maps.google.com/?q=Wildernest+Nature+Resort+Dandeli', emoji:'🌿', desc:'Award-winning nature resort perched at the edge of the Western Ghats with panoramic views. Expert naturalists, zero-plastic policy, and responsible tourism at its finest. A premium experience for discerning travellers.', amenities:['🌄 Ghats view','🐆 Expert naturalist','🌿 Eco certified','🍽️ Organic meals','❄️ AC','📶 WiFi','🔭 Telescope'], packages:[{name:'Nature Night',price:'₹3,800',includes:'Room + organic meals + nature walk'},{name:'Ghats Weekend',price:'₹7,200',includes:'2 nights + naturalist + all meals'},{name:'Conservation Stay',price:'₹5,500',includes:'1 night + wildlife survey + meals'}] },
+  };
+
+  let _galIdx = 0, _galTotal = 0;
+
+  async function openDetails(name) {
+    const base = RESORT_DATA[name] || {};
+    // Try to fetch owner-updated details from Supabase
+    const { data: sb } = await _sb.from('resort_details').select('*').eq('resort_name', name).single();
+    const desc = sb?.description || base.desc || 'Details coming soon.';
+    const packages = base.packages || [];
+    const amenities = base.amenities || [];
+    const photos = sb?.photo_urls || [];
+    const avail = sb?.availability || 'open';
+    const availLabel = avail === 'open' ? '✅ Available' : avail === 'few' ? '⚠️ Limited rooms' : '❌ Fully booked';
+
+    // Populate header
+    document.getElementById('det-type').textContent = base.type || '';
+    document.getElementById('det-name').textContent = name;
+    document.getElementById('det-rating').textContent = base.rating || '';
+    document.getElementById('det-location').textContent = base.location || 'Dandeli';
+    document.getElementById('det-avail-label').textContent = availLabel;
+    document.getElementById('det-desc').textContent = desc;
+
+    // Amenities
+    document.getElementById('det-amenities').innerHTML = amenities.map(a => `<span class="details-amenity">${a}</span>`).join('');
+
+    // Packages
+    document.getElementById('det-packages').innerHTML = packages.map(p => `
+      <div class="pkg-card">
+        <div class="pkg-name">${p.name}</div>
+        <div class="pkg-price">${p.price}</div>
+        <div class="pkg-includes">${p.includes}</div>
+      </div>`).join('');
+
+    // Maps + Book button
+    document.getElementById('det-maps-btn').href = base.mapsUrl || `https://maps.google.com/?q=${encodeURIComponent(name + ' Dandeli')}`;
+    document.getElementById('det-book-btn').onclick = () => { closeDetails(); openBooking(name); };
+
+    // Build gallery
+    _galIdx = 0;
+    _galTotal = photos.length;
+    const track = document.getElementById('gallery-track');
+    if (photos.length > 0) {
+      track.innerHTML = photos.map(url => `<div class="gallery-slide"><img src="${url}" alt="${name}" /></div>`).join('');
+      document.getElementById('gallery-prev').style.display = photos.length > 1 ? 'flex' : 'none';
+      document.getElementById('gallery-next').style.display = photos.length > 1 ? 'flex' : 'none';
+      document.getElementById('gallery-count').style.display = 'block';
+      document.getElementById('gallery-dots').innerHTML = photos.map((_, i) => `<div class="gallery-dot ${i===0?'active':''}" onclick="galleryGoTo(${i})"></div>`).join('');
+    } else {
+      track.innerHTML = `<div class="gallery-slide"><div class="gallery-placeholder"><span>${base.emoji || '🏕️'}</span><span>Photos coming soon</span></div></div>`;
+      document.getElementById('gallery-prev').style.display = 'none';
+      document.getElementById('gallery-next').style.display = 'none';
+      document.getElementById('gallery-count').style.display = 'none';
+      document.getElementById('gallery-dots').innerHTML = '';
+    }
+    _updateGallery();
+
+    document.getElementById('details-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function galleryMove(dir) {
+    _galIdx = Math.max(0, Math.min(_galTotal - 1, _galIdx + dir));
+    _updateGallery();
+  }
+  function galleryGoTo(i) { _galIdx = i; _updateGallery(); }
+  function _updateGallery() {
+    document.getElementById('gallery-track').style.transform = `translateX(-${_galIdx * 100}%)`;
+    document.getElementById('gallery-count').textContent = `${_galIdx + 1} / ${_galTotal}`;
+    document.querySelectorAll('.gallery-dot').forEach((d, i) => d.classList.toggle('active', i === _galIdx));
+  }
+  function closeDetails() {
+    document.getElementById('details-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('details-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeDetails();
+  });
+
+  // ── FIX: highlight resort in list (used from dropdown favourites) ──
+  function highlightResort(name) {
+    document.getElementById('user-dropdown').style.display = 'none';
+    const cards = Array.from(document.querySelectorAll('.resort-card'));
+    const match = cards.find(c => {
+      const el = c.querySelector('.resort-name');
+      return el && el.textContent.trim() === name;
+    });
+    if (match) {
+      match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      match.style.outline = '2px solid var(--green-mid)';
+      match.style.transition = 'outline 0.3s';
+      setTimeout(() => { match.style.outline = ''; }, 2500);
+    }
+  }
+
   function toggleTheme() {
     const html = document.documentElement;
     const isDark = html.getAttribute('data-theme') === 'dark';
