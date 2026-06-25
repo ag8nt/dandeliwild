@@ -173,6 +173,7 @@
   .wish-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.85); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; transition: background 0.2s, transform 0.15s; }
   .wish-btn:hover { background: #fff; transform: scale(1.12); }
   .wish-btn.faved { background: #fff; color: #ef4444; }
+  .resort-card.highlighted { outline: 2px solid var(--green-mid); box-shadow: 0 0 0 4px rgba(29,158,117,0.15); }
 
   .resort-body { padding: 1.2rem 1.4rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
   .resort-top { margin-bottom: 0.6rem; }
@@ -462,497 +463,10 @@
   </div>
 
   <div class="resorts-list" id="resorts-list">
-
-    <!-- ── RECOMMENDED 1 ── -->
-    <div class="resort-card recommended"
-      data-avail="open" data-type="resort" data-price="3500" data-rating="4.8"
-      data-amenities="pool,ac,meals,safari,wifi" data-recommended="true">
-      <div class="resort-thumb thumb-g1">
-        🌿
-        <div class="rec-badge">⭐ Recommended</div>
-        <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Kali River Resort" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Riverside Resort</div>
-            <div class="resort-name">Kali River Resort</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.8</span><span class="dot">·</span>
-              Riverside<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">A premium riverside resort with stunning Kali River views, luxurious AC rooms and a large pool. Perfect for families and couples looking for comfort in the wild.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🏊 Pool</span>
-            <span class="amenity-tag">❄️ AC</span>
-            <span class="amenity-tag">🍽️ Meals included</span>
-            <span class="amenity-tag">🐆 Safari packages</span>
-            <span class="amenity-tag">📶 WiFi</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹3,500 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per room · Taxes extra</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Kali River Resort')">View details</button>
-            <button class="btn-book" onclick="openBooking('Kali River Resort')">Book now</button>
-          </div>
-        </div>
-      </div>
+    <div id="resorts-loading" style="grid-column:1/-1;text-align:center;padding:4rem 2rem;">
+      <div style="width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--green-mid);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 1rem;"></div>
+      <div style="font-size:14px;color:var(--text-muted);">Loading resorts…</div>
     </div>
-
-    <!-- ── RECOMMENDED 2 ── -->
-    <div class="resort-card recommended"
-      data-avail="open" data-type="camp" data-price="5200" data-rating="4.9"
-      data-amenities="pool,ac,meals,safari,wifi" data-recommended="true">
-      <div class="resort-thumb thumb-g3">
-        🏕️
-        <div class="rec-badge">⭐ Recommended</div>
-        <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Dandeli Wild Camp" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Luxury Camp</div>
-            <div class="resort-name">Dandeli Wild Camp</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.9</span><span class="dot">·</span>
-              Forest edge<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">Dandeli's most premium luxury camp — private tents with en-suite bathrooms, spa, gourmet meals and exclusive safari packages. The ultimate jungle glamping experience.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🏊 Pool</span>
-            <span class="amenity-tag">❄️ AC tents</span>
-            <span class="amenity-tag">🍽️ Gourmet meals</span>
-            <span class="amenity-tag">🐆 Exclusive safari</span>
-            <span class="amenity-tag">💆 Spa</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹5,200 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per tent · All inclusive</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Dandeli Wild Camp')">View details</button>
-            <button class="btn-book" onclick="openBooking('Dandeli Wild Camp')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── RECOMMENDED 3 ── -->
-    <div class="resort-card recommended"
-      data-avail="few" data-type="resort" data-price="2900" data-rating="4.7"
-      data-amenities="meals,safari,wifi" data-recommended="true">
-      <div class="resort-thumb thumb-g4">
-        🌊
-        <div class="rec-badge">⭐ Recommended</div>
-        <span class="avail-pill avail-few">Only 3 left</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Kali Riverside Camp" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">River Camp</div>
-            <div class="resort-name">Kali Riverside Camp</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.7</span><span class="dot">·</span>
-              Riverside<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">Cosy riverside camp with rafting and kayaking right at your doorstep. All meals included, great for adventure groups and weekend travellers.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🚣 Rafting included</span>
-            <span class="amenity-tag">🍽️ Meals included</span>
-            <span class="amenity-tag">🐆 Safari add-on</span>
-            <span class="amenity-tag">📶 WiFi</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹2,900 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per person · Meals included</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Kali Riverside Camp')">View details</button>
-            <button class="btn-book" onclick="openBooking('Kali Riverside Camp')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── RECOMMENDED 4 ── -->
-    <div class="resort-card recommended"
-      data-avail="open" data-type="resort" data-price="4100" data-rating="4.8"
-      data-amenities="ac,meals,safari,wifi" data-recommended="true">
-      <div class="resort-thumb thumb-g5">
-        🦁
-        <div class="rec-badge">⭐ Recommended</div>
-        <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Forest Edge Safari Lodge" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Safari Lodge</div>
-            <div class="resort-name">Forest Edge Safari Lodge</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.8</span><span class="dot">·</span>
-              Forest edge<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">Located right at the edge of the Dandeli forest with daily jeep safari included. Spacious AC rooms, jungle-view dining and expert naturalist guides.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">❄️ AC</span>
-            <span class="amenity-tag">🍽️ Meals included</span>
-            <span class="amenity-tag">🐆 Safari included</span>
-            <span class="amenity-tag">🌿 Nature walks</span>
-            <span class="amenity-tag">📶 WiFi</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹4,100 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per room · Safari included</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Forest Edge Safari Lodge')">View details</button>
-            <button class="btn-book" onclick="openBooking('Forest Edge Safari Lodge')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── RECOMMENDED 5 ── -->
-    <div class="resort-card recommended"
-      data-avail="open" data-type="cottage" data-price="2400" data-rating="4.7"
-      data-amenities="wifi,meals" data-recommended="true">
-      <div class="resort-thumb thumb-g4">
-        🦜
-        <div class="rec-badge">⭐ Recommended</div>
-        <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Supa Wilderness Stay" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Eco Resort</div>
-            <div class="resort-name">Supa Wilderness Stay</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.7</span><span class="dot">·</span>
-              Near Supa Dam<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">A serene eco resort near Supa Dam with forest cottages, bird watching trails and home-cooked meals. Ideal for birdwatchers and nature lovers seeking peace.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🦅 Bird watching</span>
-            <span class="amenity-tag">🍽️ Home meals</span>
-            <span class="amenity-tag">📶 WiFi</span>
-            <span class="amenity-tag">🌿 Nature trails</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹2,400 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per cottage · Meals included</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Supa Wilderness Stay')">View details</button>
-            <button class="btn-book" onclick="openBooking('Supa Wilderness Stay')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── SEPARATOR ── -->
-    <div class="section-sep">
-      <div class="section-sep-line"></div>
-      <div class="section-sep-text">More properties</div>
-      <div class="section-sep-line"></div>
-    </div>
-
-    <!-- ── REGULAR 6 ── -->
-    <div class="resort-card"
-      data-avail="few" data-type="lodge" data-price="1800" data-rating="4.6"
-      data-amenities="wifi" data-recommended="false">
-      <div class="resort-thumb thumb-g2">
-        🌳
-        <span class="avail-pill avail-few">Only 2 left</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Jungle Nest Lodge" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Forest Lodge</div>
-            <div class="resort-name">Jungle Nest Lodge</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.6</span><span class="dot">·</span>
-              Deep forest<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">Budget-friendly forest lodge with basic amenities and direct forest access. Great for backpackers and solo travellers who want to be close to nature.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🌲 Forest view</span>
-            <span class="amenity-tag">🏕️ Tented rooms</span>
-            <span class="amenity-tag">📶 WiFi</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹1,800 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per tent · Basic amenities</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Jungle Nest Lodge')">View details</button>
-            <button class="btn-book" onclick="openBooking('Jungle Nest Lodge')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── REGULAR 7 ── -->
-    <div class="resort-card"
-      data-avail="full" data-type="resort" data-price="3200" data-rating="4.5"
-      data-amenities="pool,ac,wifi,meals" data-recommended="false">
-      <div class="resort-thumb thumb-g6">
-        🌅
-        <span class="avail-pill avail-full">Fully booked</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Kali Adventure Resort" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Resort</div>
-            <div class="resort-name">Kali Adventure Resort</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.5</span><span class="dot">·</span>
-              Riverside<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">Popular resort with a large pool and adventure activity packages. Currently fully booked — check back soon or call directly to join a waitlist.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🏊 Pool</span>
-            <span class="amenity-tag">❄️ AC</span>
-            <span class="amenity-tag">🍽️ Meals</span>
-            <span class="amenity-tag">📶 WiFi</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹3,200 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per room · Taxes extra</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Kali Adventure Resort')">View details</button>
-            <button class="btn-book full" disabled>Fully booked</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── REGULAR 8 ── -->
-    <div class="resort-card"
-      data-avail="open" data-type="lodge" data-price="1200" data-rating="4.2"
-      data-amenities="meals" data-recommended="false">
-      <div class="resort-thumb thumb-g2">
-        🌿
-        <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Green Valley Lodge" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Budget Lodge</div>
-            <div class="resort-name">Green Valley Lodge</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.2</span><span class="dot">·</span>
-              Town area<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">Affordable lodge in town with clean rooms and home-cooked meals. A great base for budget travellers who want easy access to all of Dandeli's attractions.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🍽️ Home meals</span>
-            <span class="amenity-tag">🏠 Clean rooms</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹1,200 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per room · Budget stay</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Green Valley Lodge')">View details</button>
-            <button class="btn-book" onclick="openBooking('Green Valley Lodge')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── REGULAR 9 ── -->
-    <div class="resort-card"
-      data-avail="open" data-type="camp" data-price="1600" data-rating="4.4"
-      data-amenities="meals,safari" data-recommended="false">
-      <div class="resort-thumb thumb-g3">
-        🔥
-        <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Kali Jungle Camping" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Camping</div>
-            <div class="resort-name">Kali Jungle Camping</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.4</span><span class="dot">·</span>
-              Forest<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">Authentic camping experience with bonfires, outdoor meals and night jungle sounds. Great for groups and adventure lovers on a tight budget.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🔥 Bonfire</span>
-            <span class="amenity-tag">🍽️ Outdoor meals</span>
-            <span class="amenity-tag">🐆 Safari add-on</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹1,600 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per person · Group friendly</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Kali Jungle Camping')">View details</button>
-            <button class="btn-book" onclick="openBooking('Kali Jungle Camping')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── REGULAR 10 ── -->
-    <div class="resort-card"
-      data-avail="few" data-type="resort" data-price="2600" data-rating="4.5"
-      data-amenities="ac,pool,wifi" data-recommended="false">
-      <div class="resort-thumb thumb-g1">
-        🌺
-        <span class="avail-pill avail-few">2 rooms left</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Dandeli Meadows Resort" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Resort</div>
-            <div class="resort-name">Dandeli Meadows Resort</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.5</span><span class="dot">·</span>
-              Garden view<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">A peaceful resort with garden views, AC rooms and a pool. Close to the town centre and all major activity spots. Popular with families.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">❄️ AC</span>
-            <span class="amenity-tag">🏊 Pool</span>
-            <span class="amenity-tag">📶 WiFi</span>
-            <span class="amenity-tag">🌸 Garden view</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹2,600 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per room · Taxes extra</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Dandeli Meadows Resort')">View details</button>
-            <button class="btn-book" onclick="openBooking('Dandeli Meadows Resort')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── REGULAR 11 ── -->
-    <div class="resort-card"
-      data-avail="open" data-type="cottage" data-price="900" data-rating="4.1"
-      data-amenities="meals" data-recommended="false">
-      <div class="resort-thumb thumb-g2">
-        🏡
-        <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Dandeli Forest Homestay" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Homestay</div>
-            <div class="resort-name">Dandeli Forest Homestay</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.1</span><span class="dot">·</span>
-              Town<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">A cosy local homestay with authentic Karnataka meals and warm hospitality. Most affordable option in Dandeli — perfect for solo or budget travellers.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🍽️ Home meals</span>
-            <span class="amenity-tag">🏡 Local hospitality</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹900 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per person · Meals included</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Dandeli Forest Homestay')">View details</button>
-            <button class="btn-book" onclick="openBooking('Dandeli Forest Homestay')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── REGULAR 12 ── -->
-    <div class="resort-card"
-      data-avail="open" data-type="resort" data-price="3800" data-rating="4.6"
-      data-amenities="pool,ac,meals,wifi,safari" data-recommended="false">
-      <div class="resort-thumb thumb-g5">
-        🌙
-        <span class="avail-pill avail-open">Available</span>
-        <button class="wish-btn" aria-label="Save" data-resort="Wildernest Nature Resort" onclick="toggleFavourite(event,this)">♡</button>
-      </div>
-      <div class="resort-body">
-        <div>
-          <div class="resort-top">
-            <div class="resort-type">Premium Resort</div>
-            <div class="resort-name">Wildernest Nature Resort</div>
-            <div class="resort-meta">
-              <span class="rating-star">★ 4.6</span><span class="dot">·</span>
-              Forest border<span class="dot">·</span>Dandeli
-            </div>
-          </div>
-          <div class="resort-desc">Elegant resort on the forest border with stunning sunset views, a large pool, restaurant and full safari packages. Great for honeymooners and premium travellers.</div>
-          <div class="amenity-row">
-            <span class="amenity-tag">🏊 Pool</span>
-            <span class="amenity-tag">❄️ AC</span>
-            <span class="amenity-tag">🍽️ Restaurant</span>
-            <span class="amenity-tag">🐆 Safari</span>
-            <span class="amenity-tag">📶 WiFi</span>
-          </div>
-        </div>
-        <div class="resort-footer">
-          <div class="price-block">
-            <div class="price">₹3,800 <span class="price-sub">/ night</span></div>
-            <div class="price-note">Per room · All inclusive</div>
-          </div>
-          <div class="book-actions">
-            <button class="btn-details" onclick="openDetails('Wildernest Nature Resort')">View details</button>
-            <button class="btn-book" onclick="openBooking('Wildernest Nature Resort')">Book now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div><!-- end resorts-list -->
 
   <!-- NO RESULTS -->
@@ -1127,6 +641,128 @@
   document.addEventListener('click', function(e) { const u = document.getElementById('nav-user'); if (u && !u.contains(e.target)) { const dd = document.getElementById('user-dropdown'); if (dd) dd.style.display = 'none'; } });
   _initNavAuth();
 
+  // ── SYNC AVAILABILITY FROM SUPABASE ──
+  // Runs on every page load — no login needed (resort_details is publicly readable)
+  // ── RESORT SEED DATA (used when Supabase resorts table is empty / fallback) ──
+  const SEED_RESORTS = [
+    {name:'Kali River Resort',type:'resort',location:'Kali River, Dandeli',rating:4.8,price:3500,emoji:'🌿',amenities:['pool','ac','meals','safari','wifi'],maps_url:'https://maps.google.com/?q=Kali+River+Resort+Dandeli',is_recommended:true,sort_order:1},
+    {name:'Dandeli Wild Camp',type:'camp',location:'Forest Edge, Dandeli',rating:4.9,price:5200,emoji:'🏕️',amenities:['pool','ac','meals','safari','wifi','spa'],maps_url:'https://maps.google.com/?q=Dandeli+Wild+Camp',is_recommended:true,sort_order:2},
+    {name:'Kali Riverside Camp',type:'camp',location:'Riverside, Dandeli',rating:4.7,price:2900,emoji:'🌊',amenities:['meals','wifi','rafting'],maps_url:'https://maps.google.com/?q=Kali+Riverside+Camp+Dandeli',is_recommended:true,sort_order:3},
+    {name:'Forest Edge Safari Lodge',type:'resort',location:'Forest Edge, Dandeli',rating:4.8,price:4100,emoji:'🦁',amenities:['meals','safari','wifi','ac'],maps_url:'https://maps.google.com/?q=Forest+Edge+Safari+Lodge+Dandeli',is_recommended:true,sort_order:4},
+    {name:'Supa Wilderness Stay',type:'resort',location:'Near Supa Dam, Dandeli',rating:4.7,price:2400,emoji:'🦜',amenities:['meals','wifi'],maps_url:'https://maps.google.com/?q=Supa+Wilderness+Stay+Dandeli',is_recommended:true,sort_order:5},
+    {name:'Jungle Nest Lodge',type:'lodge',location:'Deep Forest, Dandeli',rating:4.6,price:1800,emoji:'🌳',amenities:['meals','wifi'],maps_url:'https://maps.google.com/?q=Jungle+Nest+Lodge+Dandeli',is_recommended:false,sort_order:6},
+    {name:'Kali Adventure Resort',type:'resort',location:'Kali River, Dandeli',rating:4.5,price:1600,emoji:'🚣',amenities:['meals','wifi'],maps_url:'https://maps.google.com/?q=Kali+Adventure+Resort+Dandeli',is_recommended:false,sort_order:7},
+    {name:'Green Valley Lodge',type:'lodge',location:'Green Valley, Dandeli',rating:4.2,price:2200,emoji:'🏡',amenities:['meals','ac','wifi'],maps_url:'https://maps.google.com/?q=Green+Valley+Lodge+Dandeli',is_recommended:false,sort_order:8},
+    {name:'Kali Jungle Camping',type:'camp',location:'Kali Forest, Dandeli',rating:4.4,price:1200,emoji:'⛺',amenities:['meals'],maps_url:'https://maps.google.com/?q=Kali+Jungle+Camping+Dandeli',is_recommended:false,sort_order:9},
+    {name:'Dandeli Meadows Resort',type:'resort',location:'Dandeli Town Area',rating:4.5,price:3200,emoji:'🌸',amenities:['pool','meals','ac','wifi'],maps_url:'https://maps.google.com/?q=Dandeli+Meadows+Resort',is_recommended:false,sort_order:10},
+    {name:'Dandeli Forest Homestay',type:'lodge',location:'Forest Outskirts, Dandeli',rating:4.1,price:900,emoji:'🏠',amenities:['meals'],maps_url:'https://maps.google.com/?q=Dandeli+Forest+Homestay',is_recommended:false,sort_order:11},
+    {name:'Wildernest Nature Resort',type:'resort',location:'Western Ghats Edge, Dandeli',rating:4.6,price:4800,emoji:'🌿',amenities:['meals','ac','wifi','safari'],maps_url:'https://maps.google.com/?q=Wildernest+Nature+Resort+Dandeli',is_recommended:false,sort_order:12},
+  ];
+
+  // ── DYNAMIC RESORT RENDERING ──
+  function getAvailClass(avail, rooms) {
+    if (avail === 'full') return { cls: 'avail-full', label: 'Fully booked' };
+    if (avail === 'few' || (rooms !== null && rooms !== undefined && rooms < 5 && rooms > 0)) return { cls: 'avail-few', label: 'Few rooms left' };
+    return { cls: 'avail-open', label: 'Available' };
+  }
+
+  function renderResortCard(r) {
+    const avail = r.availability || 'open';
+    const rooms = r.rooms_available;
+    const { cls, label } = getAvailClass(avail, rooms);
+    const dataAvail = (avail === 'full') ? 'full' : (cls === 'avail-few' ? 'few' : 'open');
+    const amenityStr = (r.amenities || []).join(',');
+    const recClass = r.is_recommended ? ' recommended' : '';
+    const recBadge = r.is_recommended ? '<div class="rec-badge">⭐ Recommended</div>' : '';
+    const isFullBook = dataAvail === 'full';
+    const bookBtn = isFullBook
+      ? `<button class="btn-book" disabled style="opacity:0.5;cursor:not-allowed;">Fully booked</button>`
+      : `<button class="btn-book" onclick="openBooking('${r.name}')">Book now</button>`;
+    const topAmenities = (r.amenities || []).slice(0, 4).map(a => {
+      const icons = {pool:'🏊',ac:'❄️',meals:'🍽️',safari:'🐆',wifi:'📶',spa:'💆',rafting:'🚣',trekking:'🥾',garden:'🌸'};
+      const labels = {pool:'Pool',ac:'AC',meals:'Meals',safari:'Safari',wifi:'WiFi',spa:'Spa',rafting:'Rafting',trekking:'Trekking',garden:'Garden'};
+      return `<span class="amenity-tag">${icons[a]||'✓'} ${labels[a]||a}</span>`;
+    }).join('');
+    const thumbClass = r.is_recommended ? 'resort-thumb thumb-g1' : 'resort-thumb thumb-g2';
+
+    return `
+    <div class="resort-card${recClass}"
+      data-avail="${dataAvail}" data-type="${r.type||'resort'}" data-price="${r.price||0}" data-rating="${r.rating||0}"
+      data-amenities="${amenityStr}" data-recommended="${r.is_recommended?'true':'false'}">
+      <div class="${thumbClass}">
+        ${r.emoji||'🏕️'}
+        ${recBadge}
+        <span class="avail-pill ${cls}">${label}</span>
+        <button class="wish-btn" aria-label="Save" data-resort="${r.name}" onclick="toggleFavourite(event,this)">♡</button>
+      </div>
+      <div class="resort-body">
+        <div>
+          <div class="resort-top">
+            <div class="resort-type">${r.type||'Resort'}</div>
+            <div class="resort-name">${r.name}</div>
+            <div class="resort-meta">
+              <span class="rating-star">★ ${r.rating||'4.5'}</span><span class="dot">·</span>${r.location||'Dandeli'}
+            </div>
+          </div>
+          <div class="amenity-row">${topAmenities}</div>
+        </div>
+        <div class="resort-footer">
+          <div class="price-block">
+            <div class="price">₹${(r.price||0).toLocaleString('en-IN')} <span class="price-sub">/ night</span></div>
+            <div class="price-note">Per room · Taxes extra</div>
+          </div>
+          <div class="book-actions">
+            <button class="btn-details" onclick="openDetails('${r.name}')">View details</button>
+            ${bookBtn}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  async function fetchAndRenderResorts() {
+    const list = document.getElementById('resorts-list');
+
+    // Try Supabase resorts table first
+    const { data: sbResorts, error } = await _sb.from('resorts').select('*').order('sort_order').order('is_recommended', { ascending: false });
+
+    // Get availability overrides from resort_details
+    const { data: details } = await _sb.from('resort_details').select('resort_name,availability,rooms_available');
+    const detMap = {};
+    (details || []).forEach(d => { detMap[d.resort_name] = d; });
+
+    // Decide which data to use
+    const resorts = (sbResorts && sbResorts.length > 0)
+      ? sbResorts.map(r => ({ ...r, availability: detMap[r.name]?.availability || 'open', rooms_available: detMap[r.name]?.rooms_available || null }))
+      : SEED_RESORTS.map(r => ({ ...r, availability: detMap[r.name]?.availability || 'open', rooms_available: detMap[r.name]?.rooms_available || null }));
+
+    // Render cards
+    list.innerHTML = resorts.map(renderResortCard).join('');
+    document.getElementById('resorts-loading')?.remove();
+
+    // Re-run post-render tasks
+    applyFilters();
+    _loadFavourites();
+
+    // Check ?selected= param
+    const params = new URLSearchParams(window.location.search);
+    const sel = params.get('selected');
+    if (sel) {
+      const decoded = decodeURIComponent(sel);
+      setTimeout(() => {
+        const cards = Array.from(document.querySelectorAll('.resort-card'));
+        const match = cards.find(c => c.querySelector('.resort-name')?.textContent.trim() === decoded);
+        if (match) {
+          match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          match.classList.add('highlighted');
+          setTimeout(() => match.classList.remove('highlighted'), 3000);
+        }
+      }, 400);
+    }
+  }
+
+  fetchAndRenderResorts();
+
   // ── THEME ──
   // ── RESORT DATA (defaults; overridden by Supabase if owner has set details) ──
   const RESORT_DATA = {
@@ -1149,7 +785,7 @@
   async function openDetails(name) {
     const base = RESORT_DATA[name] || {};
     // Try to fetch owner-updated details from Supabase
-    const { data: sb } = await _sb.from('resort_details').select('*').eq('resort_name', name).single();
+    const { data: sb } = await _sb.from('resort_details').select('*').eq('resort_name', name).maybeSingle();
     const desc = sb?.description || base.desc || 'Details coming soon.';
     const packages = base.packages || [];
     const amenities = base.amenities || [];

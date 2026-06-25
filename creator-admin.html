@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Creator Admin — DandeliWild</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--gm:#1D9E75;--gk:#0F6E56;--am:#EF9F27;--tp:#f0f0ee;--tm:#9ca3af;--tf:#6b7280;--bd:rgba(255,255,255,0.1);--bg:#0d1f1a;--bs:#111f1a;--cb:#162820;--red:#ef4444;}
+[data-theme="light"]{--tp:#111;--tm:#6b7280;--tf:#9ca3af;--bd:rgba(0,0,0,0.09);--bg:#fff;--bs:#f9f9f8;--cb:#fff;}
+body{font-family:'DM Sans',sans-serif;color:var(--tp);background:var(--bg);min-height:100vh;}
+nav{display:flex;align-items:center;gap:12px;padding:0 2rem;height:60px;border-bottom:1px solid var(--bd);background:var(--bg);position:sticky;top:0;z-index:50;}
+.logo{font-family:'DM Serif Display',serif;font-size:20px;color:#5DCAA5;text-decoration:none;}
+.logo em{color:var(--gm);font-style:normal;}
+.admin-badge{font-size:11px;font-weight:600;background:rgba(239,159,39,.15);color:var(--am);border:1px solid rgba(239,159,39,.25);padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;}
+.nav-r{margin-left:auto;display:flex;gap:8px;align-items:center;}
+.bsm{background:var(--gm);color:#fff;border:none;padding:7px 16px;border-radius:50px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
+.bsm:hover{background:var(--gk);}
+.bout{background:none;border:1px solid var(--bd);color:var(--tm);padding:6px 14px;border-radius:50px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.bout:hover{border-color:var(--red);color:var(--red);}
+/* STATES */
+.state{min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;padding:2rem;text-align:center;}
+.spinner{width:36px;height:36px;border:3px solid var(--bd);border-top-color:var(--gm);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sc{background:var(--cb);border:1px solid var(--bd);border-radius:16px;padding:2rem 2.4rem;width:100%;max-width:420px;box-shadow:0 4px 32px rgba(0,0,0,.1);}
+.sc h2{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:.3rem;}
+.sc p{font-size:13px;color:var(--tm);margin-bottom:1.4rem;line-height:1.6;}
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--bd);padding:0 2rem;}
+.tab{padding:.8rem 1.2rem;font-size:14px;color:var(--tm);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:'DM Sans',sans-serif;}
+.tab:hover{color:var(--tp);}
+.tab.active{color:var(--gm);border-bottom-color:var(--gm);}
+.tab-count{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--red);color:#fff;font-size:10px;font-weight:700;border-radius:50%;margin-left:6px;}
+/* DASHBOARD */
+#v-dash{display:none;}
+.dash{max-width:900px;margin:0 auto;padding:2rem 1.5rem;}
+/* STATS ROW */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:2rem;}
+.stat{background:var(--cb);border:1px solid var(--bd);border-radius:12px;padding:1.2rem 1.4rem;}
+.stat-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--gm);}
+.stat-lbl{font-size:12px;color:var(--tm);margin-top:2px;}
+/* SECTION */
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.section-hdr h3{font-size:16px;font-weight:600;}
+/* APPROVAL CARDS */
+.appr-card{background:var(--cb);border:1px solid var(--bd);border-radius:12px;padding:1.2rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:8px;flex-wrap:wrap;}
+.appr-name{font-weight:500;font-size:15px;}
+.appr-email{font-size:12px;color:var(--tf);margin-top:2px;}
+.appr-actions{display:flex;gap:8px;flex-shrink:0;}
+.btn-approve{background:var(--gm);color:#fff;border:none;padding:7px 18px;border-radius:50px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.btn-approve:hover{background:var(--gk);}
+.btn-reject{background:none;border:1px solid rgba(239,68,68,.3);color:var(--red);padding:7px 14px;border-radius:50px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-reject:hover{background:rgba(239,68,68,.08);}
+.empty{text-align:center;padding:2.5rem;color:var(--tf);font-size:14px;}
+/* RESORT TABLE */
+.resort-row{background:var(--cb);border:1px solid var(--bd);border-radius:10px;padding:1rem 1.2rem;display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+.resort-emoji{font-size:22px;flex-shrink:0;}
+.resort-info{flex:1;min-width:0;}
+.resort-rname{font-weight:500;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.resort-rmeta{font-size:12px;color:var(--tf);}
+.resort-actions{display:flex;gap:6px;flex-shrink:0;align-items:center;}
+.tag-rec{font-size:10px;font-weight:600;background:rgba(239,159,39,.15);color:var(--am);border:1px solid rgba(239,159,39,.25);padding:2px 8px;border-radius:50px;}
+.btn-edit{background:none;border:1px solid var(--bd);color:var(--tm);padding:5px 12px;border-radius:50px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-edit:hover{border-color:var(--gm);color:var(--gm);}
+.btn-del{background:none;border:1px solid rgba(239,68,68,.25);color:var(--red);padding:5px 10px;border-radius:50px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-del:hover{background:rgba(239,68,68,.08);}
+/* FORM */
+.form-card{background:var(--cb);border:1px solid var(--bd);border-radius:14px;padding:1.6rem;margin-bottom:1rem;}
+.form-card h4{font-size:15px;font-weight:600;margin-bottom:1.2rem;}
+.field{margin-bottom:1rem;}
+.field label{display:block;font-size:13px;font-weight:500;margin-bottom:5px;}
+.inp{width:100%;background:var(--bs);border:1px solid var(--bd);color:var(--tp);padding:10px 14px;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.inp:focus{border-color:var(--gm);}
+.sel{width:100%;background:var(--bs);border:1px solid var(--bd);color:var(--tp);padding:10px 14px;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.amenity-checks{display:flex;flex-wrap:wrap;gap:8px;}
+.ach{display:flex;align-items:center;gap:5px;background:var(--bs);border:1px solid var(--bd);padding:5px 12px;border-radius:50px;cursor:pointer;font-size:13px;color:var(--tm);transition:all .18s;}
+.ach input{display:none;}
+.ach.checked{background:rgba(29,158,117,.1);border-color:var(--gm);color:var(--gm);}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;}
+.toggle-lbl{font-size:14px;font-weight:500;}
+.toggle-sub{font-size:12px;color:var(--tf);}
+.tog{width:42px;height:24px;border-radius:50px;background:var(--bd);position:relative;cursor:pointer;transition:background .3s;border:none;flex-shrink:0;}
+.tog.on{background:var(--gm);}
+.tog::after{content:'';width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:transform .3s;}
+.tog.on::after{transform:translateX(18px);}
+.btn-primary{background:var(--gm);color:#fff;border:none;padding:12px 28px;border-radius:50px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.btn-primary:hover{background:var(--gk);}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;}
+.btn-seed{background:rgba(239,159,39,.1);color:var(--am);border:1px solid rgba(239,159,39,.3);padding:9px 18px;border-radius:50px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-seed:hover{background:rgba(239,159,39,.2);}
+.msg{padding:10px 14px;border-radius:10px;font-size:13px;margin:.5rem 0;display:none;}
+.msg.err{display:block;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red);}
+.msg.ok{display:block;background:rgba(29,158,117,.08);border:1px solid rgba(29,158,117,.2);color:var(--gm);}
+/* GOOGLE BTN */
+.btn-google{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;border:1.5px solid #dadce0;border-radius:50px;padding:12px 20px;font-size:15px;font-weight:500;color:#3c4043;font-family:'DM Sans',sans-serif;cursor:pointer;width:100%;transition:box-shadow .2s;}
+.btn-google:hover{box-shadow:0 2px 12px rgba(0,0,0,.1);}
+@media(max-width:600px){.r2,.r3{grid-template-columns:1fr;}.tabs{padding:0 1rem;}.dash{padding:1.5rem 1rem;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Dandeli<em>Wild</em></a>
+  <span class="admin-badge">🛡️ Creator Admin</span>
+  <div class="nav-r">
+    <a href="resorts.html" class="bsm">View site</a>
+    <button class="bout" id="btn-out" onclick="signOut()" style="display:none">Sign out</button>
+  </div>
+</nav>
+
+<div id="v-load" class="state"><div class="spinner"></div></div>
+
+<div id="v-login" class="state" style="display:none">
+  <div class="sc">
+    <div style="font-size:36px;margin-bottom:.5rem">🛡️</div>
+    <h2>Creator Login</h2>
+    <p>Sign in with the DandeliWild admin Google account to access the creator panel.</p>
+    <button class="btn-google" onclick="googleLogin()">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Sign in with Google
+    </button>
+  </div>
+</div>
+
+<div id="v-denied" class="state" style="display:none">
+  <div style="font-size:44px">🚫</div>
+  <div style="font-family:'DM Serif Display',serif;font-size:22px">Access denied</div>
+  <div style="font-size:14px;color:var(--tm)">This panel is only accessible to the DandeliWild admin account.</div>
+  <button class="bout" onclick="signOut()" style="margin-top:1rem">Sign out</button>
+</div>
+
+<div id="v-dash">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('approvals',this)">Approvals <span class="tab-count" id="appr-count" style="display:none">0</span></button>
+    <button class="tab" onclick="switchTab('resorts',this)">Resorts</button>
+    <button class="tab" onclick="switchTab('add',this)">+ Add Resort</button>
+  </div>
+
+  <!-- APPROVALS TAB -->
+  <div id="tab-approvals" class="dash">
+    <div class="section-hdr"><h3>Pending Approvals</h3><span style="font-size:13px;color:var(--tf)">Approve to give owner access</span></div>
+    <div id="appr-msg" class="msg"></div>
+    <div id="appr-list"><div class="empty">Loading…</div></div>
+  </div>
+
+  <!-- RESORTS TAB -->
+  <div id="tab-resorts" class="dash" style="display:none">
+    <div class="section-hdr">
+      <h3>All Resorts</h3>
+      <button class="btn-seed" onclick="seedResorts()">⬆️ Seed 12 existing resorts</button>
+    </div>
+    <div id="seed-msg" class="msg"></div>
+    <div id="resort-list"><div class="empty">Loading…</div></div>
+  </div>
+
+  <!-- ADD RESORT TAB -->
+  <div id="tab-add" class="dash" style="display:none">
+    <div class="form-card">
+      <h4 id="form-title">Add New Resort</h4>
+      <div id="add-msg" class="msg"></div>
+      <input type="hidden" id="edit-id"/>
+      <div class="r2">
+        <div class="field"><label>Resort name *</label><input class="inp" id="f-name" type="text" placeholder="Kali River Resort"/></div>
+        <div class="field"><label>Emoji icon</label><input class="inp" id="f-emoji" type="text" placeholder="🏕️" maxlength="4"/></div>
+      </div>
+      <div class="r2">
+        <div class="field"><label>Type</label>
+          <select class="sel" id="f-type"><option value="resort">Resort</option><option value="lodge">Lodge</option><option value="camp">Camp</option><option value="homestay">Homestay</option></select>
+        </div>
+        <div class="field"><label>Location</label><input class="inp" id="f-loc" type="text" placeholder="Dandeli, Karnataka"/></div>
+      </div>
+      <div class="r3">
+        <div class="field"><label>Price (₹/night)</label><input class="inp" id="f-price" type="number" placeholder="2500"/></div>
+        <div class="field"><label>Rating (0–5)</label><input class="inp" id="f-rating" type="number" step="0.1" min="0" max="5" placeholder="4.5"/></div>
+        <div class="field"><label>Sort order</label><input class="inp" id="f-sort" type="number" placeholder="1"/></div>
+      </div>
+      <div class="field"><label>Google Maps URL</label><input class="inp" id="f-maps" type="url" placeholder="https://maps.google.com/?q=..."/></div>
+      <div class="field">
+        <label>Amenities</label>
+        <div class="amenity-checks" id="amenity-checks">
+          <label class="ach"><input type="checkbox" value="pool"/>🏊 Pool</label>
+          <label class="ach"><input type="checkbox" value="ac"/>❄️ AC</label>
+          <label class="ach"><input type="checkbox" value="meals"/>🍽️ Meals</label>
+          <label class="ach"><input type="checkbox" value="safari"/>🐆 Safari</label>
+          <label class="ach"><input type="checkbox" value="wifi"/>📶 WiFi</label>
+          <label class="ach"><input type="checkbox" value="spa"/>💆 Spa</label>
+          <label class="ach"><input type="checkbox" value="rafting"/>🚣 Rafting</label>
+          <label class="ach"><input type="checkbox" value="trekking"/>🥾 Trekking</label>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-lbl">⭐ Mark as Recommended</div><div class="toggle-sub">Shows gold badge · Listed first</div></div>
+        <button class="tog" id="tog-rec" onclick="toggleRec()"></button>
+      </div>
+      <div class="toggle-row" style="border-top:1px solid var(--bd);margin-top:.5rem;padding-top:1rem;">
+        <div><div class="toggle-lbl">✅ Active (visible on site)</div><div class="toggle-sub">Uncheck to hide without deleting</div></div>
+        <button class="tog on" id="tog-active" onclick="toggleActive()"></button>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:1.2rem;flex-wrap:wrap;">
+        <button class="btn-primary" id="btn-save-resort" onclick="saveResort()">Save resort</button>
+        <button class="bout" onclick="resetForm()">Clear form</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const sb=supabase.createClient('https://lbgejzuzfqhdfytyumwh.supabase.co','sb_publishable_U9skEdu0mTUHQiLXGhZEQw__JeEk3NI');
+const ADMIN_EMAIL='valarinmist@gmail.com';
+let _session=null,_initiated=false,_isRec=false,_isActive=true,_editId=null;
+
+const SEED=[
+  {name:'Kali River Resort',type:'resort',location:'Kali River, Dandeli',rating:4.8,price:3500,emoji:'🌿',amenities:['pool','ac','meals','safari','wifi'],maps_url:'https://maps.google.com/?q=Kali+River+Resort+Dandeli',is_recommended:true,sort_order:1},
+  {name:'Dandeli Wild Camp',type:'camp',location:'Forest Edge, Dandeli',rating:4.9,price:5200,emoji:'🏕️',amenities:['pool','ac','meals','safari','wifi','spa'],maps_url:'https://maps.google.com/?q=Dandeli+Wild+Camp',is_recommended:true,sort_order:2},
+  {name:'Kali Riverside Camp',type:'camp',location:'Riverside, Dandeli',rating:4.7,price:2900,emoji:'🌊',amenities:['meals','wifi','rafting'],maps_url:'https://maps.google.com/?q=Kali+Riverside+Camp+Dandeli',is_recommended:true,sort_order:3},
+  {name:'Forest Edge Safari Lodge',type:'resort',location:'Forest Edge, Dandeli',rating:4.8,price:4100,emoji:'🦁',amenities:['meals','safari','wifi','ac'],maps_url:'https://maps.google.com/?q=Forest+Edge+Safari+Lodge+Dandeli',is_recommended:true,sort_order:4},
+  {name:'Supa Wilderness Stay',type:'resort',location:'Near Supa Dam, Dandeli',rating:4.7,price:2400,emoji:'🦜',amenities:['meals','wifi'],maps_url:'https://maps.google.com/?q=Supa+Wilderness+Stay+Dandeli',is_recommended:true,sort_order:5},
+  {name:'Jungle Nest Lodge',type:'lodge',location:'Deep Forest, Dandeli',rating:4.6,price:1800,emoji:'🌳',amenities:['meals','wifi'],maps_url:'https://maps.google.com/?q=Jungle+Nest+Lodge+Dandeli',is_recommended:false,sort_order:6},
+  {name:'Kali Adventure Resort',type:'resort',location:'Kali River, Dandeli',rating:4.5,price:1600,emoji:'🚣',amenities:['meals','wifi','rafting'],maps_url:'https://maps.google.com/?q=Kali+Adventure+Resort+Dandeli',is_recommended:false,sort_order:7},
+  {name:'Green Valley Lodge',type:'lodge',location:'Green Valley, Dandeli',rating:4.2,price:2200,emoji:'🏡',amenities:['meals','ac','wifi'],maps_url:'https://maps.google.com/?q=Green+Valley+Lodge+Dandeli',is_recommended:false,sort_order:8},
+  {name:'Kali Jungle Camping',type:'camp',location:'Kali Forest, Dandeli',rating:4.4,price:1200,emoji:'⛺',amenities:['meals'],maps_url:'https://maps.google.com/?q=Kali+Jungle+Camping+Dandeli',is_recommended:false,sort_order:9},
+  {name:'Dandeli Meadows Resort',type:'resort',location:'Dandeli Town Area',rating:4.5,price:3200,emoji:'🌸',amenities:['pool','meals','ac','wifi'],maps_url:'https://maps.google.com/?q=Dandeli+Meadows+Resort',is_recommended:false,sort_order:10},
+  {name:'Dandeli Forest Homestay',type:'homestay',location:'Forest Outskirts, Dandeli',rating:4.1,price:900,emoji:'🏠',amenities:['meals'],maps_url:'https://maps.google.com/?q=Dandeli+Forest+Homestay',is_recommended:false,sort_order:11},
+  {name:'Wildernest Nature Resort',type:'resort',location:'Western Ghats Edge, Dandeli',rating:4.6,price:4800,emoji:'🌿',amenities:['meals','ac','wifi','safari'],maps_url:'https://maps.google.com/?q=Wildernest+Nature+Resort+Dandeli',is_recommended:false,sort_order:12},
+];
+
+function show(id){['v-load','v-login','v-denied','v-dash'].forEach(v=>{const e=document.getElementById(v);if(e)e.style.display=v===id?'flex':'none';});if(id==='v-dash'){document.getElementById('v-dash').style.display='block';document.getElementById('btn-out').style.display='inline-flex';}}
+function showMsg(id,t,m){const e=document.getElementById(id);e.className='msg '+t;e.textContent=m;setTimeout(()=>{e.className='msg';},4000);}
+function switchTab(name,btn){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');['approvals','resorts','add'].forEach(t=>{const e=document.getElementById('tab-'+t);if(e)e.style.display=t===name?'block':'none';});if(name==='approvals')loadApprovals();if(name==='resorts')loadResorts();}
+
+async function init(){
+  const{data:{session}}=await sb.auth.getSession();
+  if(session){_initiated=true;handleSession(session);return;}
+  sb.auth.onAuthStateChange(async(ev,sess)=>{if(_initiated)return;_initiated=true;if(sess)handleSession(sess);else show('v-login');});
+  setTimeout(()=>{if(!_initiated){_initiated=true;show('v-login');}},5000);
+}
+
+function handleSession(sess){
+  _session=sess;
+  if(sess.user.email!==ADMIN_EMAIL){show('v-denied');return;}
+  show('v-dash');loadApprovals();loadResorts();
+}
+
+async function googleLogin(){
+  await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:'https://dandelitourism.vercel.app/creator-admin.html'}});
+}
+async function signOut(){await sb.auth.signOut();show('v-login');document.getElementById('btn-out').style.display='none';}
+
+// AMENITY CHECKBOXES
+document.querySelectorAll('.ach').forEach(lbl=>{
+  lbl.addEventListener('click',()=>{const cb=lbl.querySelector('input');cb.checked=!cb.checked;lbl.classList.toggle('checked',cb.checked);});
+});
+
+// APPROVALS
+async function loadApprovals(){
+  const{data,error}=await sb.from('resort_owners').select('*').eq('approved',false).order('created_at');
+  const list=document.getElementById('appr-list');
+  if(error||!data||data.length===0){list.innerHTML=`<div class="empty">✅ No pending approvals</div>`;document.getElementById('appr-count').style.display='none';return;}
+  document.getElementById('appr-count').textContent=data.length;document.getElementById('appr-count').style.display='inline-flex';
+  list.innerHTML=data.map(o=>`
+    <div class="appr-card" id="appr-${o.id}">
+      <div>
+        <div class="appr-name">🏨 ${o.resort_name}</div>
+        <div class="appr-email">User ID: ${o.user_id.slice(0,16)}… · Applied ${new Date(o.created_at).toLocaleDateString('en-IN')}</div>
+      </div>
+      <div class="appr-actions">
+        <button class="btn-approve" onclick="approveOwner('${o.id}','${o.resort_name}')">✅ Approve</button>
+        <button class="btn-reject" onclick="rejectOwner('${o.id}')">Reject</button>
+      </div>
+    </div>`).join('');
+}
+
+async function approveOwner(id,name){
+  const{error}=await sb.from('resort_owners').update({approved:true}).eq('id',id);
+  if(error){showMsg('appr-msg','err','Error: '+error.message);return;}
+  document.getElementById('appr-'+id)?.remove();
+  showMsg('appr-msg','ok',`✅ ${name} approved! Owner can now set up their credentials.`);
+  const remaining=document.querySelectorAll('[id^="appr-"]').length;
+  if(remaining===0){document.getElementById('appr-list').innerHTML='<div class="empty">✅ No pending approvals</div>';document.getElementById('appr-count').style.display='none';}
+  else{document.getElementById('appr-count').textContent=remaining;}
+}
+
+async function rejectOwner(id){
+  if(!confirm('Delete this registration? This cannot be undone.'))return;
+  await sb.from('resort_owners').delete().eq('id',id);
+  document.getElementById('appr-'+id)?.remove();
+  showMsg('appr-msg','ok','Registration removed.');
+}
+
+// RESORTS
+async function loadResorts(){
+  const{data,error}=await sb.from('resorts').select('*').order('sort_order');
+  const list=document.getElementById('resort-list');
+  if(error){list.innerHTML=`<div class="empty">Error loading resorts</div>`;return;}
+  if(!data||data.length===0){list.innerHTML=`<div class="empty">No resorts yet. Click "Seed 12 existing resorts" to import, or use the Add Resort tab.</div>`;return;}
+  list.innerHTML=data.map(r=>`
+    <div class="resort-row" id="rrow-${r.id}">
+      <div class="resort-emoji">${r.emoji||'🏕️'}</div>
+      <div class="resort-info">
+        <div class="resort-rname">${r.name} ${r.is_recommended?'<span class="tag-rec">⭐ Recommended</span>':''} ${!r.is_active?'<span style="font-size:10px;color:var(--tf);background:var(--bs);padding:2px 8px;border-radius:50px;border:1px solid var(--bd)">Hidden</span>':''}</div>
+        <div class="resort-rmeta">${r.type} · ${r.location} · ₹${r.price?.toLocaleString('en-IN')}/night · ★${r.rating}</div>
+      </div>
+      <div class="resort-actions">
+        <button class="btn-edit" onclick="editResort(${JSON.stringify(r).replace(/"/g,'&quot;')})">Edit</button>
+        <button class="btn-del" onclick="deleteResort('${r.id}','${r.name}')">Del</button>
+      </div>
+    </div>`).join('');
+}
+
+async function deleteResort(id,name){
+  if(!confirm(`Delete "${name}"? This removes it from the site permanently.`))return;
+  await sb.from('resorts').delete().eq('id',id);
+  document.getElementById('rrow-'+id)?.remove();
+  showMsg('seed-msg','ok',`"${name}" deleted.`);
+}
+
+// SEED
+async function seedResorts(){
+  const btn=document.querySelector('.btn-seed');btn.disabled=true;btn.textContent='Seeding…';
+  const{error}=await sb.from('resorts').upsert(SEED,{onConflict:'name',ignoreDuplicates:false});
+  btn.disabled=false;btn.textContent='⬆️ Seed 12 existing resorts';
+  if(error){showMsg('seed-msg','err','Error: '+error.message);}
+  else{showMsg('seed-msg','ok','✅ All 12 resorts imported into Supabase!');loadResorts();}
+}
+
+// ADD / EDIT FORM
+function toggleRec(){_isRec=!_isRec;document.getElementById('tog-rec').classList.toggle('on',_isRec);}
+function toggleActive(){_isActive=!_isActive;document.getElementById('tog-active').classList.toggle('on',_isActive);}
+
+function resetForm(){
+  _editId=null;_isRec=false;_isActive=true;
+  ['f-name','f-emoji','f-loc','f-maps'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('f-emoji').value='🏕️';
+  document.getElementById('f-price').value='';document.getElementById('f-rating').value='';document.getElementById('f-sort').value='';
+  document.getElementById('f-type').value='resort';
+  document.querySelectorAll('.ach input').forEach(cb=>{cb.checked=false;cb.parentElement.classList.remove('checked');});
+  document.getElementById('tog-rec').classList.remove('on');
+  document.getElementById('tog-active').classList.add('on');
+  document.getElementById('form-title').textContent='Add New Resort';
+  document.getElementById('btn-save-resort').textContent='Save resort';
+  document.getElementById('edit-id').value='';
+}
+
+function editResort(r){
+  resetForm();_editId=r.id;_isRec=r.is_recommended||false;_isActive=r.is_active!==false;
+  document.getElementById('f-name').value=r.name||'';
+  document.getElementById('f-emoji').value=r.emoji||'🏕️';
+  document.getElementById('f-type').value=r.type||'resort';
+  document.getElementById('f-loc').value=r.location||'';
+  document.getElementById('f-price').value=r.price||'';
+  document.getElementById('f-rating').value=r.rating||'';
+  document.getElementById('f-sort').value=r.sort_order||'';
+  document.getElementById('f-maps').value=r.maps_url||'';
+  document.getElementById('tog-rec').classList.toggle('on',_isRec);
+  document.getElementById('tog-active').classList.toggle('on',_isActive);
+  (r.amenities||[]).forEach(a=>{const cb=document.querySelector(`.ach input[value="${a}"]`);if(cb){cb.checked=true;cb.parentElement.classList.add('checked');}});
+  document.getElementById('form-title').textContent='Edit Resort';
+  document.getElementById('btn-save-resort').textContent='Update resort';
+  document.getElementById('edit-id').value=r.id;
+  // Switch to add tab
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab')[2].classList.add('active');
+  ['approvals','resorts','add'].forEach(t=>{const e=document.getElementById('tab-'+t);if(e)e.style.display=t==='add'?'block':'none';});
+  document.getElementById('tab-add').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+async function saveResort(){
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){showMsg('add-msg','err','Resort name is required.');return;}
+  const amenities=Array.from(document.querySelectorAll('.ach input:checked')).map(c=>c.value);
+  const payload={
+    name,emoji:document.getElementById('f-emoji').value.trim()||'🏕️',
+    type:document.getElementById('f-type').value,
+    location:document.getElementById('f-loc').value.trim()||'Dandeli, Karnataka',
+    price:parseInt(document.getElementById('f-price').value)||null,
+    rating:parseFloat(document.getElementById('f-rating').value)||null,
+    sort_order:parseInt(document.getElementById('f-sort').value)||99,
+    maps_url:document.getElementById('f-maps').value.trim()||null,
+    amenities,is_recommended:_isRec,is_active:_isActive,
+  };
+  const btn=document.getElementById('btn-save-resort');btn.disabled=true;btn.textContent='Saving…';
+  let error;
+  if(_editId){const res=await sb.from('resorts').update(payload).eq('id',_editId);error=res.error;}
+  else{const res=await sb.from('resorts').insert(payload);error=res.error;}
+  btn.disabled=false;btn.textContent=_editId?'Update resort':'Save resort';
+  if(error){showMsg('add-msg','err','Error: '+error.message);}
+  else{showMsg('add-msg','ok',`✅ "${name}" ${_editId?'updated':'added'} successfully!`);if(!_editId)resetForm();}
+}
+
+// AMENITY CLICK FIX (event delegation)
+document.getElementById('amenity-checks').addEventListener('click',e=>{
+  const lbl=e.target.closest('.ach');if(!lbl)return;
+  const cb=lbl.querySelector('input');cb.checked=!cb.checked;lbl.classList.toggle('checked',cb.checked);
+});
+
+init();
+</script>
+</body>
+</html>

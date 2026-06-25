@@ -1,469 +1,361 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Owner Dashboard — DandeliWild</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
 <style>
-  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-  :root,[data-theme="light"]{--green-deep:#04342C;--green-dark:#0F6E56;--green-mid:#1D9E75;--green-light:#5DCAA5;--amber:#EF9F27;--text-primary:#111;--text-muted:#6b7280;--text-faint:#9ca3af;--border:rgba(0,0,0,0.09);--bg:#ffffff;--bg-soft:#f9f9f8;--card-bg:#ffffff;--radius:14px;}
-  [data-theme="dark"]{--text-primary:#f0f0ee;--text-muted:#9ca3af;--text-faint:#6b7280;--border:rgba(255,255,255,0.1);--bg:#0d1f1a;--bg-soft:#111f1a;--card-bg:#162820;}
-  body{font-family:'DM Sans',sans-serif;color:var(--text-primary);background:var(--bg);min-height:100vh;}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:50;}
-  .logo{font-family:'DM Serif Display',serif;font-size:22px;color:var(--green-deep);text-decoration:none;}
-  [data-theme="dark"] .logo{color:var(--green-light);}
-  .logo em{color:var(--green-mid);font-style:normal;}
-  .nav-right{display:flex;align-items:center;gap:12px;}
-  .owner-tag{font-size:12px;color:var(--text-faint);background:var(--bg-soft);border:1px solid var(--border);padding:4px 12px;border-radius:50px;}
-  .btn-signout{background:none;border:1px solid var(--border);color:var(--text-muted);padding:7px 16px;border-radius:50px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:border-color 0.2s;}
-  .btn-signout:hover{border-color:#ef4444;color:#ef4444;}
-  .btn-view-site{background:var(--green-mid);color:#fff;border:none;padding:8px 18px;border-radius:50px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;text-decoration:none;transition:background 0.2s;}
-  .btn-view-site:hover{background:var(--green-dark);}
-
-  /* LOADING / STATES */
-  .state-screen{min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;padding:2rem;text-align:center;}
-  .state-icon{font-size:48px;margin-bottom:8px;}
-  .state-title{font-family:'DM Serif Display',serif;font-size:24px;}
-  .state-sub{font-size:14px;color:var(--text-muted);max-width:380px;line-height:1.6;}
-  .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--green-mid);border-radius:50%;animation:spin 0.7s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-
-  /* REGISTER FORM */
-  .register-card{background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:2.4rem;width:100%;max-width:480px;box-shadow:0 4px 40px rgba(0,0,0,0.12);}
-  .register-card h2{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:0.4rem;}
-  .register-card p{font-size:14px;color:var(--text-muted);margin-bottom:1.6rem;line-height:1.6;}
-  .form-field{margin-bottom:1.2rem;}
-  .form-label{display:block;font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:6px;}
-  .form-input,.form-select{width:100%;background:var(--bg-soft);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
-  .form-input:focus,.form-select:focus{border-color:var(--green-mid);}
-  .form-hint{font-size:12px;color:var(--text-faint);margin-top:5px;}
-  .btn-register{width:100%;background:var(--green-mid);color:#fff;border:none;padding:13px;border-radius:50px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;margin-top:0.5rem;}
-  .btn-register:hover{background:var(--green-dark);}
-  .btn-register:disabled{opacity:0.6;cursor:not-allowed;}
-
-  /* ADMIN DASHBOARD */
-  #admin-view{display:none;}
-  .dashboard{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem;}
-  .dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
-  .dash-resort-name{font-family:'DM Serif Display',serif;font-size:28px;}
-  .live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(29,158,117,0.12);border:1px solid rgba(29,158,117,0.3);color:var(--green-mid);font-size:12px;font-weight:500;padding:4px 12px;border-radius:50px;}
-  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green-mid);animation:pulse 1.5s infinite;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
-
-  /* SECTION CARDS */
-  .section-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;margin-bottom:1.2rem;}
-  .section-card h3{font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:4px;}
-  .section-card .section-desc{font-size:13px;color:var(--text-faint);margin-bottom:1.4rem;}
-
-  /* AVAILABILITY TOGGLE */
-  .avail-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-  .avail-btn{padding:14px 8px;border-radius:12px;border:2px solid var(--border);background:var(--bg-soft);cursor:pointer;text-align:center;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
-  .avail-btn .avail-emoji{font-size:22px;display:block;margin-bottom:6px;}
-  .avail-btn .avail-label{font-size:13px;font-weight:500;color:var(--text-muted);}
-  .avail-btn .avail-sub{font-size:11px;color:var(--text-faint);margin-top:3px;}
-  .avail-btn.selected.open{border-color:#1D9E75;background:rgba(29,158,117,0.08);}
-  .avail-btn.selected.open .avail-label{color:#1D9E75;}
-  .avail-btn.selected.few{border-color:#EF9F27;background:rgba(239,159,39,0.08);}
-  .avail-btn.selected.few .avail-label{color:#EF9F27;}
-  .avail-btn.selected.full{border-color:#ef4444;background:rgba(239,68,68,0.08);}
-  .avail-btn.selected.full .avail-label{color:#ef4444;}
-  .avail-btn:hover:not(.selected){border-color:var(--green-mid);}
-
-  /* PHOTO UPLOAD */
-  .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:1.2rem;}
-  .photo-thumb{aspect-ratio:4/3;border-radius:10px;object-fit:cover;position:relative;border:1px solid var(--border);}
-  .photo-thumb-wrap{position:relative;}
-  .photo-thumb-wrap img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;}
-  .photo-remove{position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.6);border:none;color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;}
-  .photo-remove:hover{background:rgba(239,68,68,0.85);}
-  .upload-zone{border:2px dashed var(--border);border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;}
-  .upload-zone:hover,.upload-zone.drag-over{border-color:var(--green-mid);background:rgba(29,158,117,0.04);}
-  .upload-zone input{display:none;}
-  .upload-zone .upload-icon{font-size:32px;margin-bottom:8px;}
-  .upload-zone p{font-size:13px;color:var(--text-muted);}
-  .upload-zone span{font-size:12px;color:var(--text-faint);}
-  .upload-progress{margin-top:8px;font-size:13px;color:var(--green-mid);display:none;}
-
-  /* DETAILS FORM */
-  .form-textarea{width:100%;background:var(--bg-soft);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;resize:vertical;min-height:120px;outline:none;transition:border-color 0.2s;line-height:1.6;}
-  .form-textarea:focus{border-color:var(--green-mid);}
-  .price-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-
-  /* SAVE BUTTON */
-  .save-bar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;z-index:40;}
-  .save-status{font-size:13px;color:var(--text-faint);}
-  .save-status.saved{color:var(--green-mid);}
-  .save-status.saving{color:var(--amber);}
-  .btn-save{background:var(--green-mid);color:#fff;border:none;padding:12px 32px;border-radius:50px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;}
-  .btn-save:hover{background:var(--green-dark);}
-  .btn-save:disabled{opacity:0.5;cursor:not-allowed;}
-
-  .status-msg{padding:12px 14px;border-radius:10px;font-size:13px;margin-bottom:1rem;display:none;}
-  .status-msg.error{display:block;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#ef4444;}
-  .status-msg.success{display:block;background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25);color:var(--green-mid);}
-
-  @media(max-width:600px){
-    nav{padding:0 1rem;}
-    .avail-options{grid-template-columns:1fr;}
-    .price-row{grid-template-columns:1fr;}
-    .dash-header{flex-direction:column;align-items:flex-start;}
-    .save-bar{flex-direction:column;}
-    .btn-save{width:100%;}
-  }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--gm:#1D9E75;--gk:#0F6E56;--gl:#5DCAA5;--am:#EF9F27;--tp:#f0f0ee;--tm:#9ca3af;--tf:#6b7280;--bd:rgba(255,255,255,0.1);--bg:#0d1f1a;--bs:#111f1a;--cb:#162820;}
+[data-theme="light"]{--tp:#111;--tm:#6b7280;--tf:#9ca3af;--bd:rgba(0,0,0,0.09);--bg:#fff;--bs:#f9f9f8;--cb:#fff;}
+body{font-family:'DM Sans',sans-serif;color:var(--tp);background:var(--bg);min-height:100vh;}
+nav{display:flex;align-items:center;gap:10px;padding:0 2rem;height:60px;border-bottom:1px solid var(--bd);background:var(--bg);position:sticky;top:0;z-index:50;}
+.logo{font-family:'DM Serif Display',serif;font-size:20px;color:#5DCAA5;text-decoration:none;flex-shrink:0;}
+.logo em{color:var(--gm);font-style:normal;}
+.role-chip{font-size:11px;font-weight:600;padding:3px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0;}
+.role-chip.owner{background:rgba(239,159,39,.15);color:var(--am);}
+.role-chip.manager{background:rgba(29,158,117,.15);color:var(--gm);}
+.role-chip.staff{background:rgba(129,140,248,.15);color:#818cf8;}
+.nav-resort{font-size:13px;font-weight:500;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.nav-r{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.bsm{background:var(--gm);color:#fff;border:none;padding:7px 16px;border-radius:50px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;white-space:nowrap;}
+.bsm:hover{background:var(--gk);}
+.bout{background:none;border:1px solid var(--bd);color:var(--tm);padding:6px 14px;border-radius:50px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.bout:hover{border-color:#ef4444;color:#ef4444;}
+/* STATES */
+.state{min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;padding:2rem;text-align:center;}
+.spinner{width:36px;height:36px;border:3px solid var(--bd);border-top-color:var(--gm);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.si{font-size:44px;}.st{font-family:'DM Serif Display',serif;font-size:24px;}.ss{font-size:14px;color:var(--tm);max-width:360px;line-height:1.65;}
+/* CARD */
+.sc{background:var(--cb);border:1px solid var(--bd);border-radius:16px;padding:2rem 2.2rem;width:100%;max-width:480px;box-shadow:0 4px 32px rgba(0,0,0,.1);}
+.sc h2{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:.3rem;}
+.sc p{font-size:13px;color:var(--tm);margin-bottom:1.4rem;line-height:1.6;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;padding:3px 10px;border-radius:50px;margin-bottom:1rem;border:1px solid;}
+.badge.amber{background:rgba(239,159,39,.12);border-color:rgba(239,159,39,.25);color:var(--am);}
+.badge.green{background:rgba(29,158,117,.12);border-color:rgba(29,158,117,.25);color:var(--gm);}
+/* WIZARD */
+.wsteps{display:flex;gap:6px;margin-bottom:1.4rem;}
+.ws{flex:1;height:4px;border-radius:2px;background:var(--bd);transition:background .3s;}
+.ws.done{background:var(--gm);}.ws.active{background:var(--am);}
+.wlabel{font-size:12px;color:var(--tf);margin-bottom:1rem;}
+/* FORM */
+.field{margin-bottom:1rem;}
+.field label{display:block;font-size:13px;font-weight:500;margin-bottom:5px;}
+.inp{width:100%;background:var(--bs);border:1px solid var(--bd);color:var(--tp);padding:10px 14px;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.inp:focus{border-color:var(--gm);}.inp:disabled{opacity:.5;cursor:not-allowed;}
+.pwr{position:relative;}.pwr .inp{padding-right:42px;}
+.peye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:15px;color:var(--tf);}
+.ta{width:100%;background:var(--bs);border:1px solid var(--bd);color:var(--tp);padding:10px 14px;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;resize:vertical;min-height:100px;outline:none;transition:border-color .2s;line-height:1.6;}
+.ta:focus{border-color:var(--gm);}
+.hint{font-size:12px;color:var(--tf);margin-top:4px;}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn-p{width:100%;background:var(--gm);color:#fff;border:none;padding:12px;border-radius:50px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.btn-p:hover{background:var(--gk);}.btn-p:disabled{opacity:.55;cursor:not-allowed;}
+.btn-g{background:none;border:1px solid var(--bd);color:var(--tm);padding:10px 20px;border-radius:50px;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-g:hover{border-color:var(--gm);color:var(--gm);}
+.msg{padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:1rem;display:none;}
+.msg.err{display:block;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#ef4444;}
+.msg.ok{display:block;background:rgba(29,158,117,.08);border:1px solid rgba(29,158,117,.2);color:var(--gm);}
+/* DASHBOARD */
+#v-dash{display:none;}
+.dash{max-width:820px;margin:0 auto;padding:2rem 1.2rem 6rem;}
+.dash-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.8rem;flex-wrap:wrap;gap:1rem;}
+.dash-title{font-family:'DM Serif Display',serif;font-size:26px;}
+.ldot{width:8px;height:8px;border-radius:50%;background:var(--gm);animation:pulse 1.5s infinite;display:inline-block;margin-right:5px;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.panel{background:var(--cb);border:1px solid var(--bd);border-radius:14px;padding:1.6rem;margin-bottom:1rem;}
+.panel h3{font-size:15px;font-weight:600;margin-bottom:3px;}
+.pdesc{font-size:12px;color:var(--tf);margin-bottom:1.2rem;}
+/* AVAILABILITY 2-STATE */
+.av2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ab{padding:1.4rem;border-radius:12px;border:2px solid var(--bd);background:var(--bs);cursor:pointer;text-align:center;transition:all .18s;font-family:'DM Sans',sans-serif;}
+.ab .abi{font-size:28px;display:block;margin-bottom:6px;}
+.ab .abl{font-size:14px;font-weight:500;color:var(--tm);}
+.ab:hover:not(.sel){border-color:var(--gm);}
+.ab.sel.avopen{border-color:var(--gm);background:rgba(29,158,117,.08);}.ab.sel.avopen .abl{color:var(--gm);}
+.ab.sel.avfull{border-color:#ef4444;background:rgba(239,68,68,.06);}.ab.sel.avfull .abl{color:#ef4444;}
+.rooms-wrap{margin-top:1rem;padding:1rem;background:var(--bs);border-radius:10px;border:1px solid var(--bd);}
+.rooms-wrap label{font-size:13px;font-weight:500;margin-bottom:6px;display:block;}
+.ri{width:100%;background:var(--bg);border:1px solid var(--bd);color:var(--tp);padding:10px 14px;border-radius:10px;font-size:28px;font-weight:600;text-align:center;font-family:'DM Serif Display',serif;outline:none;transition:border-color .2s;}
+.ri:focus{border-color:var(--gm);}
+.rh{text-align:center;font-size:12px;margin-top:6px;height:18px;}
+.rh.warn{color:var(--am);}.rh.good{color:var(--gm);}
+/* PHOTOS */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:1rem;}
+.pwrap{position:relative;aspect-ratio:4/3;}
+.pwrap img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;}
+.pdel{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.6);border:none;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;}
+.pdel:hover{background:rgba(239,68,68,.85);}
+.dz{border:2px dashed var(--bd);border-radius:10px;padding:1.6rem;text-align:center;cursor:pointer;transition:all .2s;}
+.dz:hover,.dz.over{border-color:var(--gm);background:rgba(29,158,117,.04);}
+.dz input{display:none;}.dzi{font-size:28px;margin-bottom:6px;}
+.dz p{font-size:13px;color:var(--tm);}.dz span{font-size:12px;color:var(--tf);}
+.uprog{font-size:13px;color:var(--gm);margin-top:6px;display:none;}
+/* CREDENTIALS */
+.cr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bd);}
+.cr:last-child{border-bottom:none;}
+.cr-role{font-size:13px;font-weight:500;}.cr-user{font-size:12px;color:var(--tf);}
+.bchg{background:none;border:1px solid var(--bd);color:var(--tm);padding:5px 12px;border-radius:50px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.bchg:hover{border-color:var(--gm);color:var(--gm);}
+.ce{background:var(--bs);border-radius:10px;padding:1rem;margin-top:8px;display:none;}
+.ce.open{display:block;}
+/* SAVE BAR */
+.sbar{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--bd);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:40;}
+.sst{font-size:13px;color:var(--tf);}.sst.ok{color:var(--gm);}.sst.saving{color:var(--am);}
+.bsave{background:var(--gm);color:#fff;border:none;padding:11px 32px;border-radius:50px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.bsave:hover{background:var(--gk);}.bsave:disabled{opacity:.5;cursor:not-allowed;}
+@media(max-width:600px){nav{padding:0 1rem;}.nav-resort{display:none;}.r2{grid-template-columns:1fr;}.av2{grid-template-columns:1fr;}.sbar{padding:.8rem 1rem;flex-direction:column;gap:8px;}.bsave{width:100%;}}
 </style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="logo">Dandeli<em>Wild</em></a>
-  <div class="nav-right">
-    <span class="owner-tag" id="owner-email-tag">—</span>
-    <a href="resorts.html" class="btn-view-site">View site</a>
-    <button class="btn-signout" onclick="signOut()">Sign out</button>
+  <span class="role-chip" id="nav-role" style="display:none"></span>
+  <span class="nav-resort" id="nav-resort"></span>
+  <div class="nav-r">
+    <a href="resorts.html" class="bsm">View site</a>
+    <button class="bout" onclick="doSignOut()">Sign out</button>
   </div>
 </nav>
 
-<!-- LOADING STATE -->
-<div id="loading-view" class="state-screen">
-  <div class="spinner"></div>
-  <div style="font-size:14px;color:var(--text-muted);">Loading your dashboard…</div>
-</div>
+<div id="v-load" class="state"><div class="spinner"></div><p style="color:var(--tm);font-size:14px;margin-top:.5rem">Loading…</p></div>
+<div id="v-noauth" class="state" style="display:none"><div class="si">🔒</div><div class="st">Access required</div><div class="ss">Sign in to manage your resort.</div><a href="owner-login.html" class="bsm" style="margin-top:1rem">Go to login</a></div>
 
-<!-- NOT LOGGED IN STATE -->
-<div id="noauth-view" class="state-screen" style="display:none;">
-  <div class="state-icon">🔒</div>
-  <div class="state-title">Access required</div>
-  <div class="state-sub">Please sign in as a resort owner to access the dashboard.</div>
-  <a href="owner-login.html" style="margin-top:1rem;background:var(--green-mid);color:#fff;padding:12px 28px;border-radius:50px;text-decoration:none;font-weight:500;">Go to Owner Login</a>
-</div>
-
-<!-- REGISTER STATE (logged in but no resort registered) -->
-<div id="register-view" class="state-screen" style="display:none;">
-  <div class="register-card">
-    <h2>Register your resort 🏨</h2>
-    <p>You're signed in. Now tell us which resort you own — your listing will go live after we review and approve your application.</p>
-    <div id="reg-status" class="status-msg"></div>
-    <div class="form-field">
-      <label class="form-label">Resort name *</label>
-      <input class="form-input" id="reg-resort-name" type="text" placeholder="e.g. Kali River Resort" />
-      <div class="form-hint">Must match your resort's name exactly as listed or as you'd like it listed.</div>
-    </div>
-    <div class="form-field">
-      <label class="form-label">Your role</label>
-      <select class="form-select" id="reg-role">
-        <option value="owner">Owner</option>
-        <option value="manager">Manager</option>
-        <option value="front-desk">Front desk / staff</option>
-      </select>
-    </div>
-    <div class="form-field">
-      <label class="form-label">Contact phone</label>
-      <input class="form-input" id="reg-phone" type="tel" placeholder="+91 98765 43210" />
-    </div>
-    <button class="btn-register" id="btn-register" onclick="registerResort()">Submit for approval →</button>
+<div id="v-reg" class="state" style="display:none">
+  <div class="sc">
+    <div class="badge amber">🏨 New Resort Owner</div>
+    <h2>Register your resort</h2>
+    <p>You're signed in. Register your resort name — we'll approve within 24 hours.</p>
+    <div id="reg-msg" class="msg"></div>
+    <div class="field"><label>Resort name *</label><input class="inp" id="reg-name" type="text" placeholder="e.g. Kali River Resort"/></div>
+    <div class="field"><label>Contact phone</label><input class="inp" id="reg-phone" type="tel" placeholder="+91 98765 43210"/></div>
+    <button class="btn-p" id="btn-reg" onclick="submitReg()">Submit for approval →</button>
   </div>
 </div>
 
-<!-- PENDING APPROVAL STATE -->
-<div id="pending-view" class="state-screen" style="display:none;">
-  <div class="state-icon">⏳</div>
-  <div class="state-title">Application under review</div>
-  <div class="state-sub" id="pending-resort-name" style="font-weight:500;color:var(--text-primary);font-size:16px;margin-bottom:4px;"></div>
-  <div class="state-sub">Your resort registration is being reviewed. We'll approve it within 24 hours. You'll be able to manage your listing once approved.</div>
-  <button onclick="signOut()" style="margin-top:1.5rem;background:none;border:1px solid var(--border);color:var(--text-muted);padding:10px 24px;border-radius:50px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;">Sign out</button>
+<div id="v-pending" class="state" style="display:none">
+  <div class="si">⏳</div><div class="st">Application under review</div>
+  <div class="ss" id="pending-name" style="font-size:15px;font-weight:500;color:var(--tp)"></div>
+  <div class="ss">Your registration is being reviewed. You'll get access within 24 hours once approved.</div>
+  <button onclick="doSignOut()" class="btn-g" style="margin-top:1.5rem">Sign out</button>
 </div>
 
-<!-- ADMIN DASHBOARD (approved owners) -->
-<div id="admin-view">
-  <div class="dashboard">
+<div id="v-setup" class="state" style="display:none">
+  <div class="sc">
+    <div class="badge green">✅ Approved — First time setup</div>
+    <h2>Create staff logins</h2>
+    <p>Set a username and password for each role. After this, all logins use credentials — not Google.</p>
+    <div class="wsteps"><div class="ws active" id="ws0"></div><div class="ws" id="ws1"></div><div class="ws" id="ws2"></div></div>
+    <div id="wlabel" class="wlabel">Step 1 of 3 — Owner login (that's you)</div>
+    <div id="setup-msg" class="msg"></div>
+    <div class="field"><label id="setup-rlbl">Owner username</label><input class="inp" id="su-user" type="text" placeholder="e.g. kali_owner" autocomplete="off"/></div>
+    <div class="field"><label>Password <span style="font-size:11px;color:var(--tf)">(min 8 characters)</span></label>
+      <div class="pwr"><input class="inp" id="su-pass" type="password" autocomplete="new-password"/><button class="peye" onclick="togglePw('su-pass')" type="button">👁</button></div></div>
+    <div class="field"><label>Confirm password</label>
+      <div class="pwr"><input class="inp" id="su-conf" type="password" autocomplete="new-password"/><button class="peye" onclick="togglePw('su-conf')" type="button">👁</button></div></div>
+    <button class="btn-p" id="btn-next" onclick="wizNext()">Next →</button>
+  </div>
+</div>
 
-    <div class="dash-header">
-      <div>
-        <div style="font-size:13px;color:var(--text-faint);margin-bottom:4px;">Managing</div>
-        <div class="dash-resort-name" id="dash-resort-name">—</div>
-      </div>
-      <div class="live-badge"><div class="live-dot"></div> Listed on DandeliWild</div>
-    </div>
+<div id="v-done" class="state" style="display:none">
+  <div class="sc" style="text-align:center">
+    <div style="font-size:48px;margin-bottom:1rem">🎉</div>
+    <h2>All logins created!</h2>
+    <p>Owner, manager and staff credentials are saved. From now on, log in with your username and password.</p>
+    <a href="owner-login.html" class="btn-p" style="display:block;text-decoration:none;text-align:center;margin-top:.5rem">Go to login page →</a>
+  </div>
+</div>
 
-    <!-- AVAILABILITY -->
-    <div class="section-card">
-      <h3>Availability</h3>
-      <div class="section-desc">Update this whenever your availability changes — it shows live on the site.</div>
-      <div class="avail-options">
-        <button class="avail-btn open" data-val="open" onclick="selectAvail(this)">
-          <span class="avail-emoji">✅</span>
-          <div class="avail-label">Available</div>
-          <div class="avail-sub">Rooms open</div>
-        </button>
-        <button class="avail-btn few" data-val="few" onclick="selectAvail(this)">
-          <span class="avail-emoji">⚠️</span>
-          <div class="avail-label">Limited rooms</div>
-          <div class="avail-sub">Only a few left</div>
-        </button>
-        <button class="avail-btn full" data-val="full" onclick="selectAvail(this)">
-          <span class="avail-emoji">❌</span>
-          <div class="avail-label">Fully booked</div>
-          <div class="avail-sub">No rooms available</div>
-        </button>
-      </div>
-    </div>
+<div id="v-use-cred" class="state" style="display:none">
+  <div class="si">🔑</div><div class="st">Use your credentials</div>
+  <div class="ss">Credentials are already set up for your resort. Log in with your username and password.</div>
+  <a href="owner-login.html" class="bsm" style="margin-top:1rem">Go to login</a>
+</div>
 
-    <!-- PHOTOS -->
-    <div class="section-card">
-      <h3>Photos</h3>
-      <div class="section-desc">Upload photos of your resort. These appear in the image gallery when tourists click "View details". First photo is shown first.</div>
-      <div class="photo-grid" id="photo-grid"></div>
-      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('photo-input').click()">
-        <input type="file" id="photo-input" accept="image/*" multiple onchange="uploadPhotos(this.files)" />
-        <div class="upload-icon">📸</div>
-        <p>Click to upload photos</p>
-        <span>JPG, PNG up to 5MB each · Multiple allowed</span>
-      </div>
-      <div class="upload-progress" id="upload-progress">Uploading…</div>
-    </div>
-
-    <!-- RESORT DETAILS -->
-    <div class="section-card">
-      <h3>Resort details</h3>
-      <div class="section-desc">This text appears in the "View details" panel when tourists browse your resort.</div>
-      <div class="form-field">
-        <label class="form-label">Description</label>
-        <textarea class="form-textarea" id="det-description" placeholder="Describe your resort — location, vibe, what makes it special…"></textarea>
-      </div>
-      <div class="price-row">
-        <div class="form-field">
-          <label class="form-label">Starting price (₹ / night)</label>
-          <input class="form-input" type="number" id="det-price" placeholder="e.g. 2500" min="0" />
-        </div>
-        <div class="form-field">
-          <label class="form-label">Contact phone</label>
-          <input class="form-input" type="tel" id="det-phone" placeholder="+91 98765 43210" />
-        </div>
-      </div>
-      <div class="form-field">
-        <label class="form-label">Packages (one per line, format: Name | Price | What's included)</label>
-        <textarea class="form-textarea" id="det-packages" placeholder="Overnight | ₹2,500 | Room + breakfast&#10;Weekend | ₹5,000 | 2 nights + all meals&#10;Group (6 pax) | ₹12,000 | All inclusive" style="min-height:90px;"></textarea>
-        <div class="form-hint">Example: Overnight | ₹2,500 | Room + breakfast</div>
-      </div>
-    </div>
-
+<!-- DASHBOARD -->
+<div id="v-dash">
+<div class="dash">
+  <div class="dash-hdr">
+    <div><div style="font-size:12px;color:var(--tf);margin-bottom:3px">Managing</div><div class="dash-title" id="dash-resort">—</div></div>
+    <div style="display:flex;align-items:center;padding-top:4px"><span class="ldot"></span><span style="font-size:13px;color:var(--gm);font-weight:500">Live on DandeliWild</span></div>
   </div>
 
-  <div class="save-bar">
-    <div class="save-status" id="save-status">Unsaved changes</div>
-    <button class="btn-save" id="btn-save" onclick="saveAll()">Save all changes</button>
+  <!-- AVAILABILITY -->
+  <div class="panel">
+    <h3>Availability</h3><div class="pdesc">Update whenever rooms change — reflects on site immediately.</div>
+    <div class="av2">
+      <button class="ab avopen sel" data-val="open" onclick="selAv(this)"><span class="abi">✅</span><div class="abl">Available</div></button>
+      <button class="ab avfull" data-val="full" onclick="selAv(this)"><span class="abi">❌</span><div class="abl">Fully Booked</div></button>
+    </div>
+    <div class="rooms-wrap" id="rooms-wrap">
+      <label>Rooms available tonight</label>
+      <input class="ri" id="ri" type="number" min="1" max="999" value="10" oninput="onRooms()"/>
+      <div class="rh" id="rh"></div>
+    </div>
   </div>
+
+  <!-- PHOTOS (owner + manager) -->
+  <div class="panel" id="pan-photos" style="display:none">
+    <h3>Photos</h3><div class="pdesc">These appear in the image gallery when tourists click "View details".</div>
+    <div class="pgrid" id="pgrid"></div>
+    <div class="dz" id="dz" onclick="document.getElementById('ph-inp').click()">
+      <input type="file" id="ph-inp" accept="image/*" multiple onchange="uploadPhotos(this.files)"/>
+      <div class="dzi">📸</div><p>Click or drag to upload photos</p><span>JPG, PNG · Max 5MB each</span>
+    </div>
+    <div class="uprog" id="uprog"></div>
+  </div>
+
+  <!-- DETAILS (owner + manager) -->
+  <div class="panel" id="pan-details" style="display:none">
+    <h3>Resort details</h3><div class="pdesc">Shows in the "View details" panel on the resorts page.</div>
+    <div class="field">
+      <label>Resort name <span id="name-note" style="font-size:11px;color:var(--tf)"></span></label>
+      <input class="inp" id="det-name" type="text"/>
+    </div>
+    <div class="field"><label>Description</label><textarea class="ta" id="det-desc" placeholder="Describe your resort — location, vibe, what makes it special…"></textarea></div>
+    <div class="r2">
+      <div class="field"><label>Price (₹/night)</label><input class="inp" type="number" id="det-price" placeholder="2500"/></div>
+      <div class="field"><label>Contact phone</label><input class="inp" type="tel" id="det-phone" placeholder="+91 98765 43210"/></div>
+    </div>
+    <div class="field">
+      <label>Packages <span style="font-size:11px;color:var(--tf)">(Name | Price | What's included)</span></label>
+      <textarea class="ta" id="det-pkgs" placeholder="Overnight | ₹2,500 | Room + breakfast&#10;Weekend | ₹5,000 | 2 nights + all meals" style="min-height:80px"></textarea>
+    </div>
+  </div>
+
+  <!-- CREDENTIALS (owner only) -->
+  <div class="panel" id="pan-creds" style="display:none">
+    <h3>Staff login credentials</h3><div class="pdesc">Change usernames and passwords for any role.</div>
+    <div id="creds-msg" class="msg"></div>
+    <div id="cred-list"></div>
+  </div>
+</div>
+
+<div class="sbar"><div class="sst" id="sst">Unsaved changes</div><button class="bsave" id="bsave" onclick="saveAll()">Save changes</button></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
-  const sb = supabase.createClient('https://lbgejzuzfqhdfytyumwh.supabase.co','sb_publishable_U9skEdu0mTUHQiLXGhZEQw__JeEk3NI');
-  let _session = null, _ownerRecord = null, _currentAvail = 'open', _photoUrls = [];
+const sb=supabase.createClient('https://lbgejzuzfqhdfytyumwh.supabase.co','sb_publishable_U9skEdu0mTUHQiLXGhZEQw__JeEk3NI');
+let _role=null,_resort=null,_user=null,_hash=null,_gu=null,_owner=null,_photos=[],_avail='open',_ok=false;
+const ROLES=['owner','manager','staff'],RLBLS={owner:'👑 Owner',manager:'📋 Manager',staff:'🛎️ Staff'};
+const STP=['owner','manager','staff'],SLBLS=['Owner login (that\'s you)','Manager login','Staff login'];
+let _step=0,_sc={};
 
-  // ── INIT ──
-  let _initiated = false;
+function show(id){['v-load','v-noauth','v-reg','v-pending','v-setup','v-done','v-use-cred','v-dash'].forEach(v=>{const e=document.getElementById(v);if(e)e.style.display=v===id?(id==='v-dash'?'block':'flex'):'none';});}
+async function hashPw(pw){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+function togglePw(id){const e=document.getElementById(id);e.type=e.type==='password'?'text':'password';}
+function setSt(m,c=''){const e=document.getElementById('sst');e.textContent=m;e.className='sst'+(c?' '+c:'');}
+function showMsg(id,t,m){const e=document.getElementById(id);e.className='msg '+t;e.textContent=m;}
 
-  async function checkOwnerStatus(session) {
-    _session = session;
-    document.getElementById('owner-email-tag').textContent = session.user.email || '';
+async function init(){
+  const role=sessionStorage.getItem('dw_role'),resort=sessionStorage.getItem('dw_resort'),user=sessionStorage.getItem('dw_user'),hash=sessionStorage.getItem('dw_hash');
+  if(role&&resort&&user&&hash){_role=role;_resort=resort;_user=user;_hash=hash;setNav();await loadDash();return;}
+  const{data:{session}}=await sb.auth.getSession();
+  if(session){_ok=true;await googleFlow(session);return;}
+  sb.auth.onAuthStateChange(async(ev,sess)=>{if(_ok)return;_ok=true;if(sess)await googleFlow(sess);else show('v-noauth');});
+  setTimeout(()=>{if(!_ok){_ok=true;show('v-noauth');}},6000);
+}
 
-    const { data: owner, error } = await sb
-      .from('resort_owners')
-      .select('*')
-      .eq('user_id', session.user.id)
-      .maybeSingle();
+async function googleFlow(sess){
+  _gu=sess.user;document.getElementById('nav-resort').textContent=sess.user.email||'';
+  const{data:o}=await sb.from('resort_owners').select('*').eq('user_id',sess.user.id).maybeSingle();
+  if(!o){show('v-reg');return;}
+  _owner=o;
+  if(!o.approved){document.getElementById('pending-name').textContent=o.resort_name;show('v-pending');return;}
+  _resort=o.resort_name;
+  const{data:c}=await sb.from('resort_credentials').select('role').eq('resort_name',o.resort_name);
+  if(!c||c.length===0){show('v-setup');return;}
+  show('v-use-cred');
+}
 
-    if (error) { console.error('Owner lookup:', error); show('register-view'); return; }
-    if (!owner) { show('register-view'); return; }
+function setNav(){
+  document.getElementById('nav-resort').textContent=_resort||'';
+  const rc=document.getElementById('nav-role');rc.textContent=RLBLS[_role]||_role;rc.className='role-chip '+(_role||'');rc.style.display='inline-flex';
+}
 
-    _ownerRecord = owner;
-    if (!owner.approved) {
-      document.getElementById('pending-resort-name').textContent = owner.resort_name;
-      show('pending-view'); return;
-    }
-
-    document.getElementById('dash-resort-name').textContent = owner.resort_name;
-    await loadResortDetails(owner.resort_name);
-    show('admin-view');
+async function loadDash(){
+  document.getElementById('dash-resort').textContent=_resort;
+  if(_role==='owner'||_role==='manager'){document.getElementById('pan-photos').style.display='block';document.getElementById('pan-details').style.display='block';}
+  if(_role==='owner'){document.getElementById('pan-creds').style.display='block';}
+  document.getElementById('det-name').disabled=_role==='manager';
+  document.getElementById('name-note').textContent=_role==='owner'?'(editable)':'(not editable by manager)';
+  const{data:d}=await sb.from('resort_details').select('*').eq('resort_name',_resort).maybeSingle();
+  if(d){
+    _avail=d.availability||'open';_photos=d.photo_urls||[];
+    document.getElementById('ri').value=d.rooms_available||10;
+    if(d.description)document.getElementById('det-desc').value=d.description;
+    if(d.price)document.getElementById('det-price').value=d.price;
+    if(d.contact_phone)document.getElementById('det-phone').value=d.contact_phone;
+    if(d.packages)document.getElementById('det-pkgs').value=d.packages;
   }
+  document.getElementById('det-name').value=_resort;
+  selAvVal(_avail,true);renderPhotos();
+  if(_role==='owner')await loadCreds();
+  setSt('All changes saved','ok');
+  document.querySelectorAll('.inp,.ta').forEach(e=>e.addEventListener('input',()=>setSt('Unsaved changes')));
+  show('v-dash');
+}
 
-  async function init() {
-    // First try getSession() — works if user was already logged in
-    const { data: { session } } = await sb.auth.getSession();
-    if (session) {
-      _initiated = true;
-      await checkOwnerStatus(session);
-      return;
-    }
+function selAv(btn,silent){document.querySelectorAll('.ab').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');_avail=btn.dataset.val;document.getElementById('rooms-wrap').style.display=_avail==='open'?'block':'none';if(!silent)setSt('Unsaved changes');onRooms();}
+function selAvVal(v,s){const b=document.querySelector(`.ab[data-val="${v}"]`);if(b)selAv(b,s);}
+function onRooms(){const r=parseInt(document.getElementById('ri').value)||0,h=document.getElementById('rh');if(r<1){h.textContent='Enter at least 1 room';h.className='rh warn';}else if(r<5){h.textContent=`⚠️ ${r} rooms — will show as "Few rooms left"`;h.className='rh warn';}else{h.textContent=`✓ ${r} rooms — will show as "Available"`;h.className='rh good';}setSt('Unsaved changes');}
 
-    // No session yet — this happens after Google OAuth redirect
-    // Wait for Supabase to process the token from the URL hash
-    sb.auth.onAuthStateChange(async (event, session) => {
-      if (_initiated) return;
-      _initiated = true;
-      if (session) {
-        await checkOwnerStatus(session);
-      } else {
-        show('noauth-view');
-      }
-    });
+function renderPhotos(){document.getElementById('pgrid').innerHTML=_photos.map((u,i)=>`<div class="pwrap"><img src="${u}" alt=""/><button class="pdel" onclick="rmPhoto(${i})">✕</button></div>`).join('');}
+function rmPhoto(i){_photos.splice(i,1);renderPhotos();setSt('Unsaved changes');}
+async function uploadPhotos(files){if(!files||!files.length)return;const p=document.getElementById('uprog');p.style.display='block';let n=0;for(const f of files){if(f.size>5*1024*1024){alert(f.name+' is over 5MB');continue;}const ext=f.name.split('.').pop(),path=`${_resort.replace(/\s+/g,'-').toLowerCase()}/${Date.now()}.${ext}`;p.textContent=`Uploading ${n+1}/${files.length}…`;const{data,error}=await sb.storage.from('resort-photos').upload(path,f,{upsert:false});if(!error){const{data:u}=sb.storage.from('resort-photos').getPublicUrl(data.path);_photos.push(u.publicUrl);n++;}}p.textContent=`${n} photo${n!==1?'s':''} uploaded!`;setTimeout(()=>p.style.display='none',2500);renderPhotos();setSt('Unsaved changes');document.getElementById('ph-inp').value='';}
+const dz=document.getElementById('dz');
+if(dz){dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over');});dz.addEventListener('dragleave',()=>dz.classList.remove('over'));dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');uploadPhotos(e.dataTransfer.files);});}
 
-    // Safety fallback: if no auth event fires within 6 seconds, show not-logged-in
-    setTimeout(() => {
-      if (!_initiated) {
-        _initiated = true;
-        show('noauth-view');
-      }
-    }, 6000);
-  }
+async function saveAll(){
+  const btn=document.getElementById('bsave');btn.disabled=true;btn.textContent='Saving…';setSt('Saving…','saving');
+  const rooms=parseInt(document.getElementById('ri').value)||10;
+  let fav=_avail;if(_avail==='open'&&rooms<5&&rooms>0)fav='few';
+  let ok=false;
+  if(_role==='staff'){const{data}=await sb.rpc('update_resort_availability',{p_resort:_resort,p_role:_role,p_username:_user,p_pw_hash:_hash,p_avail:fav,p_rooms:rooms});ok=data===true;}
+  else{const desc=document.getElementById('det-desc')?.value.trim()||null,price=parseInt(document.getElementById('det-price')?.value)||null,pkgs=document.getElementById('det-pkgs')?.value.trim()||null,phone=document.getElementById('det-phone')?.value.trim()||null;
+    if(_gu&&_role==='owner'){const{error}=await sb.from('resort_details').upsert({resort_name:_resort,availability:fav,rooms_available:rooms,description:desc,price:price,packages:pkgs,contact_phone:phone,photo_urls:_photos,updated_at:new Date().toISOString()},{onConflict:'resort_name'});ok=!error;}
+    else{const{data}=await sb.rpc('update_resort_all',{p_resort:_resort,p_role:_role,p_username:_user,p_pw_hash:_hash,p_avail:fav,p_rooms:rooms,p_desc:desc,p_price:price,p_packages:pkgs,p_phone:phone,p_photos:_photos});ok=data===true;}}
+  btn.disabled=false;btn.textContent='Save changes';setSt(ok?'All changes saved ✓':'Error — please try again',ok?'ok':'');
+}
 
-  async function loadResortDetails(resortName) {
-    const { data } = await sb
-      .from('resort_details')
-      .select('*')
-      .eq('resort_name', resortName)
-      .maybeSingle();
+// WIZARD
+function updWiz(){const r=STP[_step];document.getElementById('wlabel').textContent=`Step ${_step+1} of 3 — ${SLBLS[_step]}`;document.getElementById('setup-rlbl').textContent=r.charAt(0).toUpperCase()+r.slice(1)+' username';document.getElementById('su-user').value='';document.getElementById('su-pass').value='';document.getElementById('su-conf').value='';for(let i=0;i<3;i++){const w=document.getElementById('ws'+i);w.className='ws'+(i<_step?' done':i===_step?' active':'');}document.getElementById('btn-next').textContent=_step<2?'Next →':'Finish setup ✓';}
+async function wizNext(){
+  const u=document.getElementById('su-user').value.trim(),p=document.getElementById('su-pass').value,c=document.getElementById('su-conf').value;
+  if(!u||!p){showMsg('setup-msg','err','Fill in both fields.');return;}
+  if(p.length<8){showMsg('setup-msg','err','Password must be at least 8 characters.');return;}
+  if(p!==c){showMsg('setup-msg','err','Passwords don\'t match.');return;}
+  document.getElementById('btn-next').disabled=true;document.getElementById('btn-next').textContent='Saving…';
+  _sc[STP[_step]]={username:u,password_hash:await hashPw(p)};
+  if(_step<2){_step++;updWiz();document.getElementById('btn-next').disabled=false;document.getElementById('setup-msg').className='msg';return;}
+  const rows=Object.entries(_sc).map(([role,d])=>({resort_name:_resort,role,username:d.username,password_hash:d.password_hash}));
+  const{error}=await sb.from('resort_credentials').upsert(rows,{onConflict:'resort_name,role'});
+  document.getElementById('btn-next').disabled=false;
+  if(error){showMsg('setup-msg','err','Error: '+error.message);document.getElementById('btn-next').textContent='Finish setup ✓';return;}
+  show('v-done');
+}
 
-    if (data) {
-      _currentAvail = data.availability || 'open';
-      _photoUrls = data.photo_urls || [];
-      document.getElementById('det-description').value = data.description || '';
-      document.getElementById('det-price').value = data.price || '';
-      document.getElementById('det-phone').value = data.contact_phone || '';
-      document.getElementById('det-packages').value = data.packages || '';
-    }
-    selectAvail(document.querySelector(`.avail-btn[data-val="${_currentAvail}"]`), true);
-    renderPhotoGrid();
-    setSaveStatus('All changes saved', 'saved');
-  }
+// REGISTER
+async function submitReg(){const name=document.getElementById('reg-name').value.trim();if(!name){showMsg('reg-msg','err','Enter your resort name.');return;}const btn=document.getElementById('btn-reg');btn.disabled=true;btn.textContent='Submitting…';const{error}=await sb.from('resort_owners').insert({user_id:_gu.id,resort_name:name,approved:false});if(error){showMsg('reg-msg','err',error.code==='23505'?'Already registered.':error.message);btn.disabled=false;btn.textContent='Submit for approval →';}else{document.getElementById('pending-name').textContent=name;show('v-pending');}}
 
-  // ── REGISTER ──
-  async function registerResort() {
-    const name = document.getElementById('reg-resort-name').value.trim();
-    if (!name) { showMsg('reg-status','error','Please enter your resort name.'); return; }
-    const btn = document.getElementById('btn-register');
-    btn.disabled = true; btn.textContent = 'Submitting…';
-    const { error } = await sb.from('resort_owners').insert({
-      user_id: _session.user.id,
-      resort_name: name,
-      approved: false
-    });
-    if (error) {
-      showMsg('reg-status','error', error.code === '23505' ? 'You already have a registration on file.' : error.message);
-      btn.disabled = false; btn.textContent = 'Submit for approval →';
-    } else {
-      document.getElementById('pending-resort-name').textContent = name;
-      show('pending-view');
-    }
-  }
+// CREDS
+async function loadCreds(){
+  const{data:c}=await sb.from('resort_credentials').select('role,username').eq('resort_name',_resort);
+  const m={};(c||[]).forEach(x=>m[x.role]=x.username);
+  document.getElementById('cred-list').innerHTML=ROLES.map(role=>`
+    <div class="cr"><div><div class="cr-role">${RLBLS[role]}</div><div class="cr-user" id="cu-${role}">${m[role]?'@'+m[role]:'Not set'}</div></div><button class="bchg" onclick="togCE('${role}')">Change</button></div>
+    <div class="ce" id="ce-${role}">
+      <div class="field" style="margin-bottom:8px"><label>New username</label><input class="inp" id="ce-u-${role}" type="text" value="${m[role]||''}"/></div>
+      <div class="field" style="margin-bottom:8px"><label>New password</label><div class="pwr"><input class="inp" id="ce-p-${role}" type="password" placeholder="Min 8 characters"/><button class="peye" onclick="togglePw('ce-p-${role}')" type="button">👁</button></div></div>
+      <button class="bsm" onclick="saveCred('${role}')" style="font-size:13px;padding:7px 16px">Save ${role} login</button>
+    </div>`).join('');}
+function togCE(r){document.getElementById('ce-'+r).classList.toggle('open');}
+async function saveCred(role){const u=document.getElementById('ce-u-'+role).value.trim(),p=document.getElementById('ce-p-'+role).value;if(!u||!p){showMsg('creds-msg','err','Fill in both fields.');return;}if(p.length<8){showMsg('creds-msg','err','Min 8 characters.');return;}const h=await hashPw(p);const{error}=await sb.from('resort_credentials').upsert({resort_name:_resort,role,username:u,password_hash:h},{onConflict:'resort_name,role'});if(error){showMsg('creds-msg','err','Error: '+error.message);return;}document.getElementById('cu-'+role).textContent='@'+u;document.getElementById('ce-'+role).classList.remove('open');showMsg('creds-msg','ok',role+' login updated.');setTimeout(()=>{document.getElementById('creds-msg').className='msg';},3000);}
 
-  // ── AVAILABILITY ──
-  function selectAvail(btn, silent) {
-    if (!btn) return;
-    document.querySelectorAll('.avail-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    _currentAvail = btn.dataset.val;
-    if (!silent) setSaveStatus('Unsaved changes');
-  }
-
-  // ── PHOTOS ──
-  function renderPhotoGrid() {
-    const grid = document.getElementById('photo-grid');
-    if (_photoUrls.length === 0) { grid.innerHTML = ''; return; }
-    grid.innerHTML = _photoUrls.map((url, i) => `
-      <div class="photo-thumb-wrap">
-        <img src="${url}" alt="Photo ${i+1}" />
-        <button class="photo-remove" onclick="removePhoto(${i})">✕</button>
-      </div>`).join('');
-  }
-  function removePhoto(i) {
-    _photoUrls.splice(i, 1);
-    renderPhotoGrid();
-    setSaveStatus('Unsaved changes');
-  }
-  async function uploadPhotos(files) {
-    if (!files || files.length === 0) return;
-    const prog = document.getElementById('upload-progress');
-    prog.style.display = 'block';
-    let uploaded = 0;
-    for (const file of files) {
-      if (file.size > 5 * 1024 * 1024) { alert(`${file.name} is over 5MB, skipping.`); continue; }
-      const ext = file.name.split('.').pop();
-      const path = `${_ownerRecord.resort_name.replace(/\s+/g,'-').toLowerCase()}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      prog.textContent = `Uploading ${uploaded + 1}/${files.length}…`;
-      const { data, error } = await sb.storage.from('resort-photos').upload(path, file, { upsert: false });
-      if (!error) {
-        const { data: urlData } = sb.storage.from('resort-photos').getPublicUrl(data.path);
-        _photoUrls.push(urlData.publicUrl);
-        uploaded++;
-      } else {
-        console.error('Upload error:', error.message);
-      }
-    }
-    prog.textContent = `${uploaded} photo${uploaded !== 1 ? 's' : ''} uploaded!`;
-    setTimeout(() => { prog.style.display = 'none'; }, 2500);
-    renderPhotoGrid();
-    setSaveStatus('Unsaved changes');
-    document.getElementById('photo-input').value = '';
-  }
-
-  // Drag & drop
-  const zone = document.getElementById('upload-zone');
-  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
-  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); uploadPhotos(e.dataTransfer.files); });
-
-  // ── SAVE ALL ──
-  async function saveAll() {
-    const btn = document.getElementById('btn-save');
-    btn.disabled = true; btn.textContent = 'Saving…';
-    setSaveStatus('Saving…', 'saving');
-    const resortName = _ownerRecord.resort_name;
-    const payload = {
-      resort_name: resortName,
-      availability: _currentAvail,
-      description: document.getElementById('det-description').value.trim(),
-      price: parseInt(document.getElementById('det-price').value) || null,
-      contact_phone: document.getElementById('det-phone').value.trim(),
-      packages: document.getElementById('det-packages').value.trim(),
-      photo_urls: _photoUrls,
-      updated_at: new Date().toISOString()
-    };
-    const { error } = await sb.from('resort_details').upsert(payload, { onConflict: 'resort_name' });
-    btn.disabled = false; btn.textContent = 'Save all changes';
-    if (error) { setSaveStatus('Error saving: ' + error.message); }
-    else { setSaveStatus('All changes saved ✓', 'saved'); }
-  }
-
-  // ── SIGN OUT ──
-  async function signOut() { await sb.auth.signOut(); window.location.href = 'owner-login.html'; }
-
-  // ── HELPERS ──
-  function show(id) {
-    ['loading-view','noauth-view','register-view','pending-view','admin-view'].forEach(v => {
-      const el = document.getElementById(v);
-      if (el) el.style.display = v === id ? (id === 'admin-view' ? 'block' : 'flex') : 'none';
-    });
-  }
-  function setSaveStatus(msg, cls) {
-    const el = document.getElementById('save-status');
-    el.textContent = msg;
-    el.className = 'save-status' + (cls ? ' ' + cls : '');
-  }
-  function showMsg(id, type, msg) {
-    const el = document.getElementById(id);
-    el.className = 'status-msg ' + type;
-    el.textContent = msg;
-  }
-
-  // Auto-save status on any input
-  document.querySelectorAll('.form-input,.form-textarea,.form-select').forEach(el => {
-    el.addEventListener('input', () => setSaveStatus('Unsaved changes'));
-  });
-
-  init();
+async function doSignOut(){sessionStorage.clear();await sb.auth.signOut();window.location.href='owner-login.html';}
+init();
 </script>
 </body>
 </html>
