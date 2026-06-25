@@ -304,7 +304,36 @@ function onRooms(){const r=parseInt(document.getElementById('ri').value)||0,h=do
 
 function renderPhotos(){document.getElementById('pgrid').innerHTML=_photos.map((u,i)=>`<div class="pwrap"><img src="${u}" alt=""/><button class="pdel" onclick="rmPhoto(${i})">✕</button></div>`).join('');}
 function rmPhoto(i){_photos.splice(i,1);renderPhotos();setSt('Unsaved changes');}
-async function uploadPhotos(files){if(!files||!files.length)return;const p=document.getElementById('uprog');p.style.display='block';let n=0;for(const f of files){if(f.size>5*1024*1024){alert(f.name+' is over 5MB');continue;}const ext=f.name.split('.').pop(),path=`${_resort.replace(/\s+/g,'-').toLowerCase()}/${Date.now()}.${ext}`;p.textContent=`Uploading ${n+1}/${files.length}…`;const{data,error}=await sb.storage.from('resort-photos').upload(path,f,{upsert:false});if(!error){const{data:u}=sb.storage.from('resort-photos').getPublicUrl(data.path);_photos.push(u.publicUrl);n++;}}p.textContent=`${n} photo${n!==1?'s':''} uploaded!`;setTimeout(()=>p.style.display='none',2500);renderPhotos();setSt('Unsaved changes');document.getElementById('ph-inp').value='';}
+async function uploadPhotos(files){
+  if(!files||!files.length)return;
+  const p=document.getElementById('uprog');p.style.display='block';p.style.color='var(--gm)';
+  let n=0,errs=[];
+  for(const f of files){
+    if(f.size>5*1024*1024){alert(f.name+' is over 5MB — skipped');continue;}
+    const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const safe=(_resort||'resort').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    const path=`${safe}/${Date.now()}-${Math.random().toString(36).slice(2,7)}.${ext}`;
+    p.textContent=`Uploading ${n+1}/${files.length}…`;
+    const{data,error}=await sb.storage.from('resort-photos').upload(path,f,{upsert:true,contentType:f.type});
+    if(!error){
+      const{data:u}=sb.storage.from('resort-photos').getPublicUrl(data.path);
+      _photos.push(u.publicUrl);n++;
+    } else {
+      console.error('Upload error:',error.message);
+      errs.push(f.name+': '+error.message);
+    }
+  }
+  if(errs.length&&n===0){
+    p.style.color='#ef4444';
+    p.textContent='❌ '+errs[0];
+    setTimeout(()=>{p.style.display='none';p.style.color='var(--gm)';},6000);
+  } else {
+    p.textContent=`✅ ${n} photo${n!==1?'s':''} uploaded!`;
+    setTimeout(()=>{p.style.display='none';},2500);
+  }
+  renderPhotos();if(n>0)setSt('Unsaved changes');
+  document.getElementById('ph-inp').value='';
+}
 const dz=document.getElementById('dz');
 if(dz){dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over');});dz.addEventListener('dragleave',()=>dz.classList.remove('over'));dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');uploadPhotos(e.dataTransfer.files);});}
 
