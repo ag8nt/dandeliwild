@@ -140,8 +140,8 @@ async function doLogin() {
 
   const hash = await hashPassword(pass);
   const { data, error } = await sb.rpc('verify_resort_login', {
-    p_resort_name: resort, p_role: _selectedRole,
-    p_username: user, p_password_hash: hash
+    p_resort: resort, p_role: _selectedRole,
+    p_username: user, p_pw_hash: hash
   });
 
   if (error || !data) {
