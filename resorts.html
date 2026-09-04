@@ -747,6 +747,14 @@
     // Check ?selected= param
     const params = new URLSearchParams(window.location.search);
     const sel = params.get('selected');
+    const q = params.get('q');
+
+    // Pre-fill search box from ?q= (from hero search)
+    if (q) {
+      const searchEl = document.getElementById('search-input');
+      if (searchEl) { searchEl.value = decodeURIComponent(q); applyFilters(); }
+    }
+
     if (sel) {
       const decoded = decodeURIComponent(sel);
       setTimeout(() => {
