@@ -146,7 +146,21 @@
 
   /* ── SEARCH BOX ── */
   .search-box {
+    display: flex;
+    align-items: center;
     background: var(--search-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    max-width: 560px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+  .sf { flex: 1; padding: 14px 18px; }
+  .sf label { display: block; font-size: 11px; font-weight: 500; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+  .sf input { border: none; outline: none; font-size: 15px; font-family: 'DM Sans', sans-serif; color: var(--search-color); background: transparent; width: 100%; }
+  .sf input::placeholder { color: var(--text-faint); }
+  .search-btn { background: var(--green-mid); color: #fff; border: none; padding: 0 28px; height: 100%; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: background 0.2s; white-space: nowrap; }
+  .search-btn:hover { background: var(--green-dark); }
+  .search-btn svg { width: 18px; height: 18px; }
     border-radius: var(--radius);
     display: flex; align-items: stretch;
     width: 100%; max-width: 700px;
@@ -154,16 +168,6 @@
     overflow: hidden;
     transition: background 0.3s;
   }
-  .sf { flex: 1; padding: 14px 18px; border-right: 1px solid var(--border); }
-  .sf:last-of-type { border-right: none; }
-  .sf label { display: block; font-size: 11px; font-weight: 500; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
-  .sf-fixed { font-size: 15px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 6px; }
-  .sf-fixed-pin { font-size: 14px; }
-  .sf input { border: none; outline: none; font-size: 15px; font-family: 'DM Sans', sans-serif; color: var(--search-color); background: transparent; width: 100%; }
-  .sf input::placeholder { color: var(--text-faint); }
-  .search-btn { background: var(--green-mid); color: #fff; border: none; padding: 0 28px; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
-  .search-btn:hover { background: var(--green-dark); }
-  .search-btn svg { width: 18px; height: 18px; }
 
   /* ── STATS ── */
   .hero-stats { display: flex; gap: 3rem; margin-top: 3rem; }
@@ -298,9 +302,9 @@
     .hero h1 { font-size: 34px; letter-spacing: -1px; }
     .hero-sub { font-size: 15px; margin-bottom: 1.8rem; }
     .hero-eyebrow { font-size: 11px; margin-bottom: 1.4rem; }
-    .search-box { flex-direction: column; max-width: 100%; }
-    .sf { border-right: none; border-bottom: 1px solid var(--border); padding: 12px 16px; }
-    .sf:last-of-type { border-bottom: none; }
+    .search-box { max-width: 100%; }
+    .sf { padding: 12px 16px; }
+    .search-btn { padding: 0 18px; font-size: 14px; }
     .search-btn { padding: 14px 20px; justify-content: center; border-radius: 0 0 var(--radius) var(--radius); }
     .hero-stats { gap: 0; flex-wrap: wrap; margin-top: 2rem; width: 100%; max-width: 320px; }
     .hs { width: 50%; padding: 0.8rem 0; }
@@ -376,24 +380,12 @@
   <h1>Where the jungle<br>meets the <em>river</em></h1>
   <p class="hero-sub">Find resorts, book activities, and discover the wild beauty of Dandeli.</p>
 
-  <div class="search-box">
-    <div class="sf">
-      <label>📍 Where</label>
-      <div class="sf-fixed"><span class="sf-fixed-pin"></span>Dandeli, Karnataka</div>
+  <div class="search-box" id="hero-search">
+    <div class="sf" style="flex:1; border-right:none;">
+      <label>🔍 Search resorts & activities</label>
+      <input type="text" id="hero-q" placeholder="e.g. riverside camp, safari, trekking…" onkeydown="if(event.key==='Enter')heroSearch()" autocomplete="off"/>
     </div>
-    <div class="sf">
-      <label>Check in</label>
-      <input type="date" />
-    </div>
-    <div class="sf">
-      <label>Check out</label>
-      <input type="date" />
-    </div>
-    <div class="sf">
-      <label>Guests</label>
-      <input type="text" placeholder="1 guest" />
-    </div>
-    <button class="search-btn">
+    <button class="search-btn" onclick="heroSearch()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
@@ -706,6 +698,15 @@
     }
   });
   _initNavAuth();
+
+  function heroSearch() {
+    const q = document.getElementById('hero-q').value.trim();
+    if (q) {
+      window.location.href = 'resorts.html?q=' + encodeURIComponent(q);
+    } else {
+      window.location.href = 'resorts.html';
+    }
+  }
 
   function toggleTheme() {
     const html = document.documentElement;
