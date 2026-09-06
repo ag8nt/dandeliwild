@@ -188,22 +188,123 @@
   .hero-sub { font-size: 17px; color: rgba(255,255,255,0.55); margin-bottom: 2.5rem; max-width: 420px; font-weight: 300; }
 
   /* ── SEARCH BOX ── */
-  .search-box {
-    display: flex;
-    align-items: center;
-    background: var(--search-bg);
-    border-radius: var(--radius);
-    overflow: hidden;
-    max-width: 560px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  /* ── PREBAR ── */
+  .prebar-wrap { margin-bottom: 1.2rem; animation: fadeUp 0.6s ease both; animation-delay: 0.35s; }
+  .prebar {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.18);
+    border-radius: 50px; padding: 5px 6px;
+    backdrop-filter: blur(12px);
   }
-  .sf { flex: 1; padding: 14px 18px; }
-  .sf label { display: block; font-size: 11px; font-weight: 500; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
-  .sf input { border: none; outline: none; font-size: 15px; font-family: 'DM Sans', sans-serif; color: var(--search-color); background: transparent; width: 100%; }
-  .sf input::placeholder { color: var(--text-faint); }
-  .search-btn { background: var(--green-mid); color: #fff; border: none; padding: 0 28px; height: 100%; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: background 0.2s; white-space: nowrap; }
+  [data-theme="light"] .prebar { background: rgba(255,255,255,0.9); border-color: rgba(0,0,0,0.12); box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+  .pb-pill {
+    border: none; background: none; color: rgba(255,255,255,0.75);
+    padding: 8px 18px; border-radius: 50px; font-size: 14px; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; white-space: nowrap;
+  }
+  [data-theme="light"] .pb-pill { color: #555; }
+  .pb-pill:hover:not(.active) { color: #fff; background: rgba(255,255,255,0.1); }
+  [data-theme="light"] .pb-pill:hover:not(.active) { color: #111; background: rgba(0,0,0,0.05); }
+  .pb-pill.active {
+    background: #fff; color: #0d1f1a; font-weight: 600;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  }
+  [data-theme="light"] .pb-pill.active { background: #0d1f1a; color: #fff; }
+  .pb-center { padding: 8px 22px; }
+
+  /* ── SEARCH BOX ── */
+  .search-box {
+    display: flex; align-items: center;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 50px; overflow: hidden;
+    max-width: 560px; width: 100%;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    animation: fadeUp 0.6s ease both; animation-delay: 0.45s;
+  }
+  [data-theme="light"] .search-box { background: rgba(255,255,255,0.92); border-color: rgba(0,0,0,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+  .sb-icon { padding: 0 0 0 18px; color: rgba(255,255,255,0.5); display: flex; align-items: center; flex-shrink: 0; }
+  [data-theme="light"] .sb-icon { color: #aaa; }
+  .sb-input {
+    flex: 1; border: none; outline: none; padding: 16px 12px;
+    font-size: 15px; font-family: 'DM Sans', sans-serif;
+    color: #fff; background: transparent;
+  }
+  [data-theme="light"] .sb-input { color: #111; }
+  .sb-input::placeholder { color: rgba(255,255,255,0.4); }
+  [data-theme="light"] .sb-input::placeholder { color: #aaa; }
+  .search-btn {
+    background: var(--green-mid); color: #fff; border: none;
+    padding: 0 24px; height: 56px; font-size: 15px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    transition: background 0.2s; white-space: nowrap; flex-shrink: 0;
+  }
   .search-btn:hover { background: var(--green-dark); }
-  .search-btn svg { width: 18px; height: 18px; }
+
+  /* ── RESULTS PANEL ── */
+  .pb-results {
+    width: 100%; max-width: 700px;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 1.2rem;
+    backdrop-filter: blur(16px);
+    animation: fadeUp 0.3s ease both;
+    margin-top: 0.8rem;
+  }
+  [data-theme="light"] .pb-results { background: rgba(255,255,255,0.95); border-color: rgba(0,0,0,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+  .pb-results-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .pb-results-hdr span { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.06em; }
+  [data-theme="light"] .pb-results-hdr span { color: #888; }
+  .pb-close { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 4px 8px; border-radius: 50px; transition: color 0.2s; }
+  .pb-close:hover { color: #fff; }
+  [data-theme="light"] .pb-close { color: #aaa; }
+  [data-theme="light"] .pb-close:hover { color: #333; }
+  .pb-carousel-wrap { position: relative; display: flex; align-items: center; gap: 6px; }
+  .pb-carousel {
+    display: flex; gap: 10px; overflow-x: auto;
+    scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; flex: 1;
+    scrollbar-width: none;
+  }
+  .pb-carousel::-webkit-scrollbar { display: none; }
+  .pb-arrow {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+    color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.2s; line-height: 1;
+  }
+  .pb-arrow:hover { background: rgba(255,255,255,0.2); }
+  [data-theme="light"] .pb-arrow { background: #f0f0f0; border-color: #ddd; color: #333; }
+  /* RESULT CARDS */
+  .pb-card {
+    min-width: 148px; max-width: 148px;
+    scroll-snap-align: start; border-radius: 12px; overflow: hidden;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; flex-shrink: 0;
+  }
+  .pb-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .pb-thumb {
+    height: 90px; display: flex; align-items: flex-end;
+    padding: 8px; position: relative;
+  }
+  .pb-card-name { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+  .pb-card-meta { font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 2px; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+  .pb-card-body { background: rgba(255,255,255,0.06); padding: 8px 10px; }
+  [data-theme="light"] .pb-card-body { background: #f8f8f8; }
+  .pb-card-link { font-size: 11px; color: var(--green-light); font-weight: 500; }
+  [data-theme="light"] .pb-card-link { color: var(--green-mid); }
+
+  @media (max-width: 600px) {
+    .prebar { gap: 2px; padding: 4px 5px; }
+    .pb-pill { padding: 7px 12px; font-size: 13px; }
+    .pb-center { padding: 7px 14px; }
+    .search-box { max-width: 100%; }
+    .sb-input { font-size: 14px; padding: 14px 10px; }
+    .search-btn { padding: 0 16px; font-size: 14px; height: 50px; }
+    .pb-card { min-width: 130px; max-width: 130px; }
+  }
     border-radius: var(--radius);
     display: flex; align-items: stretch;
     width: 100%; max-width: 700px;
@@ -346,8 +447,8 @@
     .hero-sub { font-size: 15px; margin-bottom: 1.8rem; }
     .hero-eyebrow { font-size: 11px; margin-bottom: 1.4rem; }
     .search-box { max-width: 100%; }
-    .sf { padding: 12px 16px; }
-    .search-btn { padding: 0 18px; font-size: 14px; }
+    .sb-input { font-size: 14px; }
+    .search-btn { padding: 0 16px; font-size: 14px; }
     .search-btn { padding: 14px 20px; justify-content: center; border-radius: 0 0 var(--radius) var(--radius); }
     .hero-stats { gap: 0; flex-wrap: wrap; margin-top: 2rem; width: 100%; max-width: 320px; }
     .hs { width: 50%; padding: 0.8rem 0; }
@@ -423,17 +524,40 @@
   <h1>Where the jungle<br>meets the <em>river</em></h1>
   <p class="hero-sub">Find resorts, book activities, and discover the wild beauty of Dandeli.</p>
 
-  <div class="search-box" id="hero-search">
-    <div class="sf" style="flex:1; border-right:none;">
-      <label>🔍 Search resorts & activities</label>
-      <input type="text" id="hero-q" placeholder="e.g. riverside camp, safari, trekking…" onkeydown="if(event.key==='Enter')heroSearch()" autocomplete="off"/>
+  <!-- FILTER PRE-BAR -->
+  <div class="prebar-wrap">
+    <div class="prebar" id="prebar">
+      <button class="pb-pill" data-cat="resorts" onclick="selectPill(this)">Resorts</button>
+      <button class="pb-pill" data-cat="viewpoints" onclick="selectPill(this)">Viewpoints</button>
+      <button class="pb-pill pb-center" data-cat="safari" onclick="selectPill(this)">Safari</button>
+      <button class="pb-pill" data-cat="rafting" onclick="selectPill(this)">Rafting</button>
+      <button class="pb-pill" data-cat="activities" onclick="selectPill(this)">Activities</button>
     </div>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="search-box" id="hero-search">
+    <div class="sb-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+    <input type="text" id="hero-q" class="sb-input" placeholder="What are you looking for?" onkeydown="if(event.key==='Enter')heroSearch()" oninput="heroSearch()" autocomplete="off"/>
     <button class="search-btn" onclick="heroSearch()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Search
     </button>
+  </div>
+
+  <!-- RESULTS PANEL -->
+  <div class="pb-results" id="pb-results" style="display:none">
+    <div class="pb-results-hdr">
+      <span id="pb-results-label">Resorts</span>
+      <button class="pb-close" onclick="closePillResults()">✕ Close</button>
+    </div>
+    <div class="pb-carousel-wrap">
+      <button class="pb-arrow pb-prev" id="pb-prev" onclick="pbScroll(-1)">‹</button>
+      <div class="pb-carousel" id="pb-carousel"></div>
+      <button class="pb-arrow pb-next" id="pb-next" onclick="pbScroll(1)">›</button>
+    </div>
   </div>
 
   <div class="hero-stats">
@@ -749,6 +873,117 @@
     } else {
       window.location.href = 'resorts.html';
     }
+  }
+
+  // ── PREBAR DATA ──
+  const PB_DATA = {
+    resorts: {
+      label: 'Resorts & Lodges',
+      items: [
+        { name:'Kali River Resort', meta:'Riverside · ₹3,500/night', grad:'linear-gradient(135deg,#1a4a38,#1D9E75)', url:'resorts.html?selected=Kali+River+Resort' },
+        { name:'Dandeli Wild Camp', meta:'Luxury Camp · ₹5,200/night', grad:'linear-gradient(135deg,#0a2e1f,#0F6E56)', url:'resorts.html?selected=Dandeli+Wild+Camp' },
+        { name:'Forest Edge Safari', meta:'Safari Lodge · ₹4,100/night', grad:'linear-gradient(135deg,#1e3a1e,#2d6e2d)', url:'resorts.html?selected=Forest+Edge+Safari+Lodge' },
+        { name:'Supa Wilderness Stay', meta:'Eco Resort · ₹2,400/night', grad:'linear-gradient(135deg,#0f3028,#1D9E75)', url:'resorts.html?selected=Supa+Wilderness+Stay' },
+        { name:'Kali Riverside Camp', meta:'River Camp · ₹2,900/night', grad:'linear-gradient(135deg,#0a2535,#0a6e8f)', url:'resorts.html?selected=Kali+Riverside+Camp' },
+        { name:'Jungle Nest Lodge', meta:'Forest Lodge · ₹1,800/night', grad:'linear-gradient(135deg,#1a2e10,#3a6e18)', url:'resorts.html?selected=Jungle+Nest+Lodge' },
+        { name:'Wildernest Resort', meta:'Nature Resort · ₹4,800/night', grad:'linear-gradient(135deg,#2a1e10,#6e4a18)', url:'resorts.html?selected=Wildernest+Nature+Resort' },
+      ]
+    },
+    viewpoints: {
+      label: 'Viewpoints',
+      items: [
+        { name:'Syntheri Rocks', meta:'Rock formation · Free entry', grad:'linear-gradient(135deg,#3a2a10,#8B6914)', url:'things-to-do.html#view' },
+        { name:'Supa Dam', meta:'Dam viewpoint · Free', grad:'linear-gradient(135deg,#0a2535,#1565a0)', url:'things-to-do.html#view' },
+        { name:'Kavala Caves', meta:'Ancient caves · ₹30 entry', grad:'linear-gradient(135deg,#1a1a2e,#4a4a8a)', url:'things-to-do.html#view' },
+        { name:'Yellur Fort', meta:'Historic fort · Free', grad:'linear-gradient(135deg,#2e1a0a,#8a5a2a)', url:'things-to-do.html#view' },
+        { name:'Ulavi Temple', meta:'Forest temple · Free', grad:'linear-gradient(135deg,#1a0a0a,#8a2a2a)', url:'things-to-do.html#view' },
+        { name:'Nagajhari Waterfall', meta:'Waterfall · Seasonal', grad:'linear-gradient(135deg,#0a2535,#1D9E75)', url:'things-to-do.html#view' },
+      ]
+    },
+    safari: {
+      label: 'Safari & Wildlife',
+      items: [
+        { name:'Jungle Safari', meta:'Jeep safari · Half day', grad:'linear-gradient(135deg,#0a2010,#1a5a20)', url:'things-to-do.html#safari' },
+        { name:'Wildlife Sanctuary', meta:'Guided tour · Full day', grad:'linear-gradient(135deg,#1a2e0a,#3a6e10)', url:'things-to-do.html#safari' },
+        { name:'Bird Watching', meta:'200+ species · Morning', grad:'linear-gradient(135deg,#0a1e2e,#0a4e6e)', url:'things-to-do.html#safari' },
+        { name:'Elephant Camp', meta:'Feed & interact', grad:'linear-gradient(135deg,#2a1a0a,#6e4a1a)', url:'things-to-do.html#safari' },
+        { name:'Crocodile Park', meta:'Dandelappa Park', grad:'linear-gradient(135deg,#0a2a1a,#1a6a3a)', url:'things-to-do.html#safari' },
+        { name:'Night Safari', meta:'Nocturnal wildlife', grad:'linear-gradient(135deg,#0a0a1e,#1a1a5a)', url:'things-to-do.html#safari' },
+      ]
+    },
+    rafting: {
+      label: 'Rafting & Water Sports',
+      items: [
+        { name:'White Water Rafting', meta:'Kali River · Grade 3–4', grad:'linear-gradient(135deg,#0a1e35,#0a4e8a)', url:'things-to-do.html#water' },
+        { name:'Kayaking', meta:'Solo & tandem', grad:'linear-gradient(135deg,#0a2a35,#0a6e8a)', url:'things-to-do.html#water' },
+        { name:'Coracle Ride', meta:'Traditional boat · 30 min', grad:'linear-gradient(135deg,#1a2a0a,#3a6a1a)', url:'things-to-do.html#water' },
+        { name:'River Camp', meta:'Stay by the river', grad:'linear-gradient(135deg,#0a1a2a,#1a4a6a)', url:'things-to-do.html#water' },
+        { name:'Cliff Jumping', meta:'Natural pools', grad:'linear-gradient(135deg,#1a0a2a,#4a1a6a)', url:'things-to-do.html#water' },
+        { name:'Fishing', meta:'Mahseer fishing', grad:'linear-gradient(135deg,#0a2010,#1a5a30)', url:'things-to-do.html#water' },
+      ]
+    },
+    activities: {
+      label: 'Activities',
+      items: [
+        { name:'Forest Trekking', meta:'Multiple trails', grad:'linear-gradient(135deg,#1a2a0a,#3a5a1a)', url:'things-to-do.html#trek' },
+        { name:'Rappelling', meta:'Rock face · Beginner friendly', grad:'linear-gradient(135deg,#2a1a0a,#5a3a1a)', url:'things-to-do.html#trek' },
+        { name:'Zip Line', meta:'Forest canopy', grad:'linear-gradient(135deg,#0a1a2a,#1a4a6a)', url:'things-to-do.html#trek' },
+        { name:'Camping', meta:'Overnight in jungle', grad:'linear-gradient(135deg,#0a1a10,#1a4a20)', url:'things-to-do.html#unique' },
+        { name:'Cycling', meta:'Village & forest trails', grad:'linear-gradient(135deg,#1a0a1a,#4a1a4a)', url:'things-to-do.html#unique' },
+        { name:'Jungle Walk', meta:'Guided nature walk', grad:'linear-gradient(135deg,#0a2a10,#1a6a30)', url:'things-to-do.html#unique' },
+      ]
+    }
+  };
+
+  let _activePill = null;
+
+  function selectPill(btn) {
+    const cat = btn.dataset.cat;
+    // Toggle off if already selected
+    if (_activePill === cat) {
+      btn.classList.remove('active');
+      document.getElementById('pb-results').style.display = 'none';
+      _activePill = null;
+      return;
+    }
+    // Deselect all, select clicked
+    document.querySelectorAll('.pb-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    _activePill = cat;
+    renderPillResults(cat);
+  }
+
+  function renderPillResults(cat) {
+    const data = PB_DATA[cat];
+    if (!data) return;
+    document.getElementById('pb-results-label').textContent = data.label;
+    const carousel = document.getElementById('pb-carousel');
+    carousel.innerHTML = data.items.map(item => `
+      <div class="pb-card" onclick="window.location.href='${item.url}'">
+        <div class="pb-thumb" style="background:${item.grad}">
+          <div>
+            <div class="pb-card-name">${item.name}</div>
+            <div class="pb-card-meta">${item.meta}</div>
+          </div>
+        </div>
+        <div class="pb-card-body">
+          <div class="pb-card-link">Explore →</div>
+        </div>
+      </div>`).join('');
+    document.getElementById('pb-results').style.display = 'block';
+  }
+
+  function closePillResults() {
+    document.querySelectorAll('.pb-pill').forEach(p => p.classList.remove('active'));
+    document.getElementById('pb-results').style.display = 'none';
+    _activePill = null;
+  }
+
+  let _pbPage = 0;
+  function pbScroll(dir) {
+    const carousel = document.getElementById('pb-carousel');
+    const cardWidth = 158; // card + gap
+    carousel.scrollBy({ left: dir * cardWidth * 4, behavior: 'smooth' });
   }
 
   function toggleTheme() {
