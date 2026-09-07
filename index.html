@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8" />
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Plan your perfect Dandeli trip. Discover top resorts, jungle safaris, white-water rafting, bird watching and more in Dandeli, Karnataka. Book your stay with Dandeli Tourism." />
-  <meta name="keywords" content="Dandeli tourism, Dandeli resorts, Dandeli safari, Dandeli rafting, Dandeli adventure, Karnataka jungle tourism, Kali river resort, Dandeli Tourism" />
+  <meta name="description" content="Plan your perfect Dandeli trip. Discover top resorts, jungle safaris, white-water rafting, bird watching and more in Dandeli, Karnataka. Book your stay with DandeliWild." />
+  <meta name="keywords" content="Dandeli tourism, Dandeli resorts, Dandeli safari, Dandeli rafting, Dandeli adventure, Karnataka jungle tourism, Kali river resort, DandeliWild" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://dandelitourism.online/" />
 
   <!-- Open Graph (for social sharing & Google preview) -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Dandeli Tourism — Resorts, Safari & Adventure in Dandeli, Karnataka" />
-  <meta property="og:description" content="Plan your perfect Dandeli trip. Discover top resorts, jungle safaris, white-water rafting, bird watching and more in Dandeli, Karnataka. Book your stay with Dandeli Tourism." />
+  <meta property="og:title" content="DandeliWild — Resorts, Safari & Adventure in Dandeli, Karnataka" />
+  <meta property="og:description" content="Plan your perfect Dandeli trip. Discover top resorts, jungle safaris, white-water rafting, bird watching and more in Dandeli, Karnataka. Book your stay with DandeliWild." />
   <meta property="og:url" content="https://dandelitourism.online/" />
-  <meta property="og:site_name" content="Dandeli Tourism" />
+  <meta property="og:site_name" content="DandeliWild" />
   <meta property="og:image" content="https://dandelitourism.online/tiger.jpg" />
   <meta property="og:locale" content="en_IN" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Dandeli Tourism — Resorts, Safari & Adventure in Dandeli, Karnataka" />
-  <meta name="twitter:description" content="Plan your perfect Dandeli trip. Discover top resorts, jungle safaris, white-water rafting, bird watching and more in Dandeli, Karnataka. Book your stay with Dandeli Tourism." />
+  <meta name="twitter:title" content="DandeliWild — Resorts, Safari & Adventure in Dandeli, Karnataka" />
+  <meta name="twitter:description" content="Plan your perfect Dandeli trip. Discover top resorts, jungle safaris, white-water rafting, bird watching and more in Dandeli, Karnataka. Book your stay with DandeliWild." />
   <meta name="twitter:image" content="https://dandelitourism.online/tiger.jpg" />
 
   <!-- Structured Data (JSON-LD) for Google -->
@@ -28,8 +28,8 @@
   {
     "@context": "https://schema.org",
     "@type": "TouristDestination",
-    "name": "Dandeli Tourism",
-    "description": "Plan your perfect Dandeli trip. Discover top resorts, jungle safaris, white-water rafting, bird watching and more in Dandeli, Karnataka. Book your stay with Dandeli Tourism.",
+    "name": "DandeliWild",
+    "description": "Plan your perfect Dandeli trip. Discover top resorts, jungle safaris, white-water rafting, bird watching and more in Dandeli, Karnataka. Book your stay with DandeliWild.",
     "url": "https://dandelitourism.online/",
     "touristType": ["Adventure", "Wildlife", "Nature"],
     "geo": {
@@ -46,7 +46,7 @@
   }
   </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dandeli Tourism — Resorts, Safari & Adventure in Dandeli, Karnataka</title>
+<title>DandeliWild — Resorts, Safari & Adventure in Dandeli, Karnataka</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -148,29 +148,26 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center;
     padding: 4rem 2rem 3rem;
-    position: relative; overflow: visible;
+    position: relative; overflow: hidden;
   }
-  .hero { position: relative; overflow: visible; }
-  .hero-bg {
-    position: absolute; inset: 0; overflow: hidden;
-    pointer-events: none; z-index: 0;
-    background: var(--green-deep);
-  }
-  .hero-bg::before {
+  /* layered gradient: jungle-to-river left-right + deep glow at bottom */
+  .hero::before {
     content: '';
     position: absolute; inset: 0;
     background:
       linear-gradient(105deg, #04342C 0%, #0F6E56 35%, #1D9E75 60%, #085041 80%, #04342C 100%),
       radial-gradient(ellipse 80% 55% at 50% 100%, rgba(93,202,165,0.25) 0%, transparent 65%);
     background-blend-mode: screen;
+    pointer-events: none;
   }
-  .hero-bg::after {
+  /* subtle shimmer river streak */
+  .hero::after {
     content: '';
     position: absolute; inset: 0;
     background: radial-gradient(ellipse 40% 30% at 70% 65%, rgba(93,202,165,0.12) 0%, transparent 60%);
+    pointer-events: none;
   }
   .hero > * { position: relative; z-index: 1; }
-  .hero-bg { z-index: 0; }
 
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
@@ -192,7 +189,7 @@
 
   /* ── SEARCH BOX ── */
   /* ── PREBAR ── */
-  .prebar-wrap { margin-bottom: 1.2rem; animation: fadeUp 0.6s ease both; animation-delay: 0.35s; }
+  .prebar-wrap { margin-bottom: 1.2rem; animation: fadeUp 0.6s ease both; animation-delay: 0.35s; position: relative; z-index: 1; }
   .prebar {
     display: inline-flex; align-items: center; gap: 4px;
     background: rgba(255,255,255,0.06);
@@ -248,14 +245,14 @@
   .search-btn:hover { background: var(--green-dark); }
 
   /* SEARCH WRAP + DROPDOWN */
-  .search-wrap { position: relative; width: 100%; max-width: 560px; animation: fadeUp 0.6s ease both; animation-delay: 0.45s; }
+  .search-wrap { position: relative; width: 100%; max-width: 560px; animation: fadeUp 0.6s ease both; animation-delay: 0.45s; z-index: 500; isolation: isolate; }
   .search-box { max-width: 100%; animation: none; }
   .search-drop {
-    position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 9999;
-    background: #0a1e17; border: 1px solid rgba(255,255,255,0.14);
+    position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 200;
+    background: #0f2820; border: 1px solid rgba(255,255,255,0.12);
     border-radius: 14px; overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-    max-height: 380px; overflow-y: auto;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    max-height: 400px; overflow-y: auto;
   }
   [data-theme="light"] .search-drop { background: #fff; border-color: rgba(0,0,0,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
   .search-drop::-webkit-scrollbar { width: 4px; }
@@ -357,7 +354,7 @@
   }
 
   /* ── STATS ── */
-  .hero-stats { display: flex; gap: 3rem; margin-top: 3rem; }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 3rem; position: relative; z-index: 0; }
   .hs { text-align: center; }
   .hs-num { font-family: 'DM Serif Display', serif; font-size: 32px; color: #fff; }
   .hs-label { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 2px; }
@@ -526,7 +523,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></div>
+  <div class="logo">Dandeli<em>Wild</em></div>
   <ul class="nav-links">
     <li><a href="resorts.html">Resorts</a></li>
     <li><a href="things-to-do.html">Activities</a></li>
@@ -563,7 +560,6 @@
 </nav>
 
 <section class="hero">
-  <div class="hero-bg"></div>
   <div class="hero-eyebrow"><span></span> Karnataka's adventure capital</div>
   <h1>Where the jungle<br>meets the <em>river</em></h1>
   <p class="hero-sub">Find resorts, book activities, and discover the wild beauty of Dandeli.</p>
@@ -676,9 +672,9 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href='resorts.html?selected=Dandeli+Wild+Camp'">
-        <div class="resort-thumb thumb-amber">🏕️<button class="wishlist-btn" aria-label="Save" data-resort="Dandeli Tourism Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-full">Fully booked</span></div>
+        <div class="resort-thumb thumb-amber">🏕️<button class="wishlist-btn" aria-label="Save" data-resort="Dandeli Wild Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-full">Fully booked</span></div>
         <div class="resort-body">
-          <div class="resort-type">Luxury camp</div><div class="resort-name">Dandeli Tourism Camp</div>
+          <div class="resort-type">Luxury camp</div><div class="resort-name">Dandeli Wild Camp</div>
           <div class="resort-meta"><span class="rating-star">★ 4.9</span><span class="dot">·</span>Luxury tents<span class="dot">·</span>Spa</div>
           <div class="resort-footer"><div class="price">₹5,200 <span class="price-sub">/ night</span></div><button class="book-btn disabled" disabled>Fully booked</button></div>
         </div>
@@ -723,7 +719,7 @@
   <div class="cta-banner">
     <div class="cta-left">
       <h2>Own a resort or lodge in Dandeli?</h2>
-      <p>Get listed on Dandeli Tourism and reach thousands of tourists every month.</p>
+      <p>Get listed on DandeliWild and reach thousands of tourists every month.</p>
       <div style="display:flex; align-items:center; gap:1.2rem; margin-top:1.2rem; flex-wrap:wrap;">
         <div style="display:flex; align-items:baseline; gap:4px;">
           <span style="font-family:'DM Serif Display',serif; font-size:36px; color:#fff; line-height:1;">₹999</span>
@@ -748,7 +744,7 @@
   <div class="section-inner">
     <div class="section-top"><div><div class="section-label">Why visit</div><div class="section-title">Dandeli has it all</div></div></div>
     <div class="why-grid">
-      <div class="why-card"><div class="why-icon">🏞️</div><div class="why-title">Untouched nature</div><div class="why-desc">Home to the Dandeli Tourismlife Sanctuary and Anshi National Park — one of Karnataka's richest biodiversity zones.</div></div>
+      <div class="why-card"><div class="why-icon">🏞️</div><div class="why-title">Untouched nature</div><div class="why-desc">Home to the Dandeli Wildlife Sanctuary and Anshi National Park — one of Karnataka's richest biodiversity zones.</div></div>
       <div class="why-card"><div class="why-icon">🚣</div><div class="why-title">India's best river rafting</div><div class="why-desc">The Kali River offers thrilling Grade 3–4 rapids, making it a top destination for adventure seekers across India.</div></div>
       <div class="why-card"><div class="why-icon">🌿</div><div class="why-title">Affordable & close</div><div class="why-desc">Just 5 hours from Goa, Bangalore, and Pune — perfect for a quick long weekend without burning your wallet.</div></div>
     </div>
@@ -757,8 +753,8 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></div>
-  <div class="footer-copy">© 2026 Dandeli Tourism. Made with ♥ in Karnataka.</div>
+  <div class="footer-logo">Dandeli<em>Wild</em></div>
+  <div class="footer-copy">© 2026 DandeliWild. Made with ♥ in Karnataka.</div>
   <div class="footer-links">
     <a onclick="openModal('privacy')">Privacy</a>
     <a onclick="openModal('terms')">Terms</a>
@@ -771,9 +767,9 @@
   <div class="modal">
     <button class="modal-close" onclick="closeModal('privacy')">✕</button>
     <h2>Privacy Policy</h2>
-    <p>At <strong>Dandeli Tourism</strong>, your privacy matters to us. Here's how we handle your information:</p>
+    <p>At <strong>DandeliWild</strong>, your privacy matters to us. Here's how we handle your information:</p>
     <p><strong>What we collect:</strong> When you use our website, we may collect basic information such as your name, email address, travel dates, and preferences — only when you choose to share them.</p>
-    <p><strong>How we use it:</strong> Your information is used <strong>only</strong> for two purposes — to personalise your experience on Dandeli Tourism (show you relevant resorts, activities, and recommendations) and for internal research to improve our platform for future visitors.</p>
+    <p><strong>How we use it:</strong> Your information is used <strong>only</strong> for two purposes — to personalise your experience on DandeliWild (show you relevant resorts, activities, and recommendations) and for internal research to improve our platform for future visitors.</p>
     <p><strong>What we never do:</strong> We do not sell, rent, or share your personal data with third parties for advertising or commercial purposes.</p>
     <p><strong>Contact details:</strong> Contact information will be updated shortly. If you have any privacy concerns, reach out to us via the Contact page.</p>
     <p style="font-size:13px; color:var(--text-faint);">Last updated: January 2026</p>
@@ -785,11 +781,11 @@
   <div class="modal">
     <button class="modal-close" onclick="closeModal('terms')">✕</button>
     <h2>Terms of Use</h2>
-    <p>By using <strong>Dandeli Tourism</strong>, you agree to the following terms:</p>
+    <p>By using <strong>DandeliWild</strong>, you agree to the following terms:</p>
     <p><strong>Purpose:</strong> This website is a tourism discovery platform for Dandeli, Karnataka. It lists resorts, lodges, and activities to help travellers plan their visit.</p>
     <p><strong>Your data:</strong> Any information you provide is used solely for improving your experience on this platform and for internal research. We do not use it for any other commercial purpose.</p>
     <p><strong>Listings:</strong> Resort and activity listings are provided for informational purposes. Please verify availability and pricing directly with the property before booking.</p>
-    <p><strong>Resort owners:</strong> By listing your property on Dandeli Tourism, you agree to keep your availability and pricing information accurate and up to date.</p>
+    <p><strong>Resort owners:</strong> By listing your property on DandeliWild, you agree to keep your availability and pricing information accurate and up to date.</p>
     <p><strong>Contact details:</strong> Full legal contact information will be updated shortly.</p>
     <p style="font-size:13px; color:var(--text-faint);">Last updated: January 2026</p>
   </div>
@@ -922,7 +918,7 @@
   const SEARCH_ALL = [
     // RESORTS
     { name:'Kali River Resort', meta:'Riverside resort · ₹3,500/night', cat:'Resort', grad:'linear-gradient(135deg,#1a4a38,#1D9E75)', url:'resorts.html?selected=Kali+River+Resort' },
-    { name:'Dandeli Tourism Camp', meta:'Luxury camp · ₹5,200/night', cat:'Resort', grad:'linear-gradient(135deg,#0a2e1f,#0F6E56)', url:'resorts.html?selected=Dandeli+Wild+Camp' },
+    { name:'Dandeli Wild Camp', meta:'Luxury camp · ₹5,200/night', cat:'Resort', grad:'linear-gradient(135deg,#0a2e1f,#0F6E56)', url:'resorts.html?selected=Dandeli+Wild+Camp' },
     { name:'Kali Riverside Camp', meta:'River camp · ₹2,900/night', cat:'Resort', grad:'linear-gradient(135deg,#0a2535,#0a6e8f)', url:'resorts.html?selected=Kali+Riverside+Camp' },
     { name:'Forest Edge Safari Lodge', meta:'Safari lodge · ₹4,100/night', cat:'Resort', grad:'linear-gradient(135deg,#1e3a1e,#2d6e2d)', url:'resorts.html?selected=Forest+Edge+Safari+Lodge' },
     { name:'Supa Wilderness Stay', meta:'Eco resort · ₹2,400/night', cat:'Resort', grad:'linear-gradient(135deg,#0f3028,#1D9E75)', url:'resorts.html?selected=Supa+Wilderness+Stay' },
@@ -1053,7 +1049,7 @@
       label: 'Resorts & Lodges',
       items: [
         { name:'Kali River Resort', meta:'Riverside · ₹3,500/night', grad:'linear-gradient(135deg,#1a4a38,#1D9E75)', url:'resorts.html?selected=Kali+River+Resort' },
-        { name:'Dandeli Tourism Camp', meta:'Luxury Camp · ₹5,200/night', grad:'linear-gradient(135deg,#0a2e1f,#0F6E56)', url:'resorts.html?selected=Dandeli+Wild+Camp' },
+        { name:'Dandeli Wild Camp', meta:'Luxury Camp · ₹5,200/night', grad:'linear-gradient(135deg,#0a2e1f,#0F6E56)', url:'resorts.html?selected=Dandeli+Wild+Camp' },
         { name:'Forest Edge Safari', meta:'Safari Lodge · ₹4,100/night', grad:'linear-gradient(135deg,#1e3a1e,#2d6e2d)', url:'resorts.html?selected=Forest+Edge+Safari+Lodge' },
         { name:'Supa Wilderness Stay', meta:'Eco Resort · ₹2,400/night', grad:'linear-gradient(135deg,#0f3028,#1D9E75)', url:'resorts.html?selected=Supa+Wilderness+Stay' },
         { name:'Kali Riverside Camp', meta:'River Camp · ₹2,900/night', grad:'linear-gradient(135deg,#0a2535,#0a6e8f)', url:'resorts.html?selected=Kali+Riverside+Camp' },
