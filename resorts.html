@@ -10,16 +10,16 @@
 
   <!-- Open Graph (for social sharing & Google preview) -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Best Resorts & Lodges in Dandeli, Karnataka — DandeliWild" />
+  <meta property="og:title" content="Best Resorts & Lodges in Dandeli, Karnataka — Dandeli Tourism" />
   <meta property="og:description" content="Browse top-rated resorts and jungle lodges in Dandeli. From luxury river camps to eco stays — check availability and book your Dandeli resort stay." />
   <meta property="og:url" content="https://dandelitourism.online/resorts.html" />
-  <meta property="og:site_name" content="DandeliWild" />
+  <meta property="og:site_name" content="Dandeli Tourism" />
   <meta property="og:image" content="https://dandelitourism.online/tiger.jpg" />
   <meta property="og:locale" content="en_IN" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Best Resorts & Lodges in Dandeli, Karnataka — DandeliWild" />
+  <meta name="twitter:title" content="Best Resorts & Lodges in Dandeli, Karnataka — Dandeli Tourism" />
   <meta name="twitter:description" content="Browse top-rated resorts and jungle lodges in Dandeli. From luxury river camps to eco stays — check availability and book your Dandeli resort stay." />
   <meta name="twitter:image" content="https://dandelitourism.online/tiger.jpg" />
 
@@ -28,7 +28,7 @@
   {
     "@context": "https://schema.org",
     "@type": "TouristDestination",
-    "name": "DandeliWild",
+    "name": "Dandeli Tourism",
     "description": "Browse top-rated resorts and jungle lodges in Dandeli. From luxury river camps to eco stays — check availability and book your Dandeli resort stay.",
     "url": "https://dandelitourism.online/resorts.html",
     "touristType": ["Adventure", "Wildlife", "Nature"],
@@ -46,7 +46,7 @@
   }
   </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Best Resorts & Lodges in Dandeli, Karnataka — DandeliWild</title>
+<title>Best Resorts & Lodges in Dandeli, Karnataka — Dandeli Tourism</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -385,7 +385,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="logo">Dandeli<em>Wild</em></a>
+  <a href="index.html" class="logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="things-to-do.html">Activities</a></li>
@@ -605,8 +605,8 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Dandeli<em>Wild</em></div>
-  <div class="footer-copy">© 2026 DandeliWild. Made with ♥ in Karnataka.</div>
+  <div class="footer-logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></div>
+  <div class="footer-copy">© 2026 Dandeli Tourism. Made with ♥ in Karnataka.</div>
   <div class="footer-links">
     <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a>
   </div>
@@ -689,7 +689,7 @@
   // ── RESORT SEED DATA (used when Supabase resorts table is empty / fallback) ──
   const SEED_RESORTS = [
     {name:'Kali River Resort',type:'resort',location:'Kali River, Dandeli',rating:4.8,price:3500,emoji:'🌿',amenities:['pool','ac','meals','safari','wifi'],maps_url:'https://maps.google.com/?q=Kali+River+Resort+Dandeli',is_recommended:true,sort_order:1},
-    {name:'Dandeli Wild Camp',type:'camp',location:'Forest Edge, Dandeli',rating:4.9,price:5200,emoji:'🏕️',amenities:['pool','ac','meals','safari','wifi','spa'],maps_url:'https://maps.google.com/?q=Dandeli+Wild+Camp',is_recommended:true,sort_order:2},
+    {name:'Dandeli Tourism Camp',type:'camp',location:'Forest Edge, Dandeli',rating:4.9,price:5200,emoji:'🏕️',amenities:['pool','ac','meals','safari','wifi','spa'],maps_url:'https://maps.google.com/?q=Dandeli+Wild+Camp',is_recommended:true,sort_order:2},
     {name:'Kali Riverside Camp',type:'camp',location:'Riverside, Dandeli',rating:4.7,price:2900,emoji:'🌊',amenities:['meals','wifi','rafting'],maps_url:'https://maps.google.com/?q=Kali+Riverside+Camp+Dandeli',is_recommended:true,sort_order:3},
     {name:'Forest Edge Safari Lodge',type:'resort',location:'Forest Edge, Dandeli',rating:4.8,price:4100,emoji:'🦁',amenities:['meals','safari','wifi','ac'],maps_url:'https://maps.google.com/?q=Forest+Edge+Safari+Lodge+Dandeli',is_recommended:true,sort_order:4},
     {name:'Supa Wilderness Stay',type:'resort',location:'Near Supa Dam, Dandeli',rating:4.7,price:2400,emoji:'🦜',amenities:['meals','wifi'],maps_url:'https://maps.google.com/?q=Supa+Wilderness+Stay+Dandeli',is_recommended:true,sort_order:5},
@@ -818,7 +818,7 @@
   // ── RESORT DATA (defaults; overridden by Supabase if owner has set details) ──
   const RESORT_DATA = {
     'Kali River Resort': { type:'Riverside Resort', location:'Kali River, Dandeli', rating:'★ 4.8', mapsUrl:'https://maps.google.com/?q=Kali+River+Resort+Dandeli', emoji:'🌿', desc:'A premium riverside resort with stunning Kali River views, luxurious AC rooms and a large pool. Set amidst dense forest, it\'s perfect for families and couples seeking comfort in the wild. The resort offers guided nature walks, coracle rides, and evening bonfires.', amenities:['🏊 Pool','❄️ AC','🍽️ Meals included','🐆 Safari packages','📶 WiFi','🛁 En-suite bathrooms','🔥 Bonfire evenings'], packages:[{name:'Day Visit',price:'₹500',includes:'Entry + coracle ride'},{name:'Overnight',price:'₹3,500',includes:'Room + all meals + safari'},{name:'Weekend',price:'₹6,500',includes:'2 nights + full board + 2 safaris'}] },
-    'Dandeli Wild Camp': { type:'Luxury Camp', location:'Forest Edge, Dandeli', rating:'★ 4.9', mapsUrl:'https://maps.google.com/?q=Dandeli+Wild+Camp', emoji:'🏕️', desc:'Dandeli\'s most premium luxury camp — private tents with en-suite bathrooms, spa treatments, gourmet meals, and exclusive safari packages. The ultimate jungle glamping experience with zero compromise on comfort.', amenities:['🏊 Pool','❄️ AC tents','🍽️ Gourmet meals','🐆 Exclusive safari','💆 Spa','🔥 Campfire','📶 WiFi'], packages:[{name:'Glamping Night',price:'₹5,200',includes:'Luxury tent + gourmet meals'},{name:'Wild Weekend',price:'₹9,800',includes:'2 nights + spa + safari'},{name:'Honeymoon',price:'₹12,000',includes:'Private tent + candle dinner'}] },
+    'Dandeli Tourism Camp': { type:'Luxury Camp', location:'Forest Edge, Dandeli', rating:'★ 4.9', mapsUrl:'https://maps.google.com/?q=Dandeli+Wild+Camp', emoji:'🏕️', desc:'Dandeli\'s most premium luxury camp — private tents with en-suite bathrooms, spa treatments, gourmet meals, and exclusive safari packages. The ultimate jungle glamping experience with zero compromise on comfort.', amenities:['🏊 Pool','❄️ AC tents','🍽️ Gourmet meals','🐆 Exclusive safari','💆 Spa','🔥 Campfire','📶 WiFi'], packages:[{name:'Glamping Night',price:'₹5,200',includes:'Luxury tent + gourmet meals'},{name:'Wild Weekend',price:'₹9,800',includes:'2 nights + spa + safari'},{name:'Honeymoon',price:'₹12,000',includes:'Private tent + candle dinner'}] },
     'Kali Riverside Camp': { type:'River Camp', location:'Riverside, Dandeli', rating:'★ 4.7', mapsUrl:'https://maps.google.com/?q=Kali+Riverside+Camp+Dandeli', emoji:'🌊', desc:'Cosy riverside camp with white-water rafting and kayaking right at your doorstep. All meals included, perfect for adventure groups and weekend travellers who want an action-packed stay without breaking the bank.', amenities:['🚣 Rafting included','🍽️ Meals included','📶 WiFi','🔥 Bonfire','🏕️ Tented stay'], packages:[{name:'Rafting Day',price:'₹1,200',includes:'Rafting + lunch'},{name:'Camp Night',price:'₹2,900',includes:'Tent + all meals + rafting'},{name:'Group (6 pax)',price:'₹15,000',includes:'All inclusive package'}] },
     'Forest Edge Safari Lodge': { type:'Safari Lodge', location:'Forest Edge, Dandeli', rating:'★ 4.8', mapsUrl:'https://maps.google.com/?q=Forest+Edge+Safari+Lodge+Dandeli', emoji:'🦁', desc:'A boutique safari lodge right on the boundary of the wildlife sanctuary. Known for its expert naturalist-guided jeep safaris and exceptional birdwatching, this lodge is the go-to for serious wildlife enthusiasts.', amenities:['🐆 Safari included','🦜 Birdwatching','🍽️ Meals included','❄️ AC cottages','📶 WiFi','🔭 Naturalist guides'], packages:[{name:'Safari Day',price:'₹1,800',includes:'Jeep safari + naturalist guide'},{name:'Wildlife Night',price:'₹4,100',includes:'Cottage + meals + 2 safaris'},{name:'Bird Week',price:'₹22,000',includes:'5 nights + daily safaris'}] },
     'Supa Wilderness Stay': { type:'Eco Resort', location:'Near Supa Dam, Dandeli', rating:'★ 4.7', mapsUrl:'https://maps.google.com/?q=Supa+Wilderness+Stay+Dandeli', emoji:'🦜', desc:'A serene eco resort near Supa Dam with forest cottages, bird watching trails, and home-cooked meals. Ideal for birdwatchers and nature lovers seeking peace, away from the crowds. Home to over 200 bird species.', amenities:['🦜 Birdwatching trails','🍽️ Home-cooked meals','📶 WiFi','🌿 Eco cottages','🔭 Bird guides'], packages:[{name:'Bird Walk',price:'₹600',includes:'Guided birding + breakfast'},{name:'Cottage Night',price:'₹2,400',includes:'Cottage + all meals'},{name:'Birding Weekend',price:'₹4,500',includes:'2 nights + 3 guided walks'}] },
