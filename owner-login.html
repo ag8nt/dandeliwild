@@ -58,8 +58,8 @@
 </head>
 <body>
 <nav>
-  <a href="index.html" class="logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></a>
-  <a href="index.html" class="back">← Back to site</a>
+  <a href="/" class="logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></a>
+  <a href="/" class="back">← Back to site</a>
 </nav>
 <div class="page">
   <div class="card">
@@ -159,7 +159,7 @@ async function doLogin() {
   sessionStorage.setItem('dw_user', user);
   sessionStorage.setItem('dw_hash', hash);
   sessionStorage.setItem('dw_resort', resort);
-  window.location.href = 'owner-admin.html';
+  window.location.href='/owner-admin';
 }
 
 async function googleSetup() {
@@ -172,7 +172,7 @@ async function googleSetup() {
 
 // If already has a credential session, go straight to admin
 if (sessionStorage.getItem('dw_role') && sessionStorage.getItem('dw_resort')) {
-  window.location.href = 'owner-admin.html';
+  window.location.href='/owner-admin';
 }
 
 // Enter key support
