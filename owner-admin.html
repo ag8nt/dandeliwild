@@ -110,17 +110,17 @@ nav{display:flex;align-items:center;gap:10px;padding:0 2rem;height:60px;border-b
 </head>
 <body>
 <nav>
-  <a href="index.html" class="logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></a>
+  <a href="/" class="logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></a>
   <span class="role-chip" id="nav-role" style="display:none"></span>
   <span class="nav-resort" id="nav-resort"></span>
   <div class="nav-r">
-    <a href="resorts.html" class="bsm">View site</a>
+    <a href="/resorts" class="bsm">View site</a>
     <button class="bout" onclick="doSignOut()">Sign out</button>
   </div>
 </nav>
 
 <div id="v-load" class="state"><div class="spinner"></div><p style="color:var(--tm);font-size:14px;margin-top:.5rem">Loading…</p></div>
-<div id="v-noauth" class="state" style="display:none"><div class="si">🔒</div><div class="st">Access required</div><div class="ss">Sign in to manage your resort.</div><a href="owner-login.html" class="bsm" style="margin-top:1rem">Go to login</a></div>
+<div id="v-noauth" class="state" style="display:none"><div class="si">🔒</div><div class="st">Access required</div><div class="ss">Sign in to manage your resort.</div><a href="/owner-login" class="bsm" style="margin-top:1rem">Go to login</a></div>
 
 <div id="v-reg" class="state" style="display:none">
   <div class="sc">
@@ -163,14 +163,14 @@ nav{display:flex;align-items:center;gap:10px;padding:0 2rem;height:60px;border-b
     <div style="font-size:48px;margin-bottom:1rem">🎉</div>
     <h2>All logins created!</h2>
     <p>Owner, manager and staff credentials are saved. From now on, log in with your username and password.</p>
-    <a href="owner-login.html" class="btn-p" style="display:block;text-decoration:none;text-align:center;margin-top:.5rem">Go to login page →</a>
+    <a href="/owner-login" class="btn-p" style="display:block;text-decoration:none;text-align:center;margin-top:.5rem">Go to login page →</a>
   </div>
 </div>
 
 <div id="v-use-cred" class="state" style="display:none">
   <div class="si">🔑</div><div class="st">Use your credentials</div>
   <div class="ss">Credentials are already set up for your resort. Log in with your username and password.</div>
-  <a href="owner-login.html" class="bsm" style="margin-top:1rem">Go to login</a>
+  <a href="/owner-login" class="bsm" style="margin-top:1rem">Go to login</a>
 </div>
 
 <!-- DASHBOARD -->
@@ -383,7 +383,7 @@ async function loadCreds(){
 function togCE(r){document.getElementById('ce-'+r).classList.toggle('open');}
 async function saveCred(role){const u=document.getElementById('ce-u-'+role).value.trim(),p=document.getElementById('ce-p-'+role).value;if(!u||!p){showMsg('creds-msg','err','Fill in both fields.');return;}if(p.length<8){showMsg('creds-msg','err','Min 8 characters.');return;}const h=await hashPw(p);const{error}=await sb.from('resort_credentials').upsert({resort_name:_resort,role,username:u,password_hash:h},{onConflict:'resort_name,role'});if(error){showMsg('creds-msg','err','Error: '+error.message);return;}document.getElementById('cu-'+role).textContent='@'+u;document.getElementById('ce-'+role).classList.remove('open');showMsg('creds-msg','ok',role+' login updated.');setTimeout(()=>{document.getElementById('creds-msg').className='msg';},3000);}
 
-async function doSignOut(){sessionStorage.clear();await sb.auth.signOut();window.location.href='owner-login.html';}
+async function doSignOut(){sessionStorage.clear();await sb.auth.signOut();window.location.href="/owner-login";}
 init();
 </script>
 </body>
