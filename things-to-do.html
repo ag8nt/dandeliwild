@@ -37,7 +37,7 @@
     "url": "https://dandelitourism.online/things-to-do.html",
     "itemListElement": [
       {"@type": "TouristAttraction", "position": 1, "name": "White Water Rafting Dandeli", "description": "Grade 3-4 rapids on Kali River", "address": {"@type": "PostalAddress", "addressLocality": "Dandeli", "addressRegion": "Karnataka"}},
-      {"@type": "TouristAttraction", "position": 2, "name": "Dandeli Jungle Safari", "description": "Jeep safari through Dandeli Wildlife Sanctuary", "address": {"@type": "PostalAddress", "addressLocality": "Dandeli", "addressRegion": "Karnataka"}},
+      {"@type": "TouristAttraction", "position": 2, "name": "Dandeli Jungle Safari", "description": "Jeep safari through Dandeli Tourismlife Sanctuary", "address": {"@type": "PostalAddress", "addressLocality": "Dandeli", "addressRegion": "Karnataka"}},
       {"@type": "TouristAttraction", "position": 3, "name": "Syntheri Rocks Dandeli", "description": "Massive natural rock formation in Dandeli", "address": {"@type": "PostalAddress", "addressLocality": "Dandeli", "addressRegion": "Karnataka"}},
       {"@type": "TouristAttraction", "position": 4, "name": "Bird Watching Dandeli", "description": "200+ bird species in Dandeli forests", "address": {"@type": "PostalAddress", "addressLocality": "Dandeli", "addressRegion": "Karnataka"}},
       {"@type": "TouristAttraction", "position": 5, "name": "Dandakaranya Eco Park", "description": "Family eco park in Dandeli", "address": {"@type": "PostalAddress", "addressLocality": "Dandeli", "addressRegion": "Karnataka"}},
@@ -295,11 +295,11 @@
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></a>
+  <a href="/" class="logo">Dandeli<em style="color:#E8392A;font-style:normal">Tourism</em></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="things-to-do.html" class="active">Activities</a></li>
-    <li><a href="resorts.html">Resorts</a></li>
+    <li><a href="/">Home</a></li>
+    <li><a href="/things-to-do" class="active">Activities</a></li>
+    <li><a href="/resorts">Resorts</a></li>
     <li><a href="#view" onclick="event.preventDefault(); goToCategory('view')">Viewpoints</a></li>
   </ul>
   <div class="nav-actions">
@@ -307,7 +307,7 @@
       <div class="toggle-track"><div class="toggle-thumb"></div></div>
       <span id="theme-label">Light mode</span>
     </button>
-    <a href="login.html" class="btn-primary" id="nav-signin" style="text-decoration:none;">Sign in</a>
+    <a href="/login" class="btn-primary" id="nav-signin" style="text-decoration:none;">Sign in</a>
     <div id="nav-user" style="display:none;position:relative;">
       <button onclick="toggleUserMenu()" style="display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--border);border-radius:50px;padding:5px 14px 5px 6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-primary);">
         <div id="nav-avatar" style="width:28px;height:28px;border-radius:50%;background:var(--green-mid);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:500;overflow:hidden;"></div>
@@ -326,14 +326,14 @@
         <button onclick="signOutUser()" style="width:100%;text-align:left;background:none;border:none;padding:8px 10px;font-size:13px;color:#ef4444;cursor:pointer;font-family:'DM Sans',sans-serif;border-radius:6px;" onmouseover="this.style.background='rgba(239,68,68,0.08)'" onmouseout="this.style.background='none'">Sign out</button>
       </div>
     </div>
-    <button class="btn-primary nav-list-property" onclick="window.location.href='owner-login.html'">List your property</button>
+    <button class="btn-primary nav-list-property" onclick="window.location.href="/owner-login"">List your property</button>
   </div>
 </nav>
 
 <!-- PAGE HERO -->
 <div class="page-hero">
   <div class="page-hero-inner">
-    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Things to do</div>
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Things to do</div>
     <h1>Things to do in<br><em>Dandeli</em></h1>
     <p>From white-water rapids to silent jungle trails — every kind of adventure waits here.</p>
     <div class="hero-chips">
@@ -1118,7 +1118,7 @@
     <h2>Ready to explore Dandeli?</h2>
     <p>Find a resort with your activities included, or book experiences separately.</p>
     <div class="cta-btns">
-      <button class="btn-white" onclick="window.location.href='index.html'">Browse resorts →</button>
+      <button class="btn-white" onclick="window.location.href="/"">Browse resorts →</button>
       <button class="btn-outline-white">Plan my trip</button>
     </div>
   </div>
@@ -1163,7 +1163,7 @@
     el.innerHTML = data.map(f =>
       `<div style="display:flex;align-items:center;gap:6px;padding:2px 0;">
         <span style="color:#ef4444;font-size:11px;">♥</span>
-        <a href="resorts.html?selected=${encodeURIComponent(f.resort_name)}" style="color:var(--text-primary);text-decoration:none;font-size:13px;" onclick="document.getElementById('user-dropdown').style.display='none'">${f.resort_name}</a>
+        <a href="/resorts?selected=${encodeURIComponent(f.resort_name)}" style="color:var(--text-primary);text-decoration:none;font-size:13px;" onclick="document.getElementById('user-dropdown').style.display='none'">${f.resort_name}</a>
       </div>`
     ).join('');
   }
