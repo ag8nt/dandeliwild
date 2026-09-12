@@ -428,7 +428,7 @@
     cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; background: var(--card-bg);
   }
   .resort-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.15); }
-  .resort-thumb { height: 170px; display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative; }
+  .resort-thumb { height: 170px; display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative; overflow:hidden; background-size:cover!important; background-position:center!important; }
   .thumb-green { background: linear-gradient(135deg, #E1F5EE, #9FE1CB); }
   .thumb-teal  { background: linear-gradient(135deg, #d4ede8, #9FE1CB); }
   .thumb-amber { background: linear-gradient(135deg, #FAEEDA, #FAC775); }
@@ -695,7 +695,7 @@
     </div>
     <div class="resorts-grid">
       <div class="resort-card" onclick="window.location.href="/resorts?selected=Kali+River+Resort"">
-        <div class="resort-thumb thumb-green">🌿<button class="wishlist-btn" aria-label="Save" data-resort="Kali River Resort" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
+        <div class="resort-thumb thumb-green" style="background:url('https://source.unsplash.com/featured/600x400/?river,resort,india&sig=1') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Kali River Resort" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
         <div class="resort-body">
           <div class="resort-type">Riverside resort</div><div class="resort-name">Kali River Resort</div>
           <div class="resort-meta"><span class="rating-star">★ 4.8</span><span class="dot">·</span>AC rooms<span class="dot">·</span>Pool</div>
@@ -703,7 +703,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href="/resorts?selected=Jungle+Nest+Lodge"">
-        <div class="resort-thumb thumb-teal">🌳<button class="wishlist-btn" aria-label="Save" data-resort="Jungle Nest Lodge" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-few">Only 2 left</span></div>
+        <div class="resort-thumb thumb-teal" style="background:url('https://source.unsplash.com/featured/600x400/?jungle,forest,lodge&sig=2') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Jungle Nest Lodge" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-few">Only 2 left</span></div>
         <div class="resort-body">
           <div class="resort-type">Forest lodge</div><div class="resort-name">Jungle Nest Lodge</div>
           <div class="resort-meta"><span class="rating-star">★ 4.6</span><span class="dot">·</span>Forest view<span class="dot">·</span>Tents</div>
@@ -711,7 +711,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href="/resorts?selected=Dandeli+Wild+Camp"">
-        <div class="resort-thumb thumb-amber">🏕️<button class="wishlist-btn" aria-label="Save" data-resort="Dandeli Tourism Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-full">Fully booked</span></div>
+        <div class="resort-thumb thumb-amber" style="background:url('https://source.unsplash.com/featured/600x400/?glamping,luxury,tent&sig=3') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Dandeli Tourism Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-full">Fully booked</span></div>
         <div class="resort-body">
           <div class="resort-type">Luxury camp</div><div class="resort-name">Dandeli Tourism Camp</div>
           <div class="resort-meta"><span class="rating-star">★ 4.9</span><span class="dot">·</span>Luxury tents<span class="dot">·</span>Spa</div>
@@ -719,7 +719,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href="/resorts?selected=Supa+Wilderness+Stay"">
-        <div class="resort-thumb thumb-deep">🦜<button class="wishlist-btn" aria-label="Save" data-resort="Supa Wilderness Stay" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
+        <div class="resort-thumb thumb-deep" style="background:url('https://source.unsplash.com/featured/600x400/?wilderness,cabin,forest&sig=4') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Supa Wilderness Stay" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
         <div class="resort-body">
           <div class="resort-type">Eco resort</div><div class="resort-name">Supa Wilderness Stay</div>
           <div class="resort-meta"><span class="rating-star">★ 4.7</span><span class="dot">·</span>Bird watching<span class="dot">·</span>Cottages</div>
@@ -727,7 +727,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href="/resorts?selected=Kali+Riverside+Camp"">
-        <div class="resort-thumb thumb-green" style="background:linear-gradient(135deg,#c9e8df,#9FE1CB)">🌊<button class="wishlist-btn" aria-label="Save" data-resort="Kali Riverside Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-few">3 rooms left</span></div>
+        <div class="resort-thumb thumb-green" style="background:url('https://source.unsplash.com/featured/600x400/?riverside,camp,river&sig=5') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Kali Riverside Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-few">3 rooms left</span></div>
         <div class="resort-body">
           <div class="resort-type">River camp</div><div class="resort-name">Kali Riverside Camp</div>
           <div class="resort-meta"><span class="rating-star">★ 4.5</span><span class="dot">·</span>Rafting included<span class="dot">·</span>Meals</div>
@@ -735,7 +735,7 @@
         </div>
       </div>
       <div class="resort-card" onclick="window.location.href="/resorts?selected=Forest+Edge+Safari+Lodge"">
-        <div class="resort-thumb thumb-amber" style="background:linear-gradient(135deg,#f5e8cc,#EF9F27)">🦁<button class="wishlist-btn" aria-label="Save" data-resort="Forest Edge Safari Lodge" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
+        <div class="resort-thumb thumb-amber" style="background:url('https://source.unsplash.com/featured/600x400/?safari,lodge,wildlife&sig=6') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Forest Edge Safari Lodge" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
         <div class="resort-body">
           <div class="resort-type">Safari lodge</div><div class="resort-name">Forest Edge Safari Lodge</div>
           <div class="resort-meta"><span class="rating-star">★ 4.8</span><span class="dot">·</span>Safari included<span class="dot">·</span>Jeep tours</div>
