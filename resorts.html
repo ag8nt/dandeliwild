@@ -717,6 +717,8 @@
     const amenityStr = (r.amenities || []).join(',');
     const recClass = r.is_recommended ? ' recommended' : '';
     const recBadge = r.is_recommended ? '<div class="rec-badge">⭐ Recommended</div>' : '';
+    const RESORT_THUMB_IMGS = {"Kali River Resort": "https://source.unsplash.com/featured/600x400/?river,resort,india&sig=1", "Dandeli Wild Camp": "https://source.unsplash.com/featured/600x400/?glamping,luxury,tent&sig=3", "Kali Riverside Camp": "https://source.unsplash.com/featured/600x400/?riverside,camp,river&sig=5", "Forest Edge Safari Lodge": "https://source.unsplash.com/featured/600x400/?safari,lodge,wildlife&sig=6", "Supa Wilderness Stay": "https://source.unsplash.com/featured/600x400/?wilderness,cabin,forest&sig=4", "Jungle Nest Lodge": "https://source.unsplash.com/featured/600x400/?jungle,forest,lodge&sig=2", "Kali Adventure Resort": "https://source.unsplash.com/featured/600x400/?adventure,resort,outdoor&sig=7", "Green Valley Lodge": "https://source.unsplash.com/featured/600x400/?valley,hills,green&sig=8", "Kali Jungle Camping": "https://source.unsplash.com/featured/600x400/?camping,tents,bonfire&sig=9", "Dandeli Meadows Resort": "https://source.unsplash.com/featured/600x400/?meadow,resort,pool&sig=10", "Dandeli Forest Homestay": "https://source.unsplash.com/featured/600x400/?homestay,village,india&sig=11", "Wildernest Nature Resort": "https://source.unsplash.com/featured/600x400/?mountain,ghats,resort&sig=12"};
+    const thumbImg = RESORT_THUMB_IMGS[r.name] || 'https://source.unsplash.com/featured/600x400/?forest,resort,india&sig=0';
     const isFullBook = dataAvail === 'full';
     const bookBtn = isFullBook
       ? `<button class="btn-book" disabled style="opacity:0.5;cursor:not-allowed;">Fully booked</button>`
@@ -732,8 +734,7 @@
     <div class="resort-card${recClass}"
       data-avail="${dataAvail}" data-type="${r.type||'resort'}" data-price="${r.price||0}" data-rating="${r.rating||0}"
       data-amenities="${amenityStr}" data-recommended="${r.is_recommended?'true':'false'}">
-      <div class="${thumbClass}">
-        ${r.emoji||'🏕️'}
+      <div class="${thumbClass}" style="background:url('${thumbImg}') center/cover;">
         ${recBadge}
         <span class="avail-pill ${cls}">${label}</span>
         <button class="wish-btn" aria-label="Save" data-resort="${r.name}" onclick="toggleFavourite(event,this)">♡</button>
@@ -878,7 +879,7 @@
       document.getElementById('gallery-count').style.display = 'block';
       document.getElementById('gallery-dots').innerHTML = photos.map((_, i) => `<div class="gallery-dot ${i===0?'active':''}" onclick="galleryGoTo(${i})"></div>`).join('');
     } else {
-      track.innerHTML = `<div class="gallery-slide"><div class="gallery-placeholder"><span>${base.emoji || '🏕️'}</span><span>Photos coming soon</span></div></div>`;
+      track.innerHTML = `<div class="gallery-slide" style="background:url('${thumbImg||RESORT_THUMB_IMGS[name]}') center/cover;opacity:0.7;"><div class="gallery-placeholder"><span style='font-size:13px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)'>Photos coming soon</span></div></div>`;
       document.getElementById('gallery-prev').style.display = 'none';
       document.getElementById('gallery-next').style.display = 'none';
       document.getElementById('gallery-count').style.display = 'none';
