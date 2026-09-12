@@ -187,11 +187,13 @@
   .act-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); border-color: var(--green-light); }
   .act-card.external:hover { border-color: #60a5fa; }
 
-  .card-thumb {
+  .card-thumb { overflow:hidden; position:relative;
     height: 110px;
     display: flex; align-items: center; justify-content: center;
     font-size: 40px; position: relative;
   }
+  .card-thumb img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+  .card-thumb .card-badge { z-index:1; position:relative; }
   .thumb-water  { background: linear-gradient(135deg, #dbeafe, #93c5fd); }
   .thumb-safari { background: linear-gradient(135deg, #dcfce7, #86efac); }
   .thumb-view   { background: linear-gradient(135deg, #fef9c3, #fde047); }
@@ -279,7 +281,7 @@
     .filter-inner { padding: 12px 1.2rem; }
     .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .cards-grid.wide { grid-template-columns: 1fr; }
-    .card-thumb { height: 90px; font-size: 32px; }
+    .card-thumb { overflow:hidden; position:relative; height: 90px; font-size: 32px; }
     .cat-header { flex-direction: column; align-items: flex-start; gap: 6px; }
     footer { flex-direction: column; gap: 0.8rem; text-align: center; }
     .footer-links { justify-content: center; }
@@ -377,39 +379,39 @@
     </div>
     <div class="cards-grid">
       <div class="act-card">
-        <div class="card-thumb thumb-water"><span>🚣</span><span class="card-badge badge-popular">Most popular</span></div>
+        <div class="card-thumb thumb-water"><img src="https://source.unsplash.com/featured/600x400/?rafting,whitewater,river&sig=13" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-popular">Most popular</span></div>
         <div class="card-body"><div class="card-name">White-water rafting</div><div class="card-desc">Grade 3–4 rapids on the Kali River. Best Nov–June.</div><div class="card-price">From ₹600/person</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-water"><span>🚤</span><span class="card-badge badge-popular">Family friendly</span></div>
+        <div class="card-thumb thumb-water"><img src="https://source.unsplash.com/featured/600x400/?motorboat,river,water&sig=14" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-popular">Family friendly</span></div>
         <div class="card-body"><div class="card-name">Boating</div><div class="card-desc">Peaceful motorboat rides on the Kali River backwaters.</div><div class="card-price">From ₹200/person</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-water"><span>🛶</span></div>
+        <div class="card-thumb thumb-water"><img src="https://source.unsplash.com/featured/600x400/?kayaking,lake,paddling&sig=15" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Kayaking</div><div class="card-desc">Solo paddle through calm and rapid sections of the river.</div><div class="card-price">From ₹500/person</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-water"><span>🪀</span><span class="card-badge badge-thrill">Thrilling</span></div>
+        <div class="card-thumb thumb-water"><img src="https://source.unsplash.com/featured/600x400/?coracle,boat,river&sig=16" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-thrill">Thrilling</span></div>
         <div class="card-body"><div class="card-name">Zorbing</div><div class="card-desc">Roll inside a giant transparent ball on water or land.</div><div class="card-price">From ₹300/person</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-water"><span>🌀</span></div>
+        <div class="card-thumb thumb-water"><img src="https://source.unsplash.com/featured/600x400/?rapids,river,current&sig=17" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Coracle ride</div><div class="card-desc">Traditional round boat ride — spot crocodiles on the banks.</div><div class="card-price">From ₹400/coracle</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-water"><span>🤸</span><span class="card-badge badge-thrill">Adrenaline</span></div>
+        <div class="card-thumb thumb-water"><img src="https://source.unsplash.com/featured/600x400/?zipline,adventure,forest&sig=18" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-thrill">Adrenaline</span></div>
         <div class="card-body"><div class="card-name">Water zipline</div><div class="card-desc">Glide over the river on a steel cable at speed.</div><div class="card-price">From ₹400/person</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-water"><span>🚵</span></div>
+        <div class="card-thumb thumb-water"><img src="https://source.unsplash.com/featured/600x400/?cycling,forest,trail&sig=19" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Air cycling</div><div class="card-desc">Pedal a cycle suspended above the river on a wire.</div><div class="card-price">From ₹250/person</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-water"><span>💦</span><span class="card-badge badge-unique">Natural</span></div>
+        <div class="card-thumb thumb-water"><img src="https://source.unsplash.com/featured/600x400/?waterfall,natural,pool&sig=20" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-unique">Natural</span></div>
         <div class="card-body"><div class="card-name">Natural jacuzzi rapids</div><div class="card-desc">Let the river currents massage you at natural rock pools.</div><div class="card-price">Free / with rafting</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-water"><span>🧗</span></div>
+        <div class="card-thumb thumb-water"><img src="https://source.unsplash.com/featured/600x400/?rappelling,rockclimbing&sig=21" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">River crossing</div><div class="card-desc">Cross the Kali River on ropes — tests strength and balance.</div><div class="card-price">From ₹200/person</div></div>
       </div>
       <div class="act-card">
@@ -435,7 +437,7 @@
     </div>
     <div class="cards-grid">
       <div class="act-card" onclick="openPopup('bird')" style="cursor:pointer;">
-        <div class="card-thumb thumb-safari"><span>🦅</span><span class="card-badge badge-unique">350+ species</span></div>
+        <div class="card-thumb thumb-safari"><img src="https://source.unsplash.com/featured/600x400/?birds,birdwatching,nature&sig=23" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-unique">350+ species</span></div>
         <div class="card-body"><div class="card-name">Bird watching at Ganeshgudi</div><div class="card-desc">Managed by Old Magazine House — 350+ species including rare hornbills.</div><div class="card-price" style="color:var(--green-mid);">From ₹500+ · Tap for details →</div></div>
       </div>
 
@@ -487,7 +489,7 @@
 
       <!-- WILDLIFE SANCTUARY CARD -->
       <div class="act-card" onclick="openPopup('wildlife')" style="cursor:pointer;">
-        <div class="card-thumb thumb-safari"><span>🐯</span><span class="card-badge badge-popular">834 sq km</span></div>
+        <div class="card-thumb thumb-safari"><img src="https://source.unsplash.com/featured/600x400/?wildlife,jungle,safari&sig=24" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-popular">834 sq km</span></div>
         <div class="card-body"><div class="card-name">Dandeli Tourismlife Sanctuary</div><div class="card-desc">Karnataka's 2nd largest sanctuary — tigers, leopards, elephants.</div><div class="card-price" style="color:var(--green-mid);">From ₹999+ · Tap for details →</div></div>
       </div>
 
@@ -539,7 +541,7 @@
 
       <!-- ANSHI NATIONAL PARK CARD -->
       <div class="act-card" onclick="openPopup('anshi')" style="cursor:pointer;">
-        <div class="card-thumb thumb-safari"><span>🌳</span><span class="card-badge badge-popular">500 sq km</span></div>
+        <div class="card-thumb thumb-safari"><img src="https://source.unsplash.com/featured/600x400/?forest,jungle,green&sig=25" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-popular">500 sq km</span></div>
         <div class="card-body"><div class="card-name">Anshi National Park</div><div class="card-desc">Kali Tiger Reserve — rich Western Ghats biodiversity.</div><div class="card-price" style="color:var(--green-mid);">From ₹1,500+ · Tap for details →</div></div>
       </div>
 
@@ -607,23 +609,23 @@
     </div>
     <div class="cards-grid">
       <div class="act-card">
-        <div class="card-thumb thumb-view"><span>🏔️</span><span class="card-badge badge-scenic">Highest peak</span></div>
+        <div class="card-thumb thumb-view"><img src="https://source.unsplash.com/featured/600x400/?mountain,peak,view&sig=26" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-scenic">Highest peak</span></div>
         <div class="card-body"><div class="card-name">Shiroli Peak</div><div class="card-desc">Highest point in the Kali Tiger Reserve — panoramic Western Ghats view.</div><div class="card-price">Via jungle safari</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-view"><span>🪨</span><span class="card-badge badge-unique">Geological wonder</span></div>
+        <div class="card-thumb thumb-view"><img src="https://source.unsplash.com/featured/600x400/?rocks,formation&sig=27" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-unique">Geological wonder</span></div>
         <div class="card-body"><div class="card-name">Syntheri Rocks</div><div class="card-desc">Massive monolithic granite rock carved by the Kaneri River over millennia.</div><div class="card-price">Free entry</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-view"><span>💧</span><span class="card-badge badge-scenic">200m drop</span></div>
+        <div class="card-thumb thumb-view"><img src="https://source.unsplash.com/featured/600x400/?waterfall,falls&sig=28" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-scenic">200m drop</span></div>
         <div class="card-body"><div class="card-name">Magod Falls</div><div class="card-desc">Bedti River cascades 200m through lush forest — best in monsoon season.</div><div class="card-price">Free entry</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-view"><span>🌊</span></div>
+        <div class="card-thumb thumb-view"><img src="https://source.unsplash.com/featured/600x400/?river,flowing,water&sig=38" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Sykes Point</div><div class="card-desc">Dramatic view of the Kali River valley — permit required from KPCL.</div><div class="card-price">Permit required</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-view"><span>🏞️</span></div>
+        <div class="card-thumb thumb-view"><img src="https://source.unsplash.com/featured/600x400/?nature,india&sig=99" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Supa Dam</div><div class="card-desc">One of Karnataka's largest dams — stunning backwater views and picnic spot.</div><div class="card-price">Free entry</div></div>
       </div>
       </div>
@@ -646,15 +648,15 @@
     </div>
     <div class="cards-grid">
       <div class="act-card">
-        <div class="card-thumb thumb-trek"><span>🕳️</span><span class="card-badge badge-thrill">Underground</span></div>
+        <div class="card-thumb thumb-trek"><img src="https://source.unsplash.com/featured/600x400/?nature,india&sig=99" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-thrill">Underground</span></div>
         <div class="card-body"><div class="card-name">Kavala Caves trek</div><div class="card-desc">Massive limestone caves deep in the jungle — ancient and mystical.</div><div class="card-price">From ₹300/person</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-trek"><span>🏔️</span><span class="card-badge badge-popular">Popular</span></div>
+        <div class="card-thumb thumb-trek"><img src="https://source.unsplash.com/featured/600x400/?mountain,peak,view&sig=26" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-popular">Popular</span></div>
         <div class="card-body"><div class="card-name">Shiroli Peak trek</div><div class="card-desc">Through dense forest to the highest viewpoint in Dandeli.</div><div class="card-price">From ₹800/person</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-trek"><span>💧</span></div>
+        <div class="card-thumb thumb-trek"><img src="https://source.unsplash.com/featured/600x400/?waterfall,falls&sig=28" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Sada Falls trek</div><div class="card-desc">2-hour trail through streams and boulders ending at a hidden waterfall.</div><div class="card-price">From ₹800/person</div></div>
       </div>
       <div class="act-card">
@@ -662,7 +664,7 @@
         <div class="card-body"><div class="card-name">Huli Gudda Hill</div><div class="card-desc">Moderate hill trek with great views of the forest and river below.</div><div class="card-price">From ₹600/person</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-trek"><span>🌲</span></div>
+        <div class="card-thumb thumb-trek"><img src="https://source.unsplash.com/featured/600x400/?nature,india&sig=99" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Kulgi-Nagzari Valley</div><div class="card-desc">Dense forest valley trail — excellent for birding and wildlife spotting.</div><div class="card-price">From ₹700/person</div></div>
       </div>
     </div>
@@ -684,7 +686,7 @@
     </div>
     <div class="cards-grid wide">
       <div class="place-card" onclick="openPopup('danda')" style="cursor:pointer;">
-        <div class="place-emoji">🦊</div>
+        <div class="place-emoji"><img src="https://source.unsplash.com/featured/600x400/?nature,india,scenic&sig=50" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:8px;"/></div>
         <div class="place-info">
           <div class="place-name">Dandakaranya Park <span class="place-tag amber">Disney Park</span></div>
           <div class="place-desc">Locally known as Dandeli's Disney Park — a fun family destination with animals, nature walks and recreational activities.</div>
@@ -736,7 +738,7 @@
         </div>
       </div>
       <div class="place-card" onclick="openCroc()" style="cursor:pointer;">
-        <div class="place-emoji">🐊</div>
+        <div class="place-emoji"><img src="https://source.unsplash.com/featured/600x400/?nature,india,scenic&sig=50" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:8px;"/></div>
         <div class="place-info">
           <div class="place-name">Crocodile Park <span class="place-tag">Reptile sanctuary</span></div>
           <div class="place-desc">Watch mugger crocodiles up close in a dedicated park. A fascinating stop for wildlife lovers and families.</div>
@@ -747,7 +749,7 @@
 
       <!-- MOULANGI ECO PARK -->
       <div class="place-card" onclick="openPopup('moulangi')" style="cursor:pointer;">
-        <div class="place-emoji">🌿</div>
+        <div class="place-emoji"><img src="https://source.unsplash.com/featured/600x400/?nature,greenery&sig=30" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:8px;"/></div>
         <div class="place-info">
           <div class="place-name">Moulangi Eco Park <span class="place-tag">340 acres</span></div>
           <div class="place-desc">Lush 340-acre eco park with kayaking, nature trails, waterfalls and forest walks along the Kali River backwaters.</div>
@@ -848,7 +850,7 @@
         </div>
       </div>
       <div class="place-card" onclick="openPansoli()" style="cursor:pointer;">
-        <div class="place-emoji">🐘</div>
+        <div class="place-emoji"><img src="https://source.unsplash.com/featured/600x400/?nature,india,scenic&sig=50" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:8px;"/></div>
         <div class="place-info">
           <div class="place-name">Pansoli Elephant Camp <span class="place-tag">Interactive</span></div>
           <div class="place-desc">Meet, feed and bathe elephants at this unique camp. One of Dandeli's most memorable family experiences.</div>
@@ -902,7 +904,7 @@
         </div>
       </div>
       <div class="place-card" onclick="openPopup('fort')" style="cursor:pointer;">
-        <div class="place-emoji">🏯</div>
+        <div class="place-emoji"><img src="https://source.unsplash.com/featured/600x400/?nature,india,scenic&sig=50" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:8px;"/></div>
         <div class="place-info">
           <div class="place-name">Shivaji Fort <span class="place-tag amber">Heritage</span></div>
           <div class="place-desc">Built during the reign of Chhatrapati Shivaji Maharaj — one of Karnataka's oldest forts, popular with trekkers and history lovers.</div>
@@ -954,7 +956,7 @@
         </div>
       </div>
       <div class="place-card" onclick="openPopup('ulavi')" style="cursor:pointer;">
-        <div class="place-emoji">🛕</div>
+        <div class="place-emoji"><img src="https://source.unsplash.com/featured/600x400/?nature,india,scenic&sig=50" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:8px;"/></div>
         <div class="place-info">
           <div class="place-name">Ulavi Temple <span class="place-tag amber">Spiritual</span></div>
           <div class="place-desc">Ancient temple deep in the forest — dedicated to Lord Chennbasavanna, serene and architecturally beautiful.</div>
@@ -1006,7 +1008,7 @@
         </div>
       </div>
       <div class="place-card" onclick="openPopup('dandelappa')" style="cursor:pointer;">
-        <div class="place-emoji">🛕</div>
+        <div class="place-emoji"><img src="https://source.unsplash.com/featured/600x400/?nature,india,scenic&sig=50" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:8px;"/></div>
         <div class="place-info">
           <div class="place-name">Dandelappa Temple <span class="place-tag amber">Spiritual</span></div>
           <div class="place-desc">Local deity temple — the spiritual heart of Dandeli town, visited by locals and tourists alike.</div>
@@ -1087,27 +1089,27 @@
     </div>
     <div class="cards-grid">
       <div class="act-card">
-        <div class="card-thumb thumb-unique"><span>🌌</span><span class="card-badge badge-unique">Overnight</span></div>
+        <div class="card-thumb thumb-unique"><img src="https://source.unsplash.com/featured/600x400/?nature,india&sig=99" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-unique">Overnight</span></div>
         <div class="card-body"><div class="card-name">Night camping</div><div class="card-desc">Sleep under jungle stars with bonfire, storytelling and forest sounds.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-unique"><span>🏹</span></div>
+        <div class="card-thumb thumb-unique"><img src="https://source.unsplash.com/featured/600x400/?nature,india&sig=99" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Archery</div><div class="card-desc">Try traditional and modern archery in a forest setting.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-unique"><span>🚵</span></div>
+        <div class="card-thumb thumb-unique"><img src="https://source.unsplash.com/featured/600x400/?cycling,forest,trail&sig=19" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Mountain biking</div><div class="card-desc">Rent bikes and ride through jungle trails and forest paths.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-unique"><span>🧗</span><span class="card-badge badge-thrill">Vertical</span></div>
+        <div class="card-thumb thumb-unique"><img src="https://source.unsplash.com/featured/600x400/?rappelling,rockclimbing&sig=21" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-thrill">Vertical</span></div>
         <div class="card-body"><div class="card-name">Rappelling</div><div class="card-desc">Descend rock faces with professional guides in the forest.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-unique"><span>🌿</span></div>
+        <div class="card-thumb thumb-unique"><img src="https://source.unsplash.com/featured/600x400/?nature,greenery&sig=30" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="card-body"><div class="card-name">Nature walk</div><div class="card-desc">Guided walks through the forest learning about flora, fauna and ecology.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
       </div>
       <div class="act-card">
-        <div class="card-thumb thumb-unique"><span>🪂</span><span class="card-badge badge-thrill">Sky high</span></div>
+        <div class="card-thumb thumb-unique"><img src="https://source.unsplash.com/featured/600x400/?nature,india&sig=99" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/><span class="card-badge badge-thrill">Sky high</span></div>
         <div class="card-body"><div class="card-name">Zip lining</div><div class="card-desc">Soar over the forest canopy for a bird's eye view of Dandeli.</div><div class="card-price" style="color:var(--green-mid);">🏨 Included in most resort packages</div></div>
       </div>
     </div>
