@@ -733,7 +733,9 @@
     const amenityStr = (r.amenities || []).join(',');
     const recClass = r.is_recommended ? ' recommended' : '';
     const recBadge = r.is_recommended ? '<div class="rec-badge">⭐ Recommended</div>' : '';
-    const thumbImg = RESORT_THUMB_IMGS[r.name] || 'https://source.unsplash.com/featured/600x400/?forest,resort,india&sig=0';
+    const thumbImg = (r.photo_urls && r.photo_urls[0])
+      ? r.photo_urls[0]
+      : (RESORT_THUMB_IMGS[r.name] || 'https://source.unsplash.com/featured/600x400/?forest,resort,india&sig=0');
     const isFullBook = dataAvail === 'full';
     const bookBtn = isFullBook
       ? `<button class="btn-book" disabled style="opacity:0.5;cursor:not-allowed;">Fully booked</button>`
@@ -790,10 +792,17 @@
     const detMap = {};
     (details || []).forEach(d => { detMap[d.resort_name] = d; });
 
-    // Decide which data to use
-    const resorts = (sbResorts && sbResorts.length > 0)
-      ? sbResorts.map(r => ({ ...r, availability: detMap[r.name]?.availability || 'open', rooms_available: detMap[r.name]?.rooms_available || null }))
-      : SEED_RESORTS.map(r => ({ ...r, availability: detMap[r.name]?.availability || 'open', rooms_available: detMap[r.name]?.rooms_available || null }));
+    // Decide which data to use — Supabase only, no hardcoded fallback
+    if (!sbResorts || sbResorts.length === 0) {
+      list.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--text-muted)">No resorts added yet. Add resorts from the <a href="/creator-admin" style="color:var(--green-mid)">Creator Admin</a>.</div>';
+      document.getElementById('resorts-loading')?.remove();
+      return;
+    }
+    const resorts = sbResorts.map(r => ({
+      ...r,
+      availability: detMap[r.name]?.availability || r.availability || 'open',
+      rooms_available: detMap[r.name]?.rooms_available ?? r.rooms_available ?? null
+    }));
 
     // Render cards
     list.innerHTML = resorts.map(renderResortCard).join('');
@@ -832,76 +841,80 @@
 
   // ── THEME ──
   // ── RESORT DATA (defaults; overridden by Supabase if owner has set details) ──
-  const RESORT_DATA = {
-    'Kali River Resort': { type:'Riverside Resort', location:'Kali River, Dandeli', rating:'★ 4.8', mapsUrl:'https://maps.google.com/?q=Kali+River+Resort+Dandeli', emoji:'🌿', desc:'A premium riverside resort with stunning Kali River views, luxurious AC rooms and a large pool. Set amidst dense forest, it\'s perfect for families and couples seeking comfort in the wild. The resort offers guided nature walks, coracle rides, and evening bonfires.', amenities:['🏊 Pool','❄️ AC','🍽️ Meals included','🐆 Safari packages','📶 WiFi','🛁 En-suite bathrooms','🔥 Bonfire evenings'], packages:[{name:'Day Visit',price:'₹500',includes:'Entry + coracle ride'},{name:'Overnight',price:'₹3,500',includes:'Room + all meals + safari'},{name:'Weekend',price:'₹6,500',includes:'2 nights + full board + 2 safaris'}] },
-    'Dandeli Tourism Camp': { type:'Luxury Camp', location:'Forest Edge, Dandeli', rating:'★ 4.9', mapsUrl:'https://maps.google.com/?q=Dandeli+Wild+Camp', emoji:'🏕️', desc:'Dandeli\'s most premium luxury camp — private tents with en-suite bathrooms, spa treatments, gourmet meals, and exclusive safari packages. The ultimate jungle glamping experience with zero compromise on comfort.', amenities:['🏊 Pool','❄️ AC tents','🍽️ Gourmet meals','🐆 Exclusive safari','💆 Spa','🔥 Campfire','📶 WiFi'], packages:[{name:'Glamping Night',price:'₹5,200',includes:'Luxury tent + gourmet meals'},{name:'Wild Weekend',price:'₹9,800',includes:'2 nights + spa + safari'},{name:'Honeymoon',price:'₹12,000',includes:'Private tent + candle dinner'}] },
-    'Kali Riverside Camp': { type:'River Camp', location:'Riverside, Dandeli', rating:'★ 4.7', mapsUrl:'https://maps.google.com/?q=Kali+Riverside+Camp+Dandeli', emoji:'🌊', desc:'Cosy riverside camp with white-water rafting and kayaking right at your doorstep. All meals included, perfect for adventure groups and weekend travellers who want an action-packed stay without breaking the bank.', amenities:['🚣 Rafting included','🍽️ Meals included','📶 WiFi','🔥 Bonfire','🏕️ Tented stay'], packages:[{name:'Rafting Day',price:'₹1,200',includes:'Rafting + lunch'},{name:'Camp Night',price:'₹2,900',includes:'Tent + all meals + rafting'},{name:'Group (6 pax)',price:'₹15,000',includes:'All inclusive package'}] },
-    'Forest Edge Safari Lodge': { type:'Safari Lodge', location:'Forest Edge, Dandeli', rating:'★ 4.8', mapsUrl:'https://maps.google.com/?q=Forest+Edge+Safari+Lodge+Dandeli', emoji:'🦁', desc:'A boutique safari lodge right on the boundary of the wildlife sanctuary. Known for its expert naturalist-guided jeep safaris and exceptional birdwatching, this lodge is the go-to for serious wildlife enthusiasts.', amenities:['🐆 Safari included','🦜 Birdwatching','🍽️ Meals included','❄️ AC cottages','📶 WiFi','🔭 Naturalist guides'], packages:[{name:'Safari Day',price:'₹1,800',includes:'Jeep safari + naturalist guide'},{name:'Wildlife Night',price:'₹4,100',includes:'Cottage + meals + 2 safaris'},{name:'Bird Week',price:'₹22,000',includes:'5 nights + daily safaris'}] },
-    'Supa Wilderness Stay': { type:'Eco Resort', location:'Near Supa Dam, Dandeli', rating:'★ 4.7', mapsUrl:'https://maps.google.com/?q=Supa+Wilderness+Stay+Dandeli', emoji:'🦜', desc:'A serene eco resort near Supa Dam with forest cottages, bird watching trails, and home-cooked meals. Ideal for birdwatchers and nature lovers seeking peace, away from the crowds. Home to over 200 bird species.', amenities:['🦜 Birdwatching trails','🍽️ Home-cooked meals','📶 WiFi','🌿 Eco cottages','🔭 Bird guides'], packages:[{name:'Bird Walk',price:'₹600',includes:'Guided birding + breakfast'},{name:'Cottage Night',price:'₹2,400',includes:'Cottage + all meals'},{name:'Birding Weekend',price:'₹4,500',includes:'2 nights + 3 guided walks'}] },
-    'Jungle Nest Lodge': { type:'Forest Lodge', location:'Deep Forest, Dandeli', rating:'★ 4.6', mapsUrl:'https://maps.google.com/?q=Jungle+Nest+Lodge+Dandeli', emoji:'🌳', desc:'Charming forest lodge with treehouse-style rooms nestled deep in the jungle. Popular with backpackers and college groups for its affordable stays, excellent food, and genuine jungle experience.', amenities:['🌲 Forest view','🏕️ Tented rooms','🔥 Bonfire','🍽️ Home meals','📶 WiFi'], packages:[{name:'Budget Night',price:'₹1,800',includes:'Room + breakfast'},{name:'Full Board',price:'₹2,600',includes:'Room + all meals'},{name:'Group Camping',price:'₹1,200/person',includes:'Tent + bonfire + breakfast'}] },
-    'Kali Adventure Resort': { type:'Adventure Resort', location:'Kali River, Dandeli', rating:'★ 4.5', mapsUrl:'https://maps.google.com/?q=Kali+Adventure+Resort+Dandeli', emoji:'🚣', desc:'Purpose-built adventure resort offering the widest range of activities on the Kali River. Rappelling, river crossing, kayaking, coracle, zip-line — all in one place. Best for corporate groups and adventure clubs.', amenities:['🚣 Kayaking','🧗 Rappelling','🤿 River crossing','🏕️ Camping','🍽️ Meals','📶 WiFi'], packages:[{name:'Adventure Half Day',price:'₹1,600',includes:'3 activities + lunch'},{name:'Full Adventure Day',price:'₹2,800',includes:'All activities + meals'},{name:'Corporate Package',price:'₹POA',includes:'Custom team activities'}] },
-    'Green Valley Lodge': { type:'Valley Lodge', location:'Green Valley, Dandeli', rating:'★ 4.2', mapsUrl:'https://maps.google.com/?q=Green+Valley+Lodge+Dandeli', emoji:'🏡', desc:'A peaceful mid-range lodge surrounded by paddy fields and forested hills. Excellent base for exploring Dandeli at a relaxed pace, with honest home-cooked food and comfortable rooms.', amenities:['🌄 Valley views','🍽️ Home meals','❄️ AC rooms','📶 WiFi','🅿️ Parking'], packages:[{name:'Budget Room',price:'₹1,200',includes:'Room + breakfast'},{name:'Deluxe',price:'₹2,200',includes:'Room + all meals'},{name:'Family Room',price:'₹3,000',includes:'Family room + meals'}] },
-    'Kali Jungle Camping': { type:'Jungle Camping', location:'Kali Forest, Dandeli', rating:'★ 4.4', mapsUrl:'https://maps.google.com/?q=Kali+Jungle+Camping+Dandeli', emoji:'⛺', desc:'No-frills jungle camping right inside the forest. Tents, bonfire, night sounds of the jungle, and simple but hearty meals. Perfect for those who want the real outdoor experience at an unbeatable price.', amenities:['⛺ Canvas tents','🔥 Bonfire','🍽️ Simple meals','🌿 Jungle walks','⭐ Stargazing'], packages:[{name:'Camping Night',price:'₹1,600',includes:'Tent + bonfire + meals'},{name:'Group Camp',price:'₹1,200/person',includes:'Min 6 pax, all inclusive'},{name:'Overnight Trek',price:'₹2,000',includes:'Trek + night camp + breakfast'}] },
-    'Dandeli Meadows Resort': { type:'Meadows Resort', location:'Dandeli Town Area', rating:'★ 4.5', mapsUrl:'https://maps.google.com/?q=Dandeli+Meadows+Resort', emoji:'🌸', desc:'Well-appointed resort in a large meadow setting with excellent facilities. Popular with families for its spacious grounds, kids\' play area, and proximity to main Dandeli attractions.', amenities:['🏊 Pool','🌸 Garden','🍽️ Restaurant','❄️ AC','📶 WiFi','🅿️ Large parking'], packages:[{name:'Standard Room',price:'₹2,600',includes:'Room + breakfast'},{name:'Family Package',price:'₹4,800',includes:'Family room + all meals + pool'},{name:'Weekend Getaway',price:'₹5,500',includes:'2 nights + pool + meals'}] },
-    'Dandeli Forest Homestay': { type:'Forest Homestay', location:'Forest Outskirts, Dandeli', rating:'★ 4.1', mapsUrl:'https://maps.google.com/?q=Dandeli+Forest+Homestay', emoji:'🏠', desc:'Cosy homestay run by a local family, giving you an authentic Karnataka experience. Home-cooked traditional meals, warm hospitality, and a genuinely local feel that no resort can replicate.', amenities:['🍛 Traditional meals','🌿 Forest walks','🏡 Homely rooms','☕ Tea/Coffee','🐄 Farm animals'], packages:[{name:'Homestay Night',price:'₹900',includes:'Room + all meals'},{name:'2 Night Stay',price:'₹1,600',includes:'Both nights + meals + village walk'},{name:'Cultural Tour',price:'₹1,200',includes:'1 night + cooking class + meals'}] },
-    'Wildernest Nature Resort': { type:'Nature Resort', location:'Western Ghats Edge, Dandeli', rating:'★ 4.6', mapsUrl:'https://maps.google.com/?q=Wildernest+Nature+Resort+Dandeli', emoji:'🌿', desc:'Award-winning nature resort perched at the edge of the Western Ghats with panoramic views. Expert naturalists, zero-plastic policy, and responsible tourism at its finest. A premium experience for discerning travellers.', amenities:['🌄 Ghats view','🐆 Expert naturalist','🌿 Eco certified','🍽️ Organic meals','❄️ AC','📶 WiFi','🔭 Telescope'], packages:[{name:'Nature Night',price:'₹3,800',includes:'Room + organic meals + nature walk'},{name:'Ghats Weekend',price:'₹7,200',includes:'2 nights + naturalist + all meals'},{name:'Conservation Stay',price:'₹5,500',includes:'1 night + wildlife survey + meals'}] },
-  };
-
   let _galIdx = 0, _galTotal = 0;
 
   async function openDetails(name) {
-    const base = RESORT_DATA[name] || {};
-    // Try to fetch owner-updated details from Supabase
-    const { data: sb } = await _sb.from('resort_details').select('*').eq('resort_name', name).maybeSingle();
-    const desc = sb?.description || base.desc || 'Details coming soon.';
-    const packages = base.packages || [];
-    const amenities = base.amenities || [];
-    const photos = sb?.photo_urls || [];
-    const avail = sb?.availability || 'open';
+    // Fetch everything from Supabase — resorts table (creator data) + resort_details (owner data)
+    const [{ data: resort }, { data: ownerData }] = await Promise.all([
+      _sb.from('resorts').select('*').eq('name', name).maybeSingle(),
+      _sb.from('resort_details').select('*').eq('resort_name', name).maybeSingle()
+    ]);
+
+    const r = resort || {};
+    const od = ownerData || {};
+
+    // Merge: owner data overrides creator data where set
+    const desc       = od.description      || r.description      || 'Details coming soon.';
+    const amenities  = r.amenities         || [];
+    const packages   = (od.packages ? JSON.parse(typeof od.packages === 'string' ? od.packages : JSON.stringify(od.packages)) : null)
+                       || r.packages       || [];
+    const photos     = (od.photo_urls && od.photo_urls.length) ? od.photo_urls
+                       : (r.photo_urls && r.photo_urls.length)  ? r.photo_urls : [];
+    const avail      = od.availability     || 'open';
     const availLabel = avail === 'open' ? '✅ Available' : avail === 'few' ? '⚠️ Limited rooms' : '❌ Fully booked';
+    const mapsUrl    = r.maps_url          || `https://maps.google.com/?q=${encodeURIComponent(name + ' Dandeli')}`;
+    const rating     = r.rating            ? `★ ${r.rating}` : '';
+    const location   = r.location          || 'Dandeli';
+    const type       = r.type              || '';
 
     // Populate header
-    document.getElementById('det-type').textContent = base.type || '';
-    document.getElementById('det-name').textContent = name;
-    document.getElementById('det-rating').textContent = base.rating || '';
-    document.getElementById('det-location').textContent = base.location || 'Dandeli';
+    document.getElementById('det-type').textContent      = type;
+    document.getElementById('det-name').textContent      = name;
+    document.getElementById('det-rating').textContent    = rating;
+    document.getElementById('det-location').textContent  = location;
     document.getElementById('det-avail-label').textContent = availLabel;
-    document.getElementById('det-desc').textContent = desc;
+    document.getElementById('det-desc').textContent      = desc;
 
-    // Amenities
-    document.getElementById('det-amenities').innerHTML = amenities.map(a => `<span class="details-amenity">${a}</span>`).join('');
+    // Amenities — support both string array and emoji string array
+    const AMENITY_LABELS = {pool:'🏊 Pool',ac:'❄️ AC',meals:'🍽️ Meals',safari:'🐆 Safari',wifi:'📶 WiFi',spa:'💆 Spa',rafting:'🚣 Rafting',trekking:'🥾 Trekking',parking:'🅿️ Parking',bonfire:'🔥 Bonfire'};
+    document.getElementById('det-amenities').innerHTML = amenities.map(a =>
+      `<span class="details-amenity">${AMENITY_LABELS[a] || a}</span>`
+    ).join('');
 
-    // Packages
-    document.getElementById('det-packages').innerHTML = packages.map(p => `
-      <div class="pkg-card">
-        <div class="pkg-name">${p.name}</div>
-        <div class="pkg-price">${p.price}</div>
-        <div class="pkg-includes">${p.includes}</div>
-      </div>`).join('');
+    // Packages — support both {name,price,includes} objects and legacy string format
+    const pkgArr = Array.isArray(packages) ? packages : [];
+    document.getElementById('det-packages').innerHTML = pkgArr.length
+      ? pkgArr.map(p => `
+          <div class="pkg-card">
+            <div class="pkg-name">${p.name || ''}</div>
+            <div class="pkg-price">${p.price || ''}</div>
+            <div class="pkg-includes">${p.includes || p.description || ''}</div>
+          </div>`).join('')
+      : '<div style="color:var(--text-faint);font-size:13px;padding:.5rem 0">No packages listed yet.</div>';
 
-    // Maps + Book button
-    document.getElementById('det-maps-btn').href = base.mapsUrl || `https://maps.google.com/?q=${encodeURIComponent(name + ' Dandeli')}`;
+    // Maps + Book
+    document.getElementById('det-maps-btn').href = mapsUrl;
     document.getElementById('det-book-btn').onclick = () => { closeDetails(); openBooking(name); };
 
-    // Build gallery
-    _galIdx = 0;
-    _galTotal = photos.length;
+    // Gallery
+    _galIdx = 0; _galTotal = photos.length;
     const track = document.getElementById('gallery-track');
     if (photos.length > 0) {
-      track.innerHTML = photos.map(url => `<div class="gallery-slide"><img src="${url}" alt="${name}" /></div>`).join('');
+      track.innerHTML = photos.map(url => `<div class="gallery-slide"><img src="${url}" alt="${name}"/></div>`).join('');
       document.getElementById('gallery-prev').style.display = photos.length > 1 ? 'flex' : 'none';
       document.getElementById('gallery-next').style.display = photos.length > 1 ? 'flex' : 'none';
       document.getElementById('gallery-count').style.display = 'block';
-      document.getElementById('gallery-dots').innerHTML = photos.map((_, i) => `<div class="gallery-dot ${i===0?'active':''}" onclick="galleryGoTo(${i})"></div>`).join('');
+      document.getElementById('gallery-dots').innerHTML = photos.map((_, i) =>
+        `<div class="gallery-dot ${i===0?'active':''}" onclick="galleryGoTo(${i})"></div>`).join('');
     } else {
-      track.innerHTML = `<div class="gallery-slide" style="background:url('${RESORT_THUMB_IMGS[name] || ''}') center/cover;"><div class="gallery-placeholder"><span style="font-size:13px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)">Photos coming soon</span></div></div>`;
+      const fallback = RESORT_THUMB_IMGS[name] || '';
+      track.innerHTML = `<div class="gallery-slide" style="background:${fallback?`url('${fallback}') center/cover`:'var(--bg-soft)'}"><div class="gallery-placeholder"><span>${fallback?'':'🏕️'}</span><span style="font-size:13px">Photos coming soon</span></div></div>`;
       document.getElementById('gallery-prev').style.display = 'none';
       document.getElementById('gallery-next').style.display = 'none';
       document.getElementById('gallery-count').style.display = 'none';
       document.getElementById('gallery-dots').innerHTML = '';
     }
     _updateGallery();
-
     document.getElementById('details-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
