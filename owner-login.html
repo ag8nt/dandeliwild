@@ -165,7 +165,7 @@ async function doLogin() {
 async function googleSetup() {
   const { error } = await sb.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: 'https://dandelitourism.vercel.app/owner-admin.html' }
+    options: { redirectTo: 'https://dandelitourism.online/owner-admin' }
   });
   if (error) showError(error.message);
 }
