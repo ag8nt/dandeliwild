@@ -693,54 +693,11 @@
       </div>
       <a href="/resorts" class="see-all">View all resorts →</a>
     </div>
-    <div class="resorts-grid">
-      <div class="resort-card" onclick="window.location.href='/resorts?selected=Kali+River+Resort'"">
-        <div class="resort-thumb thumb-green" style="background:url('https://source.unsplash.com/featured/600x400/?river,resort,india&sig=1') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Kali River Resort" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
-        <div class="resort-body">
-          <div class="resort-type">Riverside resort</div><div class="resort-name">Kali River Resort</div>
-          <div class="resort-meta"><span class="rating-star">★ 4.8</span><span class="dot">·</span>AC rooms<span class="dot">·</span>Pool</div>
-          <div class="resort-footer"><div class="price">₹3,500 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Kali River Resort')">Book now</button></div>
-        </div>
-      </div>
-      <div class="resort-card" onclick="window.location.href='/resorts?selected=Jungle+Nest+Lodge'"">
-        <div class="resort-thumb thumb-teal" style="background:url('https://source.unsplash.com/featured/600x400/?jungle,forest,lodge&sig=2') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Jungle Nest Lodge" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-few">Only 2 left</span></div>
-        <div class="resort-body">
-          <div class="resort-type">Forest lodge</div><div class="resort-name">Jungle Nest Lodge</div>
-          <div class="resort-meta"><span class="rating-star">★ 4.6</span><span class="dot">·</span>Forest view<span class="dot">·</span>Tents</div>
-          <div class="resort-footer"><div class="price">₹1,800 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Jungle Nest Lodge')">Book now</button></div>
-        </div>
-      </div>
-      <div class="resort-card" onclick="window.location.href='/resorts?selected=Dandeli+Wild+Camp'"">
-        <div class="resort-thumb thumb-amber" style="background:url('https://source.unsplash.com/featured/600x400/?glamping,luxury,tent&sig=3') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Dandeli Tourism Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-full">Fully booked</span></div>
-        <div class="resort-body">
-          <div class="resort-type">Luxury camp</div><div class="resort-name">Dandeli Tourism Camp</div>
-          <div class="resort-meta"><span class="rating-star">★ 4.9</span><span class="dot">·</span>Luxury tents<span class="dot">·</span>Spa</div>
-          <div class="resort-footer"><div class="price">₹5,200 <span class="price-sub">/ night</span></div><button class="book-btn disabled" disabled>Fully booked</button></div>
-        </div>
-      </div>
-      <div class="resort-card" onclick="window.location.href='/resorts?selected=Supa+Wilderness+Stay'"">
-        <div class="resort-thumb thumb-deep" style="background:url('https://source.unsplash.com/featured/600x400/?wilderness,cabin,forest&sig=4') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Supa Wilderness Stay" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
-        <div class="resort-body">
-          <div class="resort-type">Eco resort</div><div class="resort-name">Supa Wilderness Stay</div>
-          <div class="resort-meta"><span class="rating-star">★ 4.7</span><span class="dot">·</span>Bird watching<span class="dot">·</span>Cottages</div>
-          <div class="resort-footer"><div class="price">₹2,400 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Supa Wilderness Stay')">Book now</button></div>
-        </div>
-      </div>
-      <div class="resort-card" onclick="window.location.href='/resorts?selected=Kali+Riverside+Camp'"">
-        <div class="resort-thumb thumb-green" style="background:url('https://source.unsplash.com/featured/600x400/?riverside,camp,river&sig=5') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Kali Riverside Camp" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-few">3 rooms left</span></div>
-        <div class="resort-body">
-          <div class="resort-type">River camp</div><div class="resort-name">Kali Riverside Camp</div>
-          <div class="resort-meta"><span class="rating-star">★ 4.5</span><span class="dot">·</span>Rafting included<span class="dot">·</span>Meals</div>
-          <div class="resort-footer"><div class="price">₹2,900 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Kali Riverside Camp')">Book now</button></div>
-        </div>
-      </div>
-      <div class="resort-card" onclick="window.location.href='/resorts?selected=Forest+Edge+Safari+Lodge'"">
-        <div class="resort-thumb thumb-amber" style="background:url('https://source.unsplash.com/featured/600x400/?safari,lodge,wildlife&sig=6') center/cover"><button class="wishlist-btn" aria-label="Save" data-resort="Forest Edge Safari Lodge" onclick="toggleFavourite(event,this)">♡</button><span class="avail-pill avail-open">Available</span></div>
-        <div class="resort-body">
-          <div class="resort-type">Safari lodge</div><div class="resort-name">Forest Edge Safari Lodge</div>
-          <div class="resort-meta"><span class="rating-star">★ 4.8</span><span class="dot">·</span>Safari included<span class="dot">·</span>Jeep tours</div>
-          <div class="resort-footer"><div class="price">₹4,100 <span class="price-sub">/ night</span></div><button class="book-btn" onclick="event.stopPropagation(); openBooking('Forest Edge Safari Lodge')">Book now</button></div>
-        </div>
+    <div class="resorts-grid" id="home-resorts-grid">
+      <!-- Loaded dynamically from Supabase -->
+      <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;padding:3rem;gap:12px;color:var(--text-muted)">
+        <div style="width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--green-mid);border-radius:50%;animation:spin 0.7s linear infinite"></div>
+        Loading resorts…
       </div>
     </div>
   </div>
@@ -1192,6 +1149,63 @@
     const cardWidth = 158; // card + gap
     carousel.scrollBy({ left: dir * cardWidth * 4, behavior: 'smooth' });
   }
+
+  // ── HOMEPAGE RESORT CARDS (dynamic from Supabase) ──
+  async function fetchHomeResorts() {
+    const grid = document.getElementById('home-resorts-grid');
+    if (!grid) return;
+
+    // Fetch top 6 active resorts — recommended first
+    const { data: resorts } = await _sb.from('resorts')
+      .select('*').eq('is_active', true)
+      .order('is_recommended', { ascending: false })
+      .order('sort_order').limit(6);
+
+    // Get availability from resort_details
+    const { data: details } = await _sb.from('resort_details')
+      .select('resort_name,availability,rooms_available');
+    const detMap = {};
+    (details || []).forEach(d => { detMap[d.resort_name] = d; });
+
+    if (!resorts || resorts.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-muted)">No resorts added yet.</div>';
+      return;
+    }
+
+    grid.innerHTML = resorts.map(r => {
+      const avail     = detMap[r.name]?.availability || 'open';
+      const rooms     = detMap[r.name]?.rooms_available ?? null;
+      const pillCls   = avail === 'full' ? 'avail-full' : (avail === 'few' || (rooms !== null && rooms < 5 && rooms > 0)) ? 'avail-few' : 'avail-open';
+      const pillTxt   = avail === 'full' ? 'Fully booked' : (pillCls === 'avail-few' ? (rooms ? `${rooms} rooms left` : 'Few rooms left') : 'Available');
+      const thumb     = (r.photo_urls && r.photo_urls[0]) ? `url('${r.photo_urls[0]}') center/cover` : 'linear-gradient(135deg,#1a4a38,#1D9E75)';
+      const amenStr   = (r.amenities || []).slice(0,3).join('<span class="dot">·</span>');
+      const isFullBook = avail === 'full';
+      const bookBtn   = isFullBook
+        ? '<button class="book-btn disabled" disabled>Fully booked</button>'
+        : `<button class="book-btn" onclick="event.stopPropagation();openBooking('${r.name}')">Book now</button>`;
+      return `
+      <div class="resort-card" onclick="window.location.href='/resorts?selected=${encodeURIComponent(r.name)}'">
+        <div class="resort-thumb" style="background:${thumb}">
+          <button class="wishlist-btn" aria-label="Save" data-resort="${r.name}" onclick="toggleFavourite(event,this)">♡</button>
+          <span class="avail-pill ${pillCls}">${pillTxt}</span>
+        </div>
+        <div class="resort-body">
+          <div class="resort-type">${r.type || 'Resort'}</div>
+          <div class="resort-name">${r.name}</div>
+          <div class="resort-meta"><span class="rating-star">★ ${r.rating || '4.5'}</span><span class="dot">·</span>${r.location || 'Dandeli'}</div>
+          <div class="resort-footer">
+            <div class="price">₹${(r.price || 0).toLocaleString('en-IN')} <span class="price-sub">/ night</span></div>
+            ${bookBtn}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // Load favourites state after cards are rendered
+    if (typeof _loadFavourites === 'function') _loadFavourites();
+  }
+
+  fetchHomeResorts();
 
   function toggleTheme() {
     const html = document.documentElement;
