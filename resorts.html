@@ -733,9 +733,10 @@
     const amenityStr = (r.amenities || []).join(',');
     const recClass = r.is_recommended ? ' recommended' : '';
     const recBadge = r.is_recommended ? '<div class="rec-badge">⭐ Recommended</div>' : '';
-    const thumbImg = (r.photo_urls && r.photo_urls[0])
-      ? r.photo_urls[0]
-      : (RESORT_THUMB_IMGS[r.name] || 'https://source.unsplash.com/featured/600x400/?forest,resort,india&sig=0');
+    const thumbImg = r.cover_image
+      || (r.photo_urls && r.photo_urls[0])
+      || RESORT_THUMB_IMGS[r.name]
+      || 'https://source.unsplash.com/featured/600x400/?forest,resort,india&sig=0';
     const isFullBook = dataAvail === 'full';
     const bookBtn = isFullBook
       ? `<button class="btn-book" disabled style="opacity:0.5;cursor:not-allowed;">Fully booked</button>`
