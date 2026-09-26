@@ -1177,7 +1177,11 @@
       const rooms     = detMap[r.name]?.rooms_available ?? null;
       const pillCls   = avail === 'full' ? 'avail-full' : (avail === 'few' || (rooms !== null && rooms < 5 && rooms > 0)) ? 'avail-few' : 'avail-open';
       const pillTxt   = avail === 'full' ? 'Fully booked' : (pillCls === 'avail-few' ? (rooms ? `${rooms} rooms left` : 'Few rooms left') : 'Available');
-      const thumb     = (r.photo_urls && r.photo_urls[0]) ? `url('${r.photo_urls[0]}') center/cover` : 'linear-gradient(135deg,#1a4a38,#1D9E75)';
+      const thumb     = r.cover_image
+        ? `url('${r.cover_image}') center/cover`
+        : (r.photo_urls && r.photo_urls[0])
+          ? `url('${r.photo_urls[0]}') center/cover`
+          : 'linear-gradient(135deg,#1a4a38,#1D9E75)';
       const amenStr   = (r.amenities || []).slice(0,3).join('<span class="dot">·</span>');
       const isFullBook = avail === 'full';
       const bookBtn   = isFullBook
