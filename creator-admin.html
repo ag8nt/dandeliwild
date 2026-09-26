@@ -297,6 +297,22 @@ nav{display:flex;align-items:center;gap:10px;padding:0 2rem;height:60px;border-b
     </div>
   </div>
 
+  <!-- COVER IMAGE -->
+  <div class="card">
+    <h4>Cover / Preview Image <span style="font-size:12px;font-weight:400;color:var(--tf)">— shown on homepage & resort listing card</span></h4>
+    <div id="cover-preview" style="display:none;position:relative;margin-bottom:.8rem;border-radius:10px;overflow:hidden;aspect-ratio:16/9;max-width:360px;">
+      <img id="cover-img" src="" alt="Cover" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+      <button onclick="removeCover()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.65);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <div class="dz" id="cover-dz" onclick="document.getElementById('cover-inp').click()">
+      <input type="file" id="cover-inp" accept="image/*" onchange="uploadCover(this.files[0])"/>
+      <div style="font-size:24px">🖼️</div>
+      <p>Click to upload cover image</p>
+      <span>This is the card thumbnail visitors see first · JPG, PNG, WebP · Max 5MB</span>
+    </div>
+    <div class="up-prog" id="cover-prog"></div>
+  </div>
+
   <!-- PHOTOS -->
   <div class="card">
     <h4>Photos</h4>
@@ -369,7 +385,47 @@ nav{display:flex;align-items:center;gap:10px;padding:0 2rem;height:60px;border-b
 const sb = supabase.createClient('https://lbgejzuzfqhdfytyumwh.supabase.co','sb_publishable_U9skEdu0mTUHQiLXGhZEQw__JeEk3NI');
 const ADMIN = 'amithaldukar13@gmail.com';
 let _session = null, _initiated = false;
-let _photos = [], _packages = [], _editId = null;
+let _photos = [], _packages = [], _editId = null, _coverImage = null;
+
+  // ── COVER IMAGE ──
+  function showCoverPreview(url) {
+    _coverImage = url;
+    document.getElementById('cover-img').src = url;
+    document.getElementById('cover-preview').style.display = 'block';
+    document.getElementById('cover-dz').style.display = 'none';
+  }
+  function removeCover() {
+    _coverImage = null;
+    document.getElementById('cover-img').src = '';
+    document.getElementById('cover-preview').style.display = 'none';
+    document.getElementById('cover-dz').style.display = 'block';
+  }
+  async function uploadCover(file) {
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { alert('File over 5MB'); return; }
+    const prog = document.getElementById('cover-prog');
+    prog.className = 'up-prog'; prog.style.display = 'block';
+    prog.textContent = 'Uploading cover…';
+    const resortName = (document.getElementById('f-name').value.trim() || 'resort')
+      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const path = `resorts/${resortName}/cover-${Date.now()}.${ext}`;
+    const { data, error } = await sb.storage.from('resort-photos').upload(path, file, { upsert: true, contentType: file.type });
+    if (error) {
+      prog.className = 'up-prog err'; prog.textContent = '❌ ' + error.message;
+    } else {
+      const { data: u } = sb.storage.from('resort-photos').getPublicUrl(data.path);
+      showCoverPreview(u.publicUrl);
+      prog.className = 'up-prog ok'; prog.textContent = '✅ Cover uploaded!';
+      setTimeout(() => { prog.style.display = 'none'; }, 2500);
+    }
+    document.getElementById('cover-inp').value = '';
+  }
+  // drag & drop for cover
+  const coverDz = document.getElementById('cover-dz');
+  coverDz.addEventListener('dragover', e => { e.preventDefault(); coverDz.classList.add('over'); });
+  coverDz.addEventListener('dragleave', () => coverDz.classList.remove('over'));
+  coverDz.addEventListener('drop', e => { e.preventDefault(); coverDz.classList.remove('over'); uploadCover(e.dataTransfer.files[0]); });
 
 // ── INIT ──
 async function init() {
@@ -541,6 +597,7 @@ async function saveResort() {
     amenities,
     photo_urls: _photos,
     packages: _packages,
+    cover_image: _coverImage || null,
     is_active: document.getElementById('tog-active').classList.contains('on'),
     is_recommended: document.getElementById('tog-rec').classList.contains('on'),
   };
@@ -564,6 +621,8 @@ async function saveResort() {
 // ── EDIT RESORT ──
 function editResort(r) {
   _editId = r.id; _photos = r.photo_urls || []; _packages = r.packages || [];
+  _coverImage = r.cover_image || null;
+  if (_coverImage) showCoverPreview(_coverImage); else removeCover();
   document.getElementById('f-name').value = r.name || '';
   document.getElementById('f-type').value = r.type || 'resort';
   document.getElementById('f-loc').value = r.location || '';
@@ -593,6 +652,7 @@ function resetForm() {
     const e = document.getElementById(id); if (e) e.value = '';
   });
   document.getElementById('f-type').value = 'resort';
+  removeCover();
   document.getElementById('tog-active').classList.add('on');
   document.getElementById('tog-rec').classList.remove('on');
   document.querySelectorAll('#amenity-row input').forEach(cb => { cb.checked = false; cb.parentElement.classList.remove('on'); });
